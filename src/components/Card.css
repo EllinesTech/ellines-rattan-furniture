@@ -1,0 +1,155 @@
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--sh-card);
+  overflow: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s,
+    box-shadow 0.35s;
+}
+
+.card--interactive:hover,
+a.card:hover,
+button.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 168, 76, 0.48);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(201, 168, 76, 0.12);
+}
+
+.card__shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--grad-gold);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.card--interactive:hover .card__shine,
+a.card:hover .card__shine {
+  opacity: 1;
+}
+
+.card__media {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  background: #12121c;
+}
+
+.card__media--4x3 {
+  aspect-ratio: 4 / 3;
+}
+
+.card__media--16x10 {
+  aspect-ratio: 16 / 10;
+}
+
+.card__media img,
+.card__media picture,
+.card__media picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card--interactive:hover .card__media img,
+.card--interactive:hover .card__media picture img,
+a.card:hover .card__media img,
+a.card:hover .card__media picture img {
+  transform: scale(1.06);
+}
+
+.card__body {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.card__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.card__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.card__desc {
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.card__footer {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-lt);
+}
+
+.card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-gold);
+  background: var(--grad-gold);
+  border-radius: 20px;
+  box-shadow: var(--sh-gold);
+  z-index: 2;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.card-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 960px) {
+  .card-grid--3,
+  .card-grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .card-grid--2,
+  .card-grid--3,
+  .card-grid--4 {
+    grid-template-columns: 1fr;
+  }
+}

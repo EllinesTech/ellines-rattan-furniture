@@ -3,6 +3,10 @@
   position: relative;
 }
 
+.services--page {
+  padding-top: 2rem;
+}
+
 .services::before {
   content: '';
   position: absolute;
@@ -154,7 +158,9 @@
   line-height: 0;
 }
 
-.services__media img {
+.services__media img,
+.services__media picture,
+.services__media picture img {
   width: 100%;
   height: 100%;
   object-fit: cover;

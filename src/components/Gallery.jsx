@@ -1,12 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { GALLERY_CATEGORIES, GALLERY_ITEMS } from '../data/gallery'
+import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './Gallery.css'
 
-export default function Gallery() {
-  const [filter, setFilter] = useState('All')
+export default function Gallery({ standalone = false }) {
+  const [searchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+  const initialFilter =
+    categoryParam && GALLERY_CATEGORIES.includes(categoryParam) ? categoryParam : 'All'
+
+  const [filter, setFilter] = useState(initialFilter)
   const [lightbox, setLightbox] = useState(null)
   const [showOriginal, setShowOriginal] = useState(false)
+
+  useEffect(() => {
+    if (categoryParam && GALLERY_CATEGORIES.includes(categoryParam)) {
+      setFilter(categoryParam)
+    }
+  }, [categoryParam])
 
   const items = useMemo(() => {
     if (filter === 'All') return GALLERY_ITEMS
@@ -62,19 +75,20 @@ export default function Gallery() {
   }, [lightbox, items])
 
   return (
-    <section id="gallery" className="section gallery">
+    <section className={`section gallery ${standalone ? 'gallery--page' : ''}`}>
       <div className="container">
-        <Reveal className="section-head">
-          <p className="section-eyebrow">Our Work</p>
-          <h2>Our Projects</h2>
-          <p>
-            Real furniture built in our Nyeri and Nairobi workshops — each piece
-            hand-woven to order. Browse living sets, sofas, armchairs, cabinets, tables,
-            and bespoke builds.
-          </p>
-        </Reveal>
+        {!standalone && (
+          <Reveal className="section-head">
+            <p className="section-eyebrow">Our Work</p>
+            <h2>Our Projects</h2>
+            <p>
+              Real furniture built in our Nyeri and Nairobi workshops — each piece
+              hand-woven to order.
+            </p>
+          </Reveal>
+        )}
 
-        <Reveal delay={80}>
+        <Reveal delay={standalone ? 0 : 80}>
           <div className="gallery__filters" role="tablist" aria-label="Filter projects">
             {GALLERY_CATEGORIES.map((cat) => (
               <button
@@ -107,7 +121,13 @@ export default function Gallery() {
                 className={`gallery__item ${item.featured ? 'gallery__item--featured' : ''}`}
                 onClick={() => openLightbox(item)}
               >
-                <img src={item.src} alt={item.title} loading="lazy" />
+                <OptimizedImage
+                  src={item.src}
+                  alt={item.title}
+                  loading="lazy"
+                  useThumb
+                  thumbWidth={640}
+                />
                 <span className="gallery__badge">Ellines</span>
                 <span className="gallery__overlay">
                   <span className="gallery__category">{item.category}</span>
@@ -144,7 +164,7 @@ export default function Gallery() {
             >
               ×
             </button>
-            <img src={lightboxSrc} alt={lightbox.title} />
+            <OptimizedImage src={lightboxSrc} alt={lightbox.title} loading="eager" />
             <button
               type="button"
               className="lightbox__nav lightbox__nav--next"

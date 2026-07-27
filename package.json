@@ -10,11 +10,13 @@
     "preview:pages": "wrangler pages dev dist --port 5174",
     "cf-build": "npm install && npm run build",
     "images:polish": "node scripts/polish-images.mjs",
-    "images:hero": "node scripts/compose-hero-images.mjs"
+    "images:hero": "node scripts/compose-hero-images.mjs",
+    "images:webp": "node scripts/generate-webp.mjs"
   },
   "dependencies": {
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.3",

@@ -1,23 +1,24 @@
+import { Link } from 'react-router-dom'
 import { HERO_IMAGE, HERO_TRUST, SITE } from '../data/site'
+import OptimizedImage from './OptimizedImage'
 import './Hero.css'
 
 export default function Hero() {
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
-  const scrollToProjects = () => {
-    document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <>
-      <section id="home" className="hero" aria-label="Introduction">
+      <section className="hero" aria-label="Introduction">
         <div className="hero__bg" aria-hidden="true">
-          <img
+          <OptimizedImage
             src={HERO_IMAGE.src}
             alt=""
             className="hero__bg-img"
-            style={{ objectPosition: HERO_IMAGE.position }}
+            loading="eager"
             fetchPriority="high"
+            objectPosition={HERO_IMAGE.position}
+            useThumb
+            thumbWidth={1920}
           />
           <div className="hero__bg-veil" />
         </div>
@@ -34,13 +35,9 @@ export default function Hero() {
               cabinets, and outdoor sets woven by skilled Kenyan artisans.
             </p>
             <div className="hero__btns">
-              <button
-                type="button"
-                className="btn btn-primary hero__cta-projects"
-                onClick={scrollToProjects}
-              >
+              <Link to="/projects" className="btn btn-primary hero__cta-projects">
                 View Our Projects
-              </button>
+              </Link>
               <a
                 href={waUrl}
                 className="btn btn-wa hero__cta-wa"
@@ -53,15 +50,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <button
-          type="button"
-          className="hero__scroll-cue"
-          onClick={scrollToProjects}
-          aria-label="Scroll to projects"
-        >
+        <Link to="/projects" className="hero__scroll-cue" aria-label="View projects">
           <span>Explore our work</span>
           <div className="hero__scroll-arrow" />
-        </button>
+        </Link>
       </section>
 
       <div className="hero-trust">

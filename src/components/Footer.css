@@ -32,8 +32,6 @@
 .footer__nav-link {
   color: var(--muted);
   font-size: inherit;
-  text-align: left;
-  padding: 0;
   transition: color 0.2s;
 }
 
@@ -72,8 +70,8 @@
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.4fr 0.8fr 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.4fr 0.9fr 0.9fr 1.1fr;
+  gap: 36px;
   margin-bottom: 40px;
 }
 

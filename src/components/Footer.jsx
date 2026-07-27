@@ -1,13 +1,11 @@
+import { Link } from 'react-router-dom'
+import { FOOTER_LINKS } from '../data/content'
 import { NAV_LINKS, SITE } from '../data/site'
 import './Footer.css'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
-
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   return (
     <footer className="footer">
@@ -17,9 +15,9 @@ export default function Footer() {
             <h2>Ready to transform your space?</h2>
             <p>Custom rattan furniture, woven by hand in Nyeri &amp; Nairobi.</p>
           </div>
-          <a href={waUrl} className="btn btn-primary btn-wa footer__cta-btn" target="_blank" rel="noopener noreferrer">
-            Start on WhatsApp
-          </a>
+          <Link to="/contact" className="btn btn-primary footer__cta-btn">
+            Get in Touch
+          </Link>
         </div>
       </div>
 
@@ -38,6 +36,8 @@ export default function Footer() {
               className="footer__logo"
               width="1024"
               height="1024"
+              loading="lazy"
+              decoding="async"
             />
             <p className="footer__tagline">{SITE.tagline}</p>
             <p className="footer__desc">
@@ -50,17 +50,26 @@ export default function Footer() {
             <h3>Explore</h3>
             <ul className="footer__links">
               {NAV_LINKS.map((link) => (
-                <li key={link.id}>
-                  <button type="button" className="footer__nav-link" onClick={() => scrollTo(link.id)}>
-                    {link.label}
-                  </button>
+                <li key={link.path}>
+                  <Link to={link.path} className="footer__nav-link">{link.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3>Workshops</h3>
+            <h3>Learn More</h3>
+            <ul className="footer__links">
+              {FOOTER_LINKS.map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path} className="footer__nav-link">{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3>Contact</h3>
             <ul className="footer__links">
               {SITE.workshops.map((w) => (
                 <li key={w.city}>
@@ -68,12 +77,6 @@ export default function Footer() {
                 </li>
               ))}
               <li>{SITE.hours}</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3>Contact</h3>
-            <ul className="footer__links">
               <li>
                 <a href={waUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>
               </li>

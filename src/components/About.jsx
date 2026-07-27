@@ -1,4 +1,5 @@
 import { ABOUT_STATS, CRAFTSMANSHIP, SITE } from '../data/site'
+import OptimizedImage from './OptimizedImage'
 import { useCountUp, useScrollReveal } from '../hooks/useScrollReveal'
 import Reveal from './Reveal'
 import './About.css'
@@ -17,9 +18,9 @@ function StatItem({ stat, index }) {
   )
 }
 
-export default function About() {
+export default function About({ standalone = false }) {
   return (
-    <section id="about" className="section about">
+    <section id={standalone ? undefined : 'about'} className={`section about ${standalone ? 'about--page' : ''}`}>
       <div className="container">
         <div className="about__intro">
           <Reveal className="about__copy">
@@ -87,7 +88,7 @@ export default function About() {
             <Reveal key={item.src} delay={i * 80}>
               <figure className="about__card">
                 <div className="about__card-media">
-                  <img src={item.src} alt={item.alt} loading="lazy" />
+                  <OptimizedImage src={item.src} alt={item.alt} loading="lazy" useThumb thumbWidth={480} />
                 </div>
                 <figcaption>{item.caption}</figcaption>
               </figure>

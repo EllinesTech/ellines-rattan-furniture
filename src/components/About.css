@@ -2,6 +2,10 @@
   background: var(--grad-bg);
 }
 
+.about--page {
+  padding-top: 2rem;
+}
+
 .about__intro {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;

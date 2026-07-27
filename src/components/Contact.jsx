@@ -1,21 +1,24 @@
 import { CONTACT_IMAGE, SITE, WHY_CHOOSE } from '../data/site'
+import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './Contact.css'
 
-export default function Contact() {
+export default function Contact({ standalone = false }) {
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
   return (
-    <section id="contact" className="section contact">
+    <section id={standalone ? undefined : 'contact'} className={`section contact ${standalone ? 'contact--page' : ''}`}>
       <div className="container">
-        <Reveal className="contact__header section-head section-head--center">
-          <p className="section-eyebrow">Get in Touch</p>
-          <h2>Start Your Custom Project</h2>
-          <p>
-            Visit our Nairobi showroom or connect with our Nyeri workshop team.
-            Share dimensions, colours, or reference photos — we deliver across Kenya.
-          </p>
-        </Reveal>
+        {!standalone && (
+          <Reveal className="contact__header section-head section-head--center">
+            <p className="section-eyebrow">Get in Touch</p>
+            <h2>Start Your Custom Project</h2>
+            <p>
+              Visit our Nairobi showroom or connect with our Nyeri workshop team.
+              Share dimensions, colours, or reference photos — we deliver across Kenya.
+            </p>
+          </Reveal>
+        )}
 
         <div className="contact__trust">
           {WHY_CHOOSE.map((item, i) => (
@@ -33,7 +36,7 @@ export default function Contact() {
                 <div key={w.city} className="contact__workshop card">
                   {w.image && (
                     <div className="contact__workshop-img">
-                      <img src={w.image} alt={`${w.label} — Ellines Rattan Furniture`} loading="lazy" />
+                      <OptimizedImage src={w.image} alt={`${w.label} — Ellines Rattan Furniture`} loading="lazy" useThumb thumbWidth={640} />
                     </div>
                   )}
                   <div className="contact__workshop-body">
@@ -76,7 +79,7 @@ export default function Contact() {
 
           <Reveal className="contact__visual card reveal--right" delay={120}>
             <div className="contact__visual-frame">
-              <img src={CONTACT_IMAGE.src} alt={CONTACT_IMAGE.alt} loading="lazy" />
+              <OptimizedImage src={CONTACT_IMAGE.src} alt={CONTACT_IMAGE.alt} loading="lazy" useThumb thumbWidth={960} />
             </div>
             <div className="contact__visual-caption">
               <img

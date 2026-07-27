@@ -31,6 +31,9 @@
   cursor: pointer;
   border-radius: var(--r);
   overflow: hidden;
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 .showcase__media {
@@ -48,7 +51,9 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
-.showcase__media img {
+.showcase__media img,
+.showcase__media picture,
+.showcase__media picture img {
   width: 100%;
   height: 100%;
   object-fit: cover;

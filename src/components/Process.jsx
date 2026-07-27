@@ -1,4 +1,5 @@
 import { PROCESS_STEPS, SITE } from '../data/site'
+import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './Process.css'
 
@@ -20,9 +21,10 @@ export default function Process() {
         <div className="process__track">
           {PROCESS_STEPS.map((step, i) => (
             <Reveal key={step.step} className="process__step" delay={i * 100}>
-              <article className="process__card card">
-                <div className="process__media">
-                  <img src={step.image} alt="" loading="lazy" />
+              <article className="process__card card card--interactive">
+                <span className="card__shine" aria-hidden="true" />
+                <div className="process__media card__media card__media--4x3">
+                  <OptimizedImage src={step.image} alt="" loading="lazy" useThumb thumbWidth={640} />
                   <span className="process__num">{step.step}</span>
                 </div>
                 <div className="process__body">

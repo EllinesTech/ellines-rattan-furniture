@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import { SERVICES, SITE, WHY_CHOOSE } from '../data/site'
+import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './Services.css'
 
@@ -37,24 +39,22 @@ const ICONS = {
   ),
 }
 
-export default function Services() {
+export default function Services({ standalone = false }) {
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
-    <section id="services" className="section services">
+    <section id={standalone ? undefined : 'services'} className={`section services ${standalone ? 'services--page' : ''}`}>
       <div className="container">
-        <Reveal className="section-head section-head--center">
-          <p className="section-eyebrow">What We Make</p>
-          <h2>Custom Rattan Furniture</h2>
-          <p>
-            From a single accent chair to a full outdoor lounge — hand-woven in our
-            Nyeri and Nairobi workshops.
-          </p>
-        </Reveal>
+        {!standalone && (
+          <Reveal className="section-head section-head--center">
+            <p className="section-eyebrow">What We Make</p>
+            <h2>Custom Rattan Furniture</h2>
+            <p>
+              From a single accent chair to a full outdoor lounge — hand-woven in our
+              Nyeri and Nairobi workshops.
+            </p>
+          </Reveal>
+        )}
 
         <div className="services__why">
           {WHY_CHOOSE.map((item, i) => (
@@ -68,10 +68,11 @@ export default function Services() {
         <div className="services__grid">
           {SERVICES.map((service, i) => (
             <Reveal key={service.title} delay={i * 70}>
-              <article className="services__card card">
+              <article className="services__card card card--interactive">
+                <span className="card__shine" aria-hidden="true" />
                 {service.image && (
-                  <div className="services__media">
-                    <img src={service.image} alt={service.title} loading="lazy" />
+                  <div className="services__media card__media card__media--16x10">
+                    <OptimizedImage src={service.image} alt={service.title} loading="lazy" useThumb thumbWidth={640} />
                     <span className="services__index">{String(i + 1).padStart(2, '0')}</span>
                   </div>
                 )}
@@ -91,9 +92,9 @@ export default function Services() {
             <p>Tell us what you need — we will guide you from design to delivery.</p>
           </div>
           <div className="services__cta-btns">
-            <button type="button" className="btn btn-outline" onClick={scrollToContact}>
+            <Link to="/contact" className="btn btn-outline">
               Get in Touch
-            </button>
+            </Link>
             <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
               WhatsApp Quote
             </a>

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { NAV_LINKS, SITE } from '../data/site'
-import { useScrollSpy } from '../hooks/useScrollReveal'
 import './Navbar.css'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const activeId = useScrollSpy(NAV_LINKS.map((l) => l.id))
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48)
@@ -21,21 +20,12 @@ export default function Navbar() {
     }
   }, [open])
 
-  const scrollTo = (id) => {
-    const el = document.getElementById(id)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    setOpen(false)
-  }
+  const closeMenu = () => setOpen(false)
 
   return (
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="container nav__inner">
-        <button
-          type="button"
-          className="nav__brand"
-          onClick={() => scrollTo('home')}
-          aria-label={`${SITE.name} home`}
-        >
+        <Link to="/" className="nav__brand" aria-label={`${SITE.name} home`} onClick={closeMenu}>
           <img
             src="/images/logos/ellines-rattan-logo-transparent.png"
             alt=""
@@ -47,18 +37,21 @@ export default function Navbar() {
             <span className="nav__brand-name">Ellines</span>
             <span className="nav__brand-sub">Rattan Furniture</span>
           </span>
-        </button>
+        </Link>
 
         <nav className={`nav__links ${open ? 'nav__links--open' : ''}`} aria-label="Primary">
           {NAV_LINKS.map((link) => (
-            <button
-              key={link.id}
-              type="button"
-              className={`nav__link ${activeId === link.id ? 'nav__link--active' : ''}`}
-              onClick={() => scrollTo(link.id)}
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.end}
+              className={({ isActive }) =>
+                `nav__link ${isActive ? 'nav__link--active' : ''}`
+              }
+              onClick={closeMenu}
             >
               {link.label}
-            </button>
+            </NavLink>
           ))}
           <a
             href={`https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`}
@@ -88,7 +81,7 @@ export default function Navbar() {
           type="button"
           className="nav__backdrop"
           aria-label="Close menu"
-          onClick={() => setOpen(false)}
+          onClick={closeMenu}
         />
       )}
     </header>

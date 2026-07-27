@@ -33,11 +33,11 @@ export const SITE = {
 }
 
 export const NAV_LINKS = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'Craftsmanship' },
-  { id: 'gallery', label: 'Projects' },
-  { id: 'services', label: 'Services' },
-  { id: 'contact', label: 'Contact' },
+  { path: '/', label: 'Home', id: 'home', end: true },
+  { path: '/craftsmanship', label: 'Craftsmanship', id: 'craftsmanship' },
+  { path: '/projects', label: 'Projects', id: 'projects' },
+  { path: '/services', label: 'Services', id: 'services' },
+  { path: '/contact', label: 'Contact', id: 'contact' },
 ]
 
 export const HERO_IMAGE = {

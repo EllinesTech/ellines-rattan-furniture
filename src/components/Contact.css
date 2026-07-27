@@ -2,6 +2,14 @@
   background: var(--grad-bg);
 }
 
+.contact--page {
+  padding-top: 1.5rem;
+}
+
+.contact--page .contact__trust {
+  margin-top: 0;
+}
+
 .contact__header {
   margin-bottom: 1.5rem;
 }
