@@ -4,22 +4,22 @@ import './HomeCta.css'
 
 const LINKS = [
   {
+    path: '/collections',
+    label: 'Collections',
+    desc: 'Living sets, sofas, armchairs, cabinets, tables & outdoor seating',
+    image: '/images/projects/project-original-modular-grey-white.jpg',
+  },
+  {
     path: '/craftsmanship',
     label: 'Our Craftsmanship',
     desc: 'See how we hand-weave every piece in Nyeri & Nairobi',
     image: '/images/projects/project-craftsmanship-hand-weave.jpg',
   },
   {
-    path: '/projects',
-    label: 'View Projects',
-    desc: 'Browse living sets, sofas, armchairs, cabinets & more',
-    image: '/images/projects/project-original-cabinet-gold.jpg',
-  },
-  {
-    path: '/services',
-    label: 'Our Services',
-    desc: 'Custom furniture tailored to your space and style',
-    image: '/images/projects/project-original-modular-collection.jpg',
+    path: '/hospitality',
+    label: 'Hospitality & Trade',
+    desc: 'Custom builds for hotels, restaurants, offices & designers',
+    image: '/images/projects/project-original-living-set-wide.jpg',
   },
   {
     path: '/materials',

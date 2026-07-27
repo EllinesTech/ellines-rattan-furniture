@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FOOTER_LINKS } from '../data/content'
+import { FOOTER_LINKS, LEGAL_LINKS } from '../data/content'
 import { NAV_LINKS, SITE } from '../data/site'
 import './Footer.css'
 
@@ -54,6 +54,9 @@ export default function Footer() {
                   <Link to={link.path} className="footer__nav-link">{link.label}</Link>
                 </li>
               ))}
+              <li>
+                <Link to="/hospitality" className="footer__nav-link">Hospitality &amp; Trade</Link>
+              </li>
             </ul>
           </div>
 
@@ -94,8 +97,14 @@ export default function Footer() {
 
         <div className="footer__bottom">
           <p>© {year} {SITE.name}. All rights reserved.</p>
-          <p>
-            Part of{' '}
+          <p className="footer__legal">
+            {LEGAL_LINKS.map((link, i) => (
+              <span key={link.path}>
+                {i > 0 && ' · '}
+                <Link to={link.path}>{link.label}</Link>
+              </span>
+            ))}
+            {' · '}
             <a href="https://tech.ellines.co.ke/" target="_blank" rel="noopener noreferrer">
               Ellines Group
             </a>

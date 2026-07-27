@@ -126,6 +126,10 @@
   color: var(--muted);
 }
 
+.footer__legal a:hover {
+  color: var(--gold);
+}
+
 .footer__bottom a:hover {
   color: var(--gold);
 }

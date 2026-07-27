@@ -67,11 +67,13 @@
 }
 
 .nav__link {
-  padding: 8px 14px;
-  font-size: 0.88rem;
+  position: relative;
+  padding: 8px 12px;
+  font-size: 0.86rem;
   color: var(--muted);
   border-radius: var(--r-sm);
   transition: color 0.2s, background 0.2s;
+  text-decoration: none;
 }
 
 .nav__link:hover {
@@ -94,10 +96,6 @@
   height: 4px;
   border-radius: 50%;
   background: var(--gold);
-}
-
-.nav__link {
-  position: relative;
 }
 
 .nav__cta {

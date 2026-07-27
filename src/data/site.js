@@ -35,6 +35,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { path: '/', label: 'Home', id: 'home', end: true },
   { path: '/craftsmanship', label: 'Craftsmanship', id: 'craftsmanship' },
+  { path: '/collections', label: 'Collections', id: 'collections' },
   { path: '/projects', label: 'Projects', id: 'projects' },
   { path: '/services', label: 'Services', id: 'services' },
   { path: '/contact', label: 'Contact', id: 'contact' },

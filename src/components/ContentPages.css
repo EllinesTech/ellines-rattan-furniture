@@ -143,6 +143,70 @@
   color: var(--gold);
 }
 
-.delivery-step .card__body {
-  padding-top: 24px;
+.content-page__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.collections-card {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
+.hospitality-benefits {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hospitality-benefits li {
+  padding: 16px 18px;
+  border-radius: var(--r);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  background: rgba(201, 168, 76, 0.05);
+  color: var(--text);
+  font-size: 0.9rem;
+  position: relative;
+  padding-left: 36px;
+}
+
+.hospitality-benefits li::before {
+  content: '✦';
+  position: absolute;
+  left: 14px;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+.legal-doc {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 28px;
+}
+
+.legal-doc__title {
+  font-size: 1.35rem;
+  color: var(--gold-lt);
+  margin-bottom: 20px;
+}
+
+.legal-doc p {
+  color: var(--muted);
+  margin-bottom: 14px;
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .hospitality-benefits {
+    grid-template-columns: 1fr;
+  }
 }

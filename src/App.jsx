@@ -12,6 +12,11 @@ const AboutPage = lazy(() => import('./pages/AboutPage'))
 const MaterialsPage = lazy(() => import('./pages/MaterialsPage'))
 const FaqPage = lazy(() => import('./pages/FaqPage'))
 const DeliveryPage = lazy(() => import('./pages/DeliveryPage'))
+const CollectionsPage = lazy(() => import('./pages/CollectionsPage'))
+const HospitalityPage = lazy(() => import('./pages/HospitalityPage'))
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
+const TermsPage = lazy(() => import('./pages/TermsPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 function PageLoader() {
   return (
@@ -37,12 +42,17 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="craftsmanship" element={<LazyPage Page={CraftsmanshipPage} />} />
           <Route path="projects" element={<LazyPage Page={ProjectsPage} />} />
+          <Route path="collections" element={<LazyPage Page={CollectionsPage} />} />
           <Route path="services" element={<LazyPage Page={ServicesPage} />} />
+          <Route path="hospitality" element={<LazyPage Page={HospitalityPage} />} />
           <Route path="contact" element={<LazyPage Page={ContactPage} />} />
           <Route path="about" element={<LazyPage Page={AboutPage} />} />
           <Route path="materials" element={<LazyPage Page={MaterialsPage} />} />
           <Route path="faq" element={<LazyPage Page={FaqPage} />} />
           <Route path="delivery" element={<LazyPage Page={DeliveryPage} />} />
+          <Route path="privacy" element={<LazyPage Page={PrivacyPage} />} />
+          <Route path="terms" element={<LazyPage Page={TermsPage} />} />
+          <Route path="*" element={<LazyPage Page={NotFoundPage} />} />
         </Route>
       </Routes>
     </BrowserRouter>

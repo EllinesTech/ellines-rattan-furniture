@@ -103,4 +103,42 @@ export const PAGE_META = {
     heading: 'Delivery & Warranty',
     sub: 'From workshop to your home — with support every step of the way.',
   },
+  collections: {
+    title: 'Collections | Ellines Rattan Furniture',
+    description:
+      'Explore Ellines rattan collections — living sets, sofas, armchairs, cabinets, tables, and outdoor seating.',
+    heroImage: '/images/projects/project-original-modular-grey-white.jpg',
+    heroPosition: 'center 35%',
+    eyebrow: 'Browse',
+    heading: 'Our Collections',
+    sub: 'Find the piece that fits your space — then customise it to order.',
+  },
+  hospitality: {
+    title: 'Hospitality & Trade | Ellines Rattan Furniture',
+    description:
+      'Custom rattan furniture for hotels, restaurants, offices, and interior designers across Kenya.',
+    heroImage: '/images/projects/project-original-living-set-wide.jpg',
+    heroPosition: 'center 40%',
+    eyebrow: 'Trade & Contract',
+    heading: 'Hospitality & Trade',
+    sub: 'Furniture built for guest spaces, brand interiors, and high-traffic venues.',
+  },
+  privacy: {
+    title: 'Privacy Policy | Ellines Rattan Furniture',
+    description: 'How Ellines Rattan Furniture collects and uses information when you contact us.',
+    heroImage: '/images/projects/project-craftsmanship-overhead.jpg',
+    heroPosition: 'center 40%',
+    eyebrow: 'Legal',
+    heading: 'Privacy Policy',
+    sub: 'Your privacy matters to us.',
+  },
+  terms: {
+    title: 'Terms of Use | Ellines Rattan Furniture',
+    description: 'Terms of use for the Ellines Rattan Furniture website.',
+    heroImage: '/images/projects/project-craftsmanship-hand-weave.jpg',
+    heroPosition: 'center 40%',
+    eyebrow: 'Legal',
+    heading: 'Terms of Use',
+    sub: 'Guidelines for using our website and services.',
+  },
 }

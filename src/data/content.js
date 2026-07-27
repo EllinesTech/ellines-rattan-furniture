@@ -1,9 +1,88 @@
 export const FOOTER_LINKS = [
   { path: '/about', label: 'Our Story' },
+  { path: '/collections', label: 'Collections' },
+  { path: '/hospitality', label: 'Hospitality & Trade' },
   { path: '/materials', label: 'Materials & Care' },
   { path: '/faq', label: 'FAQ' },
   { path: '/delivery', label: 'Delivery & Warranty' },
 ]
+
+export const LEGAL_LINKS = [
+  { path: '/privacy', label: 'Privacy Policy' },
+  { path: '/terms', label: 'Terms of Use' },
+]
+
+export const COLLECTIONS = [
+  {
+    name: 'Living Sets',
+    desc: 'Coordinated lounge collections for living rooms, lounges, and open-plan spaces.',
+    image: '/images/projects/project-original-living-set-wide.jpg',
+    category: 'Living Sets',
+  },
+  {
+    name: 'Sofas & Sectionals',
+    desc: 'Modular and fixed sofas tailored to your layout, weave, and colour palette.',
+    image: '/images/projects/project-original-modular-sections.jpg',
+    category: 'Sofas',
+  },
+  {
+    name: 'Armchairs',
+    desc: 'Statement seating with hand-woven rattan on sturdy metal frames.',
+    image: '/images/projects/project-original-armchair-shaggy.jpg',
+    category: 'Armchairs',
+  },
+  {
+    name: 'Cabinets & Storage',
+    desc: 'Checkered and geometric woven cabinets with glass tops and gold accents.',
+    image: '/images/projects/project-original-cabinet-gold.jpg',
+    category: 'Cabinets',
+  },
+  {
+    name: 'Tables',
+    desc: 'Coffee tables, side tables, and accent pieces that complete your set.',
+    image: '/images/projects/project-original-coffee-table.jpg',
+    category: 'Tables',
+  },
+  {
+    name: 'Outdoor Seating',
+    desc: 'Weather-resistant benches and lounge pieces for patios and terraces.',
+    image: '/images/projects/project-original-bench-brown.jpg',
+    category: 'Seating',
+  },
+]
+
+export const HOSPITALITY = {
+  intro:
+    'Hotels, restaurants, cafés, and offices across Kenya trust Ellines for durable, custom rattan that elevates guest spaces and brand interiors.',
+  audiences: [
+    {
+      title: 'Hotels & Lodges',
+      desc: 'Lobby lounges, terrace seating, and guest-area furniture built for high traffic and lasting first impressions.',
+      image: '/images/projects/project-original-living-set-brown.jpg',
+    },
+    {
+      title: 'Restaurants & Cafés',
+      desc: 'Outdoor dining and lounge sets that match your brand look — weather-ready for Kenyan climates.',
+      image: '/images/projects/project-original-modular-collection.jpg',
+    },
+    {
+      title: 'Offices & Corporate',
+      desc: 'Reception seating, breakout zones, and boardroom-adjacent lounges with a refined craft finish.',
+      image: '/images/projects/project-original-armchair-shaggy.jpg',
+    },
+    {
+      title: 'Interior Designers',
+      desc: 'Trade-friendly custom builds — share specs, mood boards, and we deliver workshop-direct pieces.',
+      image: '/images/projects/project-craftsmanship-weaving.jpg',
+    },
+  ],
+  benefits: [
+    'Volume and multi-unit project capability',
+    'Consistent weave patterns across large orders',
+    'Transparent workshop quotes for procurement',
+    'Nationwide delivery and installation support',
+  ],
+}
 
 export const ABOUT_STORY = {
   intro: [
