@@ -1,0 +1,247 @@
+{
+  "generatedAt": "2026-07-27",
+  "namingConvention": "kebab-case",
+  "extensionPolicy": "Project photos use .jpg; logos retain .png",
+  "folders": {
+    "projects": "public/images/projects/",
+    "logos": "public/images/logos/",
+    "hero": "public/images/hero/"
+  },
+  "images": [
+    {
+      "filename": "armchair-black-white-woven-workshop-outdoor.jpg",
+      "folder": "projects",
+      "alsoInHero": true,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.51.jpeg",
+      "description": "Black-and-white woven rattan armchair in progress outdoors at the workshop, with upper frame exposed and stapler on seat.",
+      "suggestedUse": "hero, about/craftsmanship",
+      "qualityRating": "hero-worthy"
+    },
+    {
+      "filename": "craftsmanship-weaving-chair-frame-workshop.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.51 (1).jpeg",
+      "description": "Close-up of black metal chair frame being woven with black-and-white synthetic rattan strips in the workshop.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "notes": "Contains phone watermark (OPPO A15) in bottom-left corner; crop before public use."
+    },
+    {
+      "filename": "cabinet-black-white-checkered-glass-top-outdoor.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.51 (2).jpeg",
+      "description": "Horizontal black-and-white checkered woven cabinet with glass top and open doors, photographed outdoors.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery"
+    },
+    {
+      "filename": "modular-sofa-sections-white-brown-grey-outdoor.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.52.jpeg",
+      "description": "Three modular rattan sofa sections in white, brown, and grey displayed outdoors against a stone wall.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery",
+      "notes": "Orientation corrected (rotated clockwise)."
+    },
+    {
+      "filename": "side-table-black-white-checkered-gold-legs.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.53.jpeg",
+      "description": "Square black-and-white checkered woven side table with ornate gold metal legs on outdoor mat.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery"
+    },
+    {
+      "filename": "modular-sofa-collection-white-brown-grey-outdoor.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.53 (1).jpeg",
+      "description": "Outdoor display of modular sofa sections, side table, and planter cubes in white, brown, and grey-white weaves.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery",
+      "notes": "Orientation corrected (rotated counter-clockwise)."
+    },
+    {
+      "filename": "cabinet-black-white-checkered-gold-legs.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.54.jpeg",
+      "description": "Two-door black-and-white woven cabinet with white panel inserts, silver handles, and gold decorative legs.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery"
+    },
+    {
+      "filename": "craftsmanship-weaving-process-black-white-workshop.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.54 (1).jpeg",
+      "description": "Close-up of weaving process on black metal chair frame with black-and-white striped rattan bands.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "notes": "Contains phone watermark (OPPO A15) in bottom-left corner; crop before public use."
+    },
+    {
+      "filename": "craftsmanship-armchair-weaving-overhead-workshop.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.55.jpeg",
+      "description": "Overhead view of armchair seat being hand-woven with black-and-white rattan on a black metal frame.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "notes": "Contains phone watermark (OPPO A15) in bottom-left corner; crop before public use."
+    },
+    {
+      "filename": "planter-square-white-woven-studio.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.00.jpeg",
+      "description": "White square woven rattan planter with black interior liner on white studio background.",
+      "suggestedUse": "product showcase",
+      "qualityRating": "skip",
+      "notes": "Only 7 KB — heavily compressed, too low resolution for web use. Request higher-resolution source."
+    },
+    {
+      "filename": "bench-brown-rattan-shaggy-grey-pillows.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.01.jpeg",
+      "description": "Brown woven rattan bench with two shaggy grey faux-fur pillows against an orange wall.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery"
+    },
+    {
+      "filename": "living-set-brown-grey-checkered-showroom.jpg",
+      "folder": "projects",
+      "alsoInHero": true,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.01 (1).jpeg",
+      "description": "Showroom living set with brown rattan sofa, grey-white checkered coffee table, white armchairs, and brown side table.",
+      "suggestedUse": "hero, product showcase, gallery",
+      "qualityRating": "hero-worthy",
+      "notes": "SOURCE FILE MISSING from Furniture Projects folder — not copied. Use living-set-brown-grey-checkered-showroom-wide.jpg as substitute."
+    },
+    {
+      "filename": "armchair-black-white-woven-shaggy-pillow.jpg",
+      "folder": "projects",
+      "alsoInHero": true,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.02.jpeg",
+      "description": "Black-and-white woven rattan armchair with grey shaggy pillow and brown side table against yellow wall.",
+      "suggestedUse": "hero, product showcase, gallery",
+      "qualityRating": "hero-worthy"
+    },
+    {
+      "filename": "coffee-table-black-white-checkered-woven.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.03.jpeg",
+      "description": "Close-up of rectangular black-and-white checkered woven coffee table with open shelf on grey shaggy rug.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery"
+    },
+    {
+      "filename": "living-set-brown-white-rattan-showroom.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.04.jpeg",
+      "description": "Indoor showroom with brown rattan sofa, white woven armchairs, and white coffee table.",
+      "suggestedUse": "gallery",
+      "qualityRating": "gallery",
+      "notes": "Slightly soft focus and cluttered office background; not ideal for hero."
+    },
+    {
+      "filename": "modular-sofa-white-grey-woven-showroom.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.04 (1).jpeg",
+      "description": "White-and-grey woven modular sofa section with chrome feet and shaggy pillow in showroom setting.",
+      "suggestedUse": "product showcase, gallery",
+      "qualityRating": "gallery"
+    },
+    {
+      "filename": "planter-square-white-woven-studio-alt.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.09.05.jpeg",
+      "description": "Alternate studio shot of white square woven rattan planter on white background.",
+      "suggestedUse": "product showcase",
+      "qualityRating": "skip",
+      "notes": "Only 10.6 KB — heavily compressed, too low resolution for web use. Request higher-resolution source."
+    },
+    {
+      "filename": "living-set-brown-grey-checkered-showroom-wide.jpg",
+      "folder": "projects",
+      "alsoInHero": true,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.22.42.jpeg",
+      "description": "Wide showroom view of brown sofa, grey-white checkered armchairs and coffee table, and brown side table.",
+      "suggestedUse": "hero, product showcase, gallery",
+      "qualityRating": "hero-worthy"
+    },
+    {
+      "filename": "woven-bench-white-brown-chevron-detail.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.22.43.jpeg",
+      "description": "Close-up detail of white-and-brown chevron geometric weave pattern on rattan bench or ottoman.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "notes": "Small timestamp visible in bottom-left corner."
+    },
+    {
+      "filename": "planter-rectangular-white-woven-studio.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "originalFilename": "WhatsApp Image 2026-07-27 at 11.22.44.jpeg",
+      "description": "Rectangular white woven rattan planter with terracotta liner on white studio background.",
+      "suggestedUse": "product showcase",
+      "qualityRating": "skip",
+      "notes": "Only 15 KB — low resolution; usable only as thumbnail. Request higher-resolution source."
+    }
+  ],
+  "logos": [
+    {
+      "filename": "ellines-rattan-logo-banner.png",
+      "folder": "logos",
+      "originalFilename": "Ellines Rattan Big Logo.png",
+      "description": "Horizontal banner logo with circular emblem, full company name, and 'Crafted Designs with Beauty' tagline on black background.",
+      "suggestedUse": "header, hero, marketing",
+      "qualityRating": "hero-worthy"
+    },
+    {
+      "filename": "ellines-rattan-logo-transparent.png",
+      "folder": "logos",
+      "originalFilename": "Ellines Rattan Logo alone no bg.png",
+      "description": "Circular gold emblem with rattan chair illustration and 'Ellines' cursive script.",
+      "suggestedUse": "favicon, social media, watermark",
+      "qualityRating": "hero-worthy"
+    },
+    {
+      "filename": "ellines-rattan-logo-circle.png",
+      "folder": "logos",
+      "originalFilename": "Ellines Rattan Logo alone.png",
+      "description": "Square-format circular logo with gold chair illustration, 'Ellines' script, and decorative leaf on black background.",
+      "suggestedUse": "footer, about page, branding",
+      "qualityRating": "hero-worthy"
+    },
+    {
+      "filename": "ellines-rattan-logo-square.png",
+      "folder": "logos",
+      "originalFilename": "Ellines Rattan Squre Logo.png",
+      "description": "Full vertical stack logo with emblem, company name, tagline, and gold flourishes on black background.",
+      "suggestedUse": "about page, print, social media profile",
+      "qualityRating": "hero-worthy"
+    }
+  ],
+  "summary": {
+    "totalProjectImages": 20,
+    "totalLogos": 4,
+    "heroWorthy": 7,
+    "gallery": 13,
+    "skip": 3,
+    "missingSourceFiles": [
+      "WhatsApp Image 2026-07-27 at 11.09.01 (1).jpeg → living-set-brown-grey-checkered-showroom.jpg"
+    ]
+  }
+}

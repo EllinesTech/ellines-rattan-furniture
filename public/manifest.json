@@ -1,0 +1,23 @@
+{
+  "name": "Ellines Rattan Furniture",
+  "short_name": "Ellines Rattan",
+  "description": "Crafted Designs with Beauty — handcrafted synthetic rattan furniture in Kenya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#c9a84c",
+  "lang": "en-KE",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/logos/ellines-rattan-logo-transparent.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

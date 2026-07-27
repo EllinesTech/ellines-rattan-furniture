@@ -1,0 +1,79 @@
+.about {
+  background: var(--grad-bg);
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about__copy h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  margin-bottom: 16px;
+}
+
+.about__copy p {
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.about__list {
+  margin: 20px 0 28px;
+  padding-left: 20px;
+  color: var(--text);
+}
+
+.about__list li {
+  margin-bottom: 8px;
+}
+
+.about__list li::marker {
+  color: var(--gold);
+}
+
+.about__banner {
+  max-width: 360px;
+  border-radius: var(--r);
+  opacity: 0.95;
+}
+
+.about__gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.about__card {
+  overflow: hidden;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.about__card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.about__card figcaption {
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.about__card:first-child {
+  grid-column: span 2;
+}
+
+@media (max-width: 900px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about__banner {
+    max-width: 100%;
+  }
+}

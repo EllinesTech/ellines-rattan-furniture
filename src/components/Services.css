@@ -1,0 +1,41 @@
+.services {
+  background: var(--surface);
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.services__card {
+  padding: 28px 24px;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.services__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 168, 76, 0.45);
+}
+
+.services__icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  color: var(--gold);
+}
+
+.services__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.services__card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.services__card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}

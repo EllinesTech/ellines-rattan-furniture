@@ -1,0 +1,5 @@
+# Ellines Rattan Furniture — https://rattanfurniture.ellines.co.ke
+User-agent: *
+Allow: /
+
+Sitemap: https://rattanfurniture.ellines.co.ke/sitemap.xml
