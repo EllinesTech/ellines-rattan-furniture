@@ -1,0 +1,64 @@
+.wa-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px 14px 16px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
+  transition: transform 0.25s, box-shadow 0.25s;
+  animation: wa-float-in 0.6s ease-out 1.2s both;
+}
+
+.wa-float svg {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.wa-float__label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wa-float:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(37, 211, 102, 0.55);
+  color: #fff;
+}
+
+@keyframes wa-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 520px) {
+  .wa-float {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px;
+    border-radius: 50%;
+  }
+
+  .wa-float__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float {
+    animation: none;
+  }
+}

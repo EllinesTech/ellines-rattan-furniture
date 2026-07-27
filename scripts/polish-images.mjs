@@ -69,7 +69,7 @@ async function generateFavicons() {
     .resize(32, 32, { fit: 'contain', background: { r: 10, g: 10, b: 15, alpha: 1 } })
     .toFile(path.join(publicDir, 'favicon.ico'))
 
-  const hero = path.join(publicDir, 'images', 'hero', 'living-set-brown-grey-checkered-showroom-wide.jpg')
+  const hero = path.join(publicDir, 'images', 'hero', 'hero-living-set-studio.jpg')
   await sharp(hero)
     .resize(1200, 630, { fit: 'cover', position: 'centre' })
     .composite([

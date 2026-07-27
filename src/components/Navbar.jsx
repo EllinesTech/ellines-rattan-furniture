@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { NAV_LINKS, SITE } from '../data/site'
+import { useScrollSpy } from '../hooks/useScrollReveal'
 import './Navbar.css'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const activeId = useScrollSpy(NAV_LINKS.map((l) => l.id))
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48)
@@ -38,8 +40,8 @@ export default function Navbar() {
             src="/images/logos/ellines-rattan-logo-transparent.png"
             alt=""
             className="nav__logo"
-            width="48"
-            height="48"
+            width="1024"
+            height="1024"
           />
           <span className="nav__brand-text">
             <span className="nav__brand-name">Ellines</span>
@@ -52,7 +54,7 @@ export default function Navbar() {
             <button
               key={link.id}
               type="button"
-              className="nav__link"
+              className={`nav__link ${activeId === link.id ? 'nav__link--active' : ''}`}
               onClick={() => scrollTo(link.id)}
             >
               {link.label}

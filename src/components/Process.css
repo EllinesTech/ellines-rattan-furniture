@@ -1,0 +1,134 @@
+.process {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.process::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 50%, rgba(201, 168, 76, 0.06), transparent),
+    radial-gradient(ellipse 50% 35% at 80% 60%, rgba(201, 168, 76, 0.04), transparent);
+  pointer-events: none;
+}
+
+.process__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.process__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.process__connector {
+  display: none;
+}
+
+.process__card {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+  transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+}
+
+.process__card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 168, 76, 0.5);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+}
+
+.process__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.process__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease;
+}
+
+.process__card:hover .process__media img {
+  transform: scale(1.07);
+}
+
+.process__num {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--on-gold);
+  background: var(--grad-gold);
+  border-radius: 20px;
+  box-shadow: var(--sh-gold);
+}
+
+.process__body {
+  padding: 18px 20px 22px;
+}
+
+.process__body h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  color: var(--gold-lt);
+}
+
+.process__body p {
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.process__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 28px 24px;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.08), rgba(201, 168, 76, 0.02));
+}
+
+.process__cta p {
+  color: var(--muted);
+  max-width: 480px;
+}
+
+@media (max-width: 960px) {
+  .process__track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .process__track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    margin-right: -16px;
+    padding-right: 16px;
+  }
+
+  .process__step {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}

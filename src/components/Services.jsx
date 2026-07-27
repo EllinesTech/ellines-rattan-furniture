@@ -1,4 +1,5 @@
-import { SERVICES } from '../data/site'
+import { SERVICES, SITE, WHY_CHOOSE } from '../data/site'
+import Reveal from './Reveal'
 import './Services.css'
 
 const ICONS = {
@@ -37,27 +38,67 @@ const ICONS = {
 }
 
 export default function Services() {
+  const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
+
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <section id="services" className="section services">
       <div className="container">
-        <div className="section-head section-head--center">
+        <Reveal className="section-head section-head--center">
           <p className="section-eyebrow">What We Make</p>
           <h2>Custom Rattan Furniture</h2>
           <p>
-            From a single accent chair to a full outdoor lounge — we design and build to your
-            specifications.
+            From a single accent chair to a full outdoor lounge — hand-woven in our
+            Nyeri and Nairobi workshops.
           </p>
+        </Reveal>
+
+        <div className="services__why">
+          {WHY_CHOOSE.map((item, i) => (
+            <Reveal key={item.title} className="services__why-item" delay={i * 60}>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </Reveal>
+          ))}
         </div>
 
         <div className="services__grid">
-          {SERVICES.map((service) => (
-            <article key={service.title} className="services__card card">
-              <div className="services__icon">{ICONS[service.icon]}</div>
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
-            </article>
+          {SERVICES.map((service, i) => (
+            <Reveal key={service.title} delay={i * 70}>
+              <article className="services__card card">
+                {service.image && (
+                  <div className="services__media">
+                    <img src={service.image} alt={service.title} loading="lazy" />
+                    <span className="services__index">{String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                )}
+                <div className="services__body">
+                  <div className="services__icon">{ICONS[service.icon]}</div>
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
+
+        <Reveal className="services__cta-band" delay={150}>
+          <div className="services__cta-copy">
+            <h3>Have a project in mind?</h3>
+            <p>Tell us what you need — we will guide you from design to delivery.</p>
+          </div>
+          <div className="services__cta-btns">
+            <button type="button" className="btn btn-outline" onClick={scrollToContact}>
+              Get in Touch
+            </button>
+            <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
+              WhatsApp Quote
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

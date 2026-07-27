@@ -2,6 +2,91 @@
   "generatedAt": "2026-07-27",
   "namingConvention": "kebab-case",
   "extensionPolicy": "Project photos use .jpg; logos retain .png",
+  "craftsmanshipRegenerated": {
+    "date": "2026-07-27",
+    "reason": "Replaced AI images showing light-skinned hands with Kenyan artisan representation",
+    "files": [
+      "project-craftsmanship-weaving.jpg",
+      "project-craftsmanship-hand-weave.jpg",
+      "project-craftsmanship-overhead.jpg",
+      "project-craftsmanship-chevron-detail.jpg"
+    ]
+  },
+  "heroComposed": [
+    {
+      "filename": "ai-hero-living-set-patio.jpg",
+      "source": "AI-generated",
+      "description": "AI editorial hero — luxury modular brown/grey rattan sofa set on elegant patio terrace, soft natural light, cream/sand backdrop",
+      "dimensions": "16:9",
+      "suggestedUse": "hero primary, og-image, featured carousel",
+      "aiGenerated": true,
+      "prompt": "Photorealistic editorial luxury outdoor patio terrace, modular synthetic rattan sofa set brown/grey tones, modern boxy weave, cream cushions, sand patio, soft morning light, no text/logos"
+    },
+    {
+      "filename": "ai-hero-armchair-luxury.jpg",
+      "source": "AI-generated",
+      "description": "AI editorial hero — black-and-white woven rattan armchair with cream cushion in luxury sunroom, soft diffused natural light",
+      "dimensions": "16:9",
+      "suggestedUse": "hero carousel, featured product card",
+      "aiGenerated": true,
+      "prompt": "Photorealistic luxury sunroom interior, black-and-white woven synthetic rattan armchair, cream cushion, grey throw pillow, clean cream neutral background"
+    },
+    {
+      "filename": "ai-hero-cabinet-studio.jpg",
+      "source": "AI-generated",
+      "description": "AI editorial hero — checkered rattan cabinet console with gold legs and glass top in modern living space",
+      "dimensions": "16:9",
+      "suggestedUse": "hero carousel, featured product card",
+      "aiGenerated": true,
+      "prompt": "Photorealistic modern living space, synthetic rattan cabinet console black-and-white checkered weave, ornate gold legs, glass top, cream neutral background"
+    },
+    {
+      "filename": "ai-hero-outdoor-lounge.jpg",
+      "source": "AI-generated",
+      "description": "AI editorial hero — premium poolside rattan lounge set with cream cushions at golden hour",
+      "dimensions": "16:9",
+      "suggestedUse": "hero carousel, featured product card",
+      "aiGenerated": true,
+      "prompt": "Photorealistic luxury poolside lounge, synthetic rattan daybed and chairs brown/grey tones, cream cushions, turquoise pool blurred background, golden hour light"
+    },
+    {
+      "filename": "hero-living-set-studio.jpg",
+      "source": "living-set-brown-grey-checkered-showroom-wide.jpg",
+      "description": "Legacy studio composite — superseded by ai-hero-living-set-patio.jpg for front page",
+      "dimensions": "1920×1280",
+      "suggestedUse": "deprecated — do not use on home page",
+      "deprecated": true
+    },
+    {
+      "filename": "hero-armchair-studio.jpg",
+      "source": "armchair-black-white-woven-shaggy-pillow.jpg",
+      "description": "Legacy studio composite — superseded by ai-hero-armchair-luxury.jpg for front page",
+      "dimensions": "1920×1280",
+      "suggestedUse": "deprecated — do not use on home page",
+      "deprecated": true
+    },
+    {
+      "filename": "hero-bench-studio.jpg",
+      "source": "bench-brown-rattan-shaggy-grey-pillows.jpg",
+      "description": "Premium studio composite — brown rattan bench with grey pillows",
+      "dimensions": "1200×900",
+      "suggestedUse": "featured product card"
+    },
+    {
+      "filename": "hero-cabinet-studio.jpg",
+      "source": "cabinet-black-white-checkered-gold-legs.jpg",
+      "description": "Premium studio composite — checkered cabinet with gold legs",
+      "dimensions": "1200×900",
+      "suggestedUse": "featured product card"
+    },
+    {
+      "filename": "hero-modular-sofa-studio.jpg",
+      "source": "modular-sofa-white-grey-woven-showroom.jpg",
+      "description": "Premium studio composite — white-grey modular sofa section",
+      "dimensions": "1200×900",
+      "suggestedUse": "hero carousel"
+    }
+  ],
   "folders": {
     "projects": "public/images/projects/",
     "logos": "public/images/logos/",
@@ -18,14 +103,48 @@
       "qualityRating": "hero-worthy"
     },
     {
-      "filename": "craftsmanship-weaving-chair-frame-workshop.jpg",
+      "filename": "project-craftsmanship-weaving.jpg",
       "folder": "projects",
       "alsoInHero": false,
-      "originalFilename": "WhatsApp Image 2026-07-27 at 11.06.51 (1).jpeg",
-      "description": "Close-up of black metal chair frame being woven with black-and-white synthetic rattan strips in the workshop.",
+      "source": "AI-generated",
+      "description": "Close-up of Kenyan artisan's dark-skinned hands weaving black and white synthetic rattan onto a modern chair frame in Nairobi workshop.",
       "suggestedUse": "about/craftsmanship, gallery",
       "qualityRating": "gallery",
-      "notes": "Contains phone watermark (OPPO A15) in bottom-left corner; crop before public use."
+      "aiGenerated": true,
+      "prompt": "Photorealistic editorial close-up of skilled Kenyan craftsman's hands with dark melanin-rich skin tone weaving black and white synthetic rattan strips onto a modern black metal chair frame in an authentic Nairobi workshop. Warm natural daylight, dignified artisan portrayal. No text/logos/watermarks."
+    },
+    {
+      "filename": "project-craftsmanship-hand-weave.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "source": "AI-generated",
+      "description": "Extreme close-up of Kenyan craftswoman's hands precisely hand-weaving black and white synthetic rattan on a furniture frame.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "aiGenerated": true,
+      "prompt": "Photorealistic editorial extreme close-up of Kenyan craftswoman's hands with dark melanin-rich skin tone precisely hand-weaving alternating black and white synthetic rattan strips on a modern furniture chair frame. Warm natural workshop light. No text/logos/watermarks."
+    },
+    {
+      "filename": "project-craftsmanship-overhead.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "source": "AI-generated",
+      "description": "Overhead bird's-eye view of Kenyan artisan hand-weaving black and white rattan on armchair seat in Nairobi workshop.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "aiGenerated": true,
+      "prompt": "Photorealistic editorial overhead bird's-eye view of Kenyan artisan with dark melanin-rich skin tone hand-weaving black and white synthetic rattan on an armchair seat frame in a Nairobi workshop. Warm natural light. No text/logos/watermarks."
+    },
+    {
+      "filename": "project-craftsmanship-chevron-detail.jpg",
+      "folder": "projects",
+      "alsoInHero": false,
+      "source": "AI-generated",
+      "description": "Detail shot of Kenyan craftsman's hands finishing white and brown chevron geometric weave on synthetic rattan bench.",
+      "suggestedUse": "about/craftsmanship, gallery",
+      "qualityRating": "gallery",
+      "aiGenerated": true,
+      "prompt": "Photorealistic editorial detail shot of Kenyan craftsman's dark melanin-rich hands finishing a white and brown chevron geometric weave pattern on synthetic rattan bench furniture in a Kenyan workshop. Warm natural light. No text/logos/watermarks."
     },
     {
       "filename": "cabinet-black-white-checkered-glass-top-outdoor.jpg",

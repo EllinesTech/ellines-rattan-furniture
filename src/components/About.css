@@ -2,78 +2,227 @@
   background: var(--grad-bg);
 }
 
-.about__grid {
+.about__intro {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 48px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 40px;
   align-items: start;
+  margin-bottom: 2rem;
 }
 
 .about__copy h2 {
   font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .about__copy p {
   color: var(--muted);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+}
+
+.about__copy strong {
+  color: var(--gold-lt);
 }
 
 .about__list {
-  margin: 20px 0 28px;
+  margin: 16px 0 0;
   padding-left: 20px;
   color: var(--text);
 }
 
 .about__list li {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .about__list li::marker {
   color: var(--gold);
 }
 
+.about__side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about__workshops {
+  padding: 24px;
+}
+
+.about__workshops h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.about__workshop {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--dim);
+}
+
+.about__workshop:last-of-type {
+  border-bottom: none;
+  padding-bottom: 8px;
+}
+
+.about__workshop-city {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--text);
+}
+
+.about__workshop-label {
+  font-size: 0.82rem;
+  color: var(--gold-lt);
+}
+
+.about__workshop-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.about__workshop-hours {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding-top: 12px;
+  border-top: 1px solid var(--dim);
+}
+
 .about__banner {
-  max-width: 360px;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
   border-radius: var(--r);
-  opacity: 0.95;
+  opacity: 0.92;
+}
+
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 20px 0;
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+}
+
+.about__stat {
+  text-align: center;
+  padding: 8px;
+}
+
+.about__stat-value {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.about__gallery-head {
+  margin-bottom: 1.25rem;
+}
+
+.about__gallery-title {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--gold-lt);
+  font-size: 1rem;
+}
+
+.about__stat-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .about__gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
 .about__card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: var(--r);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(201, 168, 76, 0.22);
   background: var(--card);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
 
-.about__card img {
-  width: 100%;
+.about__card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(201, 168, 76, 0.48);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.about__card-media {
   aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #12121c;
+}
+
+.about__card-media img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.about__card:hover .about__card-media img {
+  transform: scale(1.04);
 }
 
 .about__card figcaption {
-  padding: 12px 14px;
-  font-size: 0.82rem;
-  color: var(--muted);
+  padding: 10px 12px;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--gold-lt);
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
 }
 
-.about__card:first-child {
-  grid-column: span 2;
-}
-
-@media (max-width: 900px) {
-  .about__grid {
+@media (max-width: 960px) {
+  .about__intro {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
 
-  .about__banner {
-    max-width: 100%;
+  .about__gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .about__stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .about__gallery {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0.875rem;
+    padding-bottom: 4px;
+  }
+
+  .about__card {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
   }
 }

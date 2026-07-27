@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "preview:pages": "wrangler pages dev dist --port 5174",
     "cf-build": "npm install && npm run build",
-    "images:polish": "node scripts/polish-images.mjs"
+    "images:polish": "node scripts/polish-images.mjs",
+    "images:hero": "node scripts/compose-hero-images.mjs"
   },
   "dependencies": {
     "react": "^19.2.7",

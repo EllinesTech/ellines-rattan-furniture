@@ -1,111 +1,83 @@
-import { useEffect, useState } from 'react'
-import { HERO_IMAGES, SITE } from '../data/site'
+import { HERO_IMAGE, HERO_TRUST, SITE } from '../data/site'
 import './Hero.css'
 
 export default function Hero() {
-  const [active, setActive] = useState(0)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((i) => (i + 1) % HERO_IMAGES.length)
-    }, 6000)
-    return () => clearInterval(timer)
-  }, [])
-
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
+  const scrollToProjects = () => {
+    document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <section id="home" className="hero" aria-label="Introduction">
-      <div className="hero__bg" aria-hidden="true">
-        {HERO_IMAGES.map((src, i) => (
+    <>
+      <section id="home" className="hero" aria-label="Introduction">
+        <div className="hero__bg" aria-hidden="true">
           <img
-            key={src}
-            src={src}
+            src={HERO_IMAGE.src}
             alt=""
-            className={`hero__bg-img ${i === active ? 'hero__bg-img--active' : ''}`}
-            loading={i === 0 ? 'eager' : 'lazy'}
-            fetchPriority={i === 0 ? 'high' : 'auto'}
+            className="hero__bg-img"
+            style={{ objectPosition: HERO_IMAGE.position }}
+            fetchPriority="high"
           />
-        ))}
-        <div className="hero__bg-veil" />
-        <div className="hero__bg-glow" />
-        <div className="hero__grain" />
-      </div>
-
-      <div className="container hero__inner">
-        <div className="hero__copy">
-          <p className="hero__eyebrow badge badge-gold">Handcrafted in Kenya</p>
-          <h1 className="hero__title">
-            <span className="hero__script">Ellines</span>
-            <span className="hero__brand">Rattan Furniture</span>
-          </h1>
-          <span className="hero__rule" aria-hidden="true" />
-          <p className="hero__tagline gold-text">{SITE.tagline}</p>
-          <p className="hero__lead">
-            Handcrafted synthetic rattan furniture — custom sofas, armchairs, cabinets,
-            tables, and outdoor sets. Workshop craftsmanship meets modern design.
-          </p>
-          <div className="hero__actions">
-            <a href={waUrl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-              Request a Quote
-            </a>
-            <button
-              type="button"
-              className="btn btn-outline"
-              onClick={() => document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              View Our Work
-            </button>
-          </div>
-          <div className="hero__stats">
-            <div>
-              <strong>16+</strong>
-              <span>Completed Projects</span>
-            </div>
-            <div>
-              <strong>100%</strong>
-              <span>Hand-Woven</span>
-            </div>
-            <div>
-              <strong>Custom</strong>
-              <span>Made to Order</span>
-            </div>
-          </div>
+          <div className="hero__bg-veil" />
         </div>
 
-        <div className="hero__visual">
-          <div className="hero__frame">
-            <img
-              src={HERO_IMAGES[active]}
-              alt="Ellines Rattan Furniture showcase"
-              className="hero__featured"
-              width="640"
-              height="480"
-            />
-            <img
-              src="/images/logos/ellines-rattan-logo-circle.png"
-              alt=""
-              className="hero__emblem"
-              width="96"
-              height="96"
-              loading="lazy"
-            />
-          </div>
-          <div className="hero__dots" role="tablist" aria-label="Hero images">
-            {HERO_IMAGES.map((src, i) => (
+        <div className="container hero__content">
+          <div className="hero__copy">
+            <p className="hero__eyebrow">Nyeri &amp; Nairobi Workshops</p>
+            <h1 className="hero__h1">
+              <span className="hero__script">Ellines</span>
+              <span className="hero__headline gold-text">{SITE.tagline}</span>
+            </h1>
+            <p className="hero__sub">
+              Handcrafted synthetic rattan furniture — custom sofas, armchairs,
+              cabinets, and outdoor sets woven by skilled Kenyan artisans.
+            </p>
+            <div className="hero__btns">
               <button
-                key={src}
                 type="button"
-                role="tab"
-                aria-selected={i === active}
-                aria-label={`Show image ${i + 1}`}
-                className={`hero__dot ${i === active ? 'hero__dot--active' : ''}`}
-                onClick={() => setActive(i)}
-              />
-            ))}
+                className="btn btn-primary hero__cta-projects"
+                onClick={scrollToProjects}
+              >
+                View Our Projects
+              </button>
+              <a
+                href={waUrl}
+                className="btn btn-wa hero__cta-wa"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp Quote
+              </a>
+            </div>
           </div>
         </div>
+
+        <button
+          type="button"
+          className="hero__scroll-cue"
+          onClick={scrollToProjects}
+          aria-label="Scroll to projects"
+        >
+          <span>Explore our work</span>
+          <div className="hero__scroll-arrow" />
+        </button>
+      </section>
+
+      <div className="hero-trust">
+        <div className="container hero-trust__inner">
+          {HERO_TRUST.map((item, i) => (
+            <div key={item.title} className="hero-trust__item">
+              <span className="hero-trust__mark" aria-hidden="true" />
+              <div>
+                <strong>{item.title}</strong>
+                <span>{item.desc}</span>
+              </div>
+              {i < HERO_TRUST.length - 1 && <div className="hero-trust__bar" aria-hidden="true" />}
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+    </>
   )
 }

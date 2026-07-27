@@ -76,12 +76,12 @@ button {
 }
 
 .section {
-  padding: 88px 0;
+  padding: 2.5rem 0;
 }
 
 .section-head {
   max-width: 640px;
-  margin-bottom: 48px;
+  margin-bottom: 1.75rem;
 }
 
 .section-head--center {
@@ -191,10 +191,81 @@ button {
   }
 
   .section {
-    padding: 56px 0;
+    padding: 2rem 0;
   }
 
   .container {
     padding: 0 16px;
   }
 }
+
+/* Scroll-reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--fade {
+  transform: none;
+}
+
+.reveal--left {
+  transform: translateX(-32px);
+}
+
+.reveal--left.reveal--visible {
+  transform: translateX(0);
+}
+
+.reveal--right {
+  transform: translateX(32px);
+}
+
+.reveal--right.reveal--visible {
+  transform: translateX(0);
+}
+
+.reveal--scale {
+  transform: scale(0.96);
+}
+
+.reveal--scale.reveal--visible {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 1.75rem;
+}
+
+.section-divider__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.35), transparent);
+}
+
+.section-divider__mark {
+  color: var(--gold);
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+

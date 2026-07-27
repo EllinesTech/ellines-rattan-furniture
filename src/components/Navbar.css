@@ -27,12 +27,20 @@
   align-items: center;
   gap: 12px;
   color: inherit;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav__logo {
   width: 48px;
   height: 48px;
   object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nav__brand-text {
+  min-width: 0;
+  text-align: left;
 }
 
 .nav__brand-name {
@@ -68,6 +76,27 @@
 .nav__link:hover {
   color: var(--gold);
   background: rgba(201, 168, 76, 0.08);
+}
+
+.nav__link--active {
+  color: var(--gold-lt);
+  background: rgba(201, 168, 76, 0.12);
+}
+
+.nav__link--active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.nav__link {
+  position: relative;
 }
 
 .nav__cta {
@@ -150,5 +179,32 @@
     background: rgba(0, 0, 0, 0.55);
     border: none;
     z-index: 100;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav__inner {
+    gap: 12px;
+  }
+
+  .nav__logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav__brand {
+    gap: 8px;
+  }
+
+  .nav__brand-name {
+    font-size: 1.2rem;
+  }
+
+  .nav__brand-sub {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
