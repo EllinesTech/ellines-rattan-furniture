@@ -1,27 +1,30 @@
 .showcase {
-  padding: 2.5rem 0;
+  padding: var(--section-pad) 0;
   background: var(--surface);
   border-top: 1px solid rgba(201, 168, 76, 0.08);
+  overflow: clip;
 }
 
 .showcase__head {
   margin-bottom: 1.5rem;
+  min-width: 0;
 }
 
 .showcase__head h2 {
-  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-size: clamp(1.55rem, 3.5vw, 2.25rem);
+  overflow-wrap: anywhere;
 }
 
 .showcase__sub {
   color: var(--muted);
-  max-width: 520px;
+  max-width: min(520px, 100%);
   font-size: 0.95rem;
 }
 
 .showcase__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1rem);
 }
 
 .showcase__card {
@@ -34,6 +37,7 @@
   display: block;
   color: inherit;
   text-decoration: none;
+  min-width: 0;
 }
 
 .showcase__media {
@@ -43,11 +47,13 @@
   border-radius: var(--r);
   border: 1px solid rgba(201, 168, 76, 0.2);
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  background: #12121c;
 }
 
-.showcase__card:hover .showcase__media {
+.showcase__card:hover .showcase__media,
+.showcase__card:focus-visible .showcase__media {
   border-color: rgba(201, 168, 76, 0.5);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
@@ -62,7 +68,7 @@
 }
 
 .showcase__card:hover .showcase__media img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .showcase__overlay {
@@ -72,10 +78,10 @@
   flex-direction: column;
   justify-content: flex-end;
   gap: 4px;
-  padding: 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.2) 55%, transparent 100%);
+  padding: 14px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.35) 55%, transparent 100%);
   opacity: 0;
-  transition: opacity 0.35s;
+  transition: opacity 0.3s;
 }
 
 .showcase__card:hover .showcase__overlay,
@@ -90,13 +96,6 @@
   letter-spacing: 0.04em;
 }
 
-@media (max-width: 520px) {
-  .showcase__overlay {
-    opacity: 1;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, transparent 60%);
-  }
-}
-
 .showcase__cat {
   font-size: 0.68rem;
   letter-spacing: 0.12em;
@@ -106,8 +105,9 @@
 
 .showcase__title {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: var(--text);
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: #fff;
+  overflow-wrap: anywhere;
 }
 
 .showcase__cta-wrap {
@@ -121,22 +121,26 @@
 
 @media (max-width: 900px) {
   .showcase__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 560px) {
   .showcase__grid {
-    display: flex;
-    gap: 0.875rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
+    grid-template-columns: 1fr;
   }
 
-  .showcase__card {
-    flex: 0 0 78%;
-    scroll-snap-align: start;
+  .showcase__overlay {
+    opacity: 1;
+  }
+}
+
+@media (hover: none) {
+  .showcase__overlay {
+    opacity: 1;
+  }
+
+  .showcase__card:hover .showcase__media {
+    transform: none;
   }
 }

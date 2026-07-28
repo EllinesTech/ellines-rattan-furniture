@@ -7,8 +7,8 @@
   --gold: #c9a84c;
   --gold-lt: #e8d080;
   --gold-dk: #9e7a2a;
-  --text: #f5f0e6;
-  --muted: #9a96a6;
+  --text: #f7f2e8;
+  --muted: #b8b4c4;
   --on-gold: #0a0a0f;
   --ok: #25d366;
   --grad-gold: linear-gradient(135deg, #c9a84c, #e8d080, #9e7a2a);
@@ -19,6 +19,13 @@
   --r-sm: 6px;
   --r-lg: 20px;
   --navbar-h: 80px;
+  --container-pad: clamp(16px, 4vw, 28px);
+  --section-pad: clamp(2rem, 5vw, 3.25rem);
+  --wa-clearance: calc(72px + env(safe-area-inset-bottom, 0px));
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
 }
 
 *,
@@ -31,7 +38,9 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -40,7 +49,14 @@ body {
   color: var(--text);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
+  min-width: 0;
+}
+
+main {
+  min-width: 0;
+  overflow-x: clip;
+  padding-bottom: var(--wa-clearance);
 }
 
 h1,
@@ -70,18 +86,23 @@ button {
 }
 
 .container {
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding-left: max(var(--container-pad), var(--safe-left));
+  padding-right: max(var(--container-pad), var(--safe-right));
+  min-width: 0;
 }
 
 .section {
-  padding: 2.5rem 0;
+  padding: var(--section-pad) 0;
+  min-width: 0;
 }
 
 .section-head {
-  max-width: 640px;
+  max-width: min(640px, 100%);
   margin-bottom: 1.75rem;
+  min-width: 0;
 }
 
 .section-head--center {
@@ -91,13 +112,31 @@ button {
 }
 
 .section-head h2 {
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: clamp(1.65rem, 4vw, 2.75rem);
   margin-bottom: 12px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .section-head p,
 .section-eyebrow + h2 + p {
   color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+/* Prevent flex/grid children from forcing horizontal overflow */
+.container > *,
+.section > *,
+[class*='__grid'] > *,
+[class*='-grid'] > * {
+  min-width: 0;
 }
 
 .section-eyebrow {
@@ -128,6 +167,9 @@ button {
   font-weight: 600;
   transition: all 0.25s;
   min-height: 44px;
+  max-width: 100%;
+  text-align: center;
+  white-space: normal;
 }
 
 .btn-primary {
@@ -188,14 +230,31 @@ button {
 @media (max-width: 768px) {
   :root {
     --navbar-h: 64px;
+    --container-pad: 16px;
+    --section-pad: 2rem;
   }
 
-  .section {
-    padding: 2rem 0;
+  .btn {
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --container-pad: 14px;
   }
 
-  .container {
-    padding: 0 16px;
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Touch devices: prefer always-visible labels over hover-only overlays */
+@media (hover: none) {
+  .gallery__overlay,
+  .showcase__overlay,
+  .gallery__badge {
+    opacity: 1 !important;
   }
 }
 

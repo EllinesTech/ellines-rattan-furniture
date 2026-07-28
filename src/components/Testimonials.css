@@ -2,13 +2,13 @@
   background: var(--surface);
   border-top: 1px solid rgba(201, 168, 76, 0.08);
   border-bottom: 1px solid rgba(201, 168, 76, 0.08);
-  overflow: hidden;
+  overflow: clip;
 }
 
 .testimonials__track {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1rem);
 }
 
 .testimonials__card {
@@ -16,6 +16,7 @@
   flex-direction: column;
   height: 100%;
   padding: 0;
+  min-width: 0;
 }
 
 .testimonials__stars {
@@ -27,10 +28,11 @@
 .testimonials__quote {
   flex: 1;
   font-family: 'Playfair Display', serif;
-  font-size: 0.95rem;
+  font-size: clamp(0.88rem, 2.2vw, 0.95rem);
   font-style: italic;
   line-height: 1.65;
   color: var(--text);
+  overflow-wrap: anywhere;
 }
 
 .testimonials__name {
@@ -50,22 +52,12 @@
 
 @media (max-width: 960px) {
   .testimonials__track {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 560px) {
   .testimonials__track {
-    display: flex;
-    gap: 0.875rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
-  }
-
-  .testimonials__slide {
-    flex: 0 0 85%;
-    scroll-snap-align: start;
+    grid-template-columns: 1fr;
   }
 }
