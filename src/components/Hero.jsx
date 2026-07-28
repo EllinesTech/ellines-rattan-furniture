@@ -1,22 +1,26 @@
 import { Link } from 'react-router-dom'
 import { HERO_IMAGE, HERO_TRUST, SITE } from '../data/site'
+import { usePageMeta } from '../hooks/usePageMeta'
 import OptimizedImage from './OptimizedImage'
 import './Hero.css'
 
 export default function Hero() {
+  const meta = usePageMeta('home')
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
+  const heroSrc = meta.heroImage || HERO_IMAGE.src
+  const heroPos = meta.heroPosition || HERO_IMAGE.position
 
   return (
     <>
       <section className="hero" aria-label="Introduction">
         <div className="hero__bg" aria-hidden="true">
           <OptimizedImage
-            src={HERO_IMAGE.src}
+            src={heroSrc}
             alt=""
             className="hero__bg-img"
             loading="eager"
             fetchPriority="high"
-            objectPosition={HERO_IMAGE.position}
+            objectPosition={heroPos}
             useThumb
             thumbWidth={1920}
           />
@@ -25,14 +29,14 @@ export default function Hero() {
 
         <div className="container hero__content">
           <div className="hero__copy">
-            <p className="hero__eyebrow">Nyeri &amp; Nairobi Workshops</p>
+            <p className="hero__eyebrow">{meta.eyebrow || 'Nyeri & Nairobi Workshops'}</p>
             <h1 className="hero__h1">
               <span className="hero__script">Ellines</span>
-              <span className="hero__headline gold-text">{SITE.tagline}</span>
+              <span className="hero__headline gold-text">{meta.heading || SITE.tagline}</span>
             </h1>
             <p className="hero__sub">
-              Handcrafted synthetic rattan furniture — custom sofas, armchairs,
-              cabinets, and outdoor sets woven by skilled Kenyan artisans.
+              {meta.sub ||
+                'Handcrafted synthetic rattan furniture — custom sofas, armchairs, cabinets, and outdoor sets woven by skilled Kenyan artisans.'}
             </p>
             <div className="hero__btns">
               <Link to="/shop" className="btn btn-primary hero__cta-primary">

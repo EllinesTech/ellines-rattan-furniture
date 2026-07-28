@@ -4,6 +4,7 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import PageHero from '../components/PageHero'
 import OptimizedImage from '../components/OptimizedImage'
 import { useApp } from '../context/AppContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 import { db, isFirebaseConfigured } from '../firebase'
 import { FS } from '../firestorePaths'
@@ -36,6 +37,7 @@ const EMPTY_FORM = {
 
 export default function QuotePage() {
   const location = useLocation()
+  const meta = usePageMeta('quote')
   const {
     quoteCart,
     quoteCount,
@@ -170,11 +172,11 @@ export default function QuotePage() {
     return (
       <>
         <PageHero
-          eyebrow="Quote"
+          eyebrow={meta.eyebrow}
           title="Request Submitted"
           subtitle="Thank you — our workshop team will review your selections and respond shortly."
-          image="/images/projects/project-original-living-set-brown.jpg"
-          position="center 40%"
+          image={meta.heroImage}
+          position={meta.heroPosition}
         />
         <section className="section">
           <div className="container">
@@ -224,11 +226,11 @@ export default function QuotePage() {
   return (
     <>
       <PageHero
-        eyebrow="Quote Builder"
-        title="Build Your Quote"
-        subtitle="Review your selections, share your details, and request a workshop estimate."
-        image="/images/projects/project-original-armchair-shaggy.jpg"
-        position="center 30%"
+        eyebrow={meta.eyebrow}
+        title={meta.heading}
+        subtitle={meta.sub}
+        image={meta.heroImage}
+        position={meta.heroPosition}
       />
 
       <section className="section quote">

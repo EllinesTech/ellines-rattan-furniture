@@ -27,6 +27,7 @@ import {
 } from '../../utils/orders'
 import { getRequestTypeLabel } from '../../utils/enquiries'
 import EnquiryItemsList from '../../components/EnquiryItemsList'
+import { listSubscriptions } from '../../utils/subscriptions'
 
 const SUB_TABS = [
   { id: 'overview', label: 'Overview', icon: '🎛️' },
@@ -62,6 +63,8 @@ export default function GodModePanel() {
     image: '/images/projects/project-original-living-set-wide.jpg',
     cta: 'WhatsApp for a quote',
   })
+  const [enquiryPick, setEnquiryPick] = useState('')
+  const [finalTotalDraft, setFinalTotalDraft] = useState('')
   const canvasRef = useRef(null)
 
   const pageKeys = useMemo(() => Object.keys(sitePages || PAGE_META), [sitePages])
@@ -74,6 +77,12 @@ export default function GodModePanel() {
     const unsub = subscribeOrders(setOrders)
     return () => unsub?.()
   }, [])
+
+  useEffect(() => {
+    if (!selectedOrder) return
+    const fresh = orders.find((o) => o.id === selectedOrder.id)
+    if (fresh && fresh !== selectedOrder) setSelectedOrder(fresh)
+  }, [orders])
 
   useEffect(() => {
     setEnquiries(loadLocalQuoteRequests())
@@ -100,10 +109,11 @@ export default function GodModePanel() {
   }, [])
 
   useEffect(() => {
+    listSubscriptions().then(setSubscriptions)
+  }, [firebaseReady])
+
+  useEffect(() => {
     if (!firebaseReady || !db) return undefined
-    getDocs(collection(db, FS.SUBSCRIPTIONS)).then((snap) => {
-      setSubscriptions(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
-    })
     getDocs(collection(db, FS.MEDIA)).then((snap) => {
       if (snap.docs.length) {
         setMedia(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
@@ -111,6 +121,12 @@ export default function GodModePanel() {
     }).catch(() => {})
     return undefined
   }, [firebaseReady])
+
+  useEffect(() => {
+    if (selectedOrder) {
+      setFinalTotalDraft(selectedOrder.finalTotal != null ? String(selectedOrder.finalTotal) : '')
+    }
+  }, [selectedOrder?.id])
 
   const stats = useMemo(
     () => ({
@@ -308,7 +324,11 @@ export default function GodModePanel() {
             </div>
             <div style={{ padding: '1rem' }}>
               <h3 style={{ fontSize: '0.95rem', marginBottom: 8 }}>Create from enquiry</h3>
-              <select className="field" id="enq-pick" defaultValue="">
+              <select
+                className="field"
+                value={enquiryPick}
+                onChange={(e) => setEnquiryPick(e.target.value)}
+              >
                 <option value="" disabled>Select enquiry…</option>
                 {enquiries.filter((e) => !orders.some((o) => o.enquiryId === e.id)).map((e) => (
                   <option key={e.id} value={e.id}>{e.customer?.name} — {getRequestTypeLabel(e.requestType)}</option>
@@ -319,9 +339,11 @@ export default function GodModePanel() {
                 className="btn btn-outline"
                 style={{ marginTop: 8 }}
                 onClick={() => {
-                  const sel = document.getElementById('enq-pick')
-                  const enq = enquiries.find((e) => e.id === sel?.value)
-                  if (enq) handleCreateOrder(enq)
+                  const enq = enquiries.find((e) => e.id === enquiryPick)
+                  if (enq) {
+                    handleCreateOrder(enq)
+                    setEnquiryPick('')
+                  }
                 }}
               >
                 Create order + invoice numbers
@@ -364,8 +386,14 @@ export default function GodModePanel() {
                 <input
                   type="number"
                   className="field"
-                  value={selectedOrder.finalTotal || ''}
-                  onChange={(e) => handleOrderPatch({ finalTotal: Number(e.target.value) || 0 })}
+                  value={finalTotalDraft}
+                  onChange={(e) => setFinalTotalDraft(e.target.value)}
+                  onBlur={() => {
+                    const next = Number(finalTotalDraft) || 0
+                    if (next !== (selectedOrder.finalTotal || 0)) {
+                      handleOrderPatch({ finalTotal: next })
+                    }
+                  }}
                 />
               </div>
               <div className="form-group">
@@ -446,12 +474,31 @@ export default function GodModePanel() {
           </div>
           <div className="card" style={{ padding: '1.25rem' }}>
             <h2>Newsletter subscribers ({subscriptions.length})</h2>
+            {subscriptions.length > 0 && (
+              <button
+                type="button"
+                className="btn btn-outline"
+                style={{ marginBottom: 12 }}
+                onClick={() => {
+                  const csv = ['email,source,createdAt', ...subscriptions.map((s) =>
+                    [s.email, s.source || '', s.createdAt?.toDate?.()?.toISOString?.() || s.createdAt || ''].join(','),
+                  )].join('\n')
+                  const blob = new Blob([csv], { type: 'text/csv' })
+                  const a = document.createElement('a')
+                  a.href = URL.createObjectURL(blob)
+                  a.download = `ellines-subscribers-${Date.now()}.csv`
+                  a.click()
+                }}
+              >
+                Export CSV
+              </button>
+            )}
             {subscriptions.length === 0 ? (
               <p style={{ color: 'var(--muted)' }}>Subscribers from the footer form appear here.</p>
             ) : (
               <ul style={{ listStyle: 'none', fontSize: '0.88rem' }}>
                 {subscriptions.map((s) => (
-                  <li key={s.id} style={{ padding: '6px 0', borderBottom: '1px solid var(--dim)' }}>
+                  <li key={s.id || s.email} style={{ padding: '6px 0', borderBottom: '1px solid var(--dim)' }}>
                     {s.email}
                     <span style={{ color: 'var(--muted)', marginLeft: 8, fontSize: '0.78rem' }}>{s.source || 'footer'}</span>
                   </li>

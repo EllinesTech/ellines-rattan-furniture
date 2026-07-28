@@ -22,6 +22,9 @@ export const PAGE_META = {
       'Handcrafted synthetic rattan furniture in Kenya. Custom sofas, armchairs, cabinets, tables, and outdoor sets.',
     heroImage: '/images/projects/project-original-living-set-wide.jpg',
     heroPosition: 'center 45%',
+    eyebrow: 'Nyeri & Nairobi Workshops',
+    heading: 'Crafted Designs with Beauty',
+    sub: 'Handcrafted synthetic rattan furniture — custom sofas, armchairs, cabinets, and outdoor sets woven by skilled Kenyan artisans.',
   },
   craftsmanship: {
     title: 'Craftsmanship | Ellines Rattan Furniture',

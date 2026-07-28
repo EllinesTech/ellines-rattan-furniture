@@ -38,6 +38,7 @@ export const PAYMENT_STATUSES = ['unpaid', 'deposit', 'paid', 'refunded']
 
 const LOCAL_ORDERS_KEY = 'er_local_orders'
 const LOCAL_COUNTER_KEY = 'er_order_counter'
+const LOCAL_ORDERS_EVENT = 'er-local-orders-changed'
 
 function loadLocalOrders() {
   try {
@@ -49,6 +50,7 @@ function loadLocalOrders() {
 
 function saveLocalOrders(orders) {
   localStorage.setItem(LOCAL_ORDERS_KEY, JSON.stringify(orders))
+  window.dispatchEvent(new Event(LOCAL_ORDERS_EVENT))
 }
 
 async function nextSequence(prefix) {
@@ -69,7 +71,20 @@ async function nextSequence(prefix) {
   return `${prefix}-${year}-${String(stored[key]).padStart(4, '0')}`
 }
 
+export async function findOrderByEnquiryId(enquiryId) {
+  if (!enquiryId) return null
+  const orders = await listOrders()
+  return orders.find((o) => o.enquiryId === enquiryId) || null
+}
+
 export async function createOrderFromEnquiry(enquiry, actor) {
+  if (enquiry?.id) {
+    const existing = await findOrderByEnquiryId(enquiry.id)
+    if (existing) {
+      throw new Error(`Order already exists: ${existing.orderNumber}`)
+    }
+  }
+
   const orderNumber = await nextSequence('ORD')
   const invoiceNumber = await nextSequence('INV')
   const receiptNumber = await nextSequence('RCP')
@@ -131,9 +146,13 @@ export function subscribeOrders(callback) {
     )
   }
   callback(loadLocalOrders())
-  const onStorage = () => callback(loadLocalOrders())
-  window.addEventListener('storage', onStorage)
-  return () => window.removeEventListener('storage', onStorage)
+  const refresh = () => callback(loadLocalOrders())
+  window.addEventListener('storage', refresh)
+  window.addEventListener(LOCAL_ORDERS_EVENT, refresh)
+  return () => {
+    window.removeEventListener('storage', refresh)
+    window.removeEventListener(LOCAL_ORDERS_EVENT, refresh)
+  }
 }
 
 export async function updateOrder(orderId, patch, actor) {

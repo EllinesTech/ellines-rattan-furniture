@@ -16,6 +16,8 @@ import {
   subscribeOrders,
   ordersForClient,
   ORDER_STATUS_LABELS,
+  openInvoice,
+  openReceipt,
 } from '../../utils/orders'
 import {
   CLIENT_STATUS_LABELS,
@@ -219,6 +221,14 @@ export default function ClientDashboard() {
                     {new Date(t.at).toLocaleString('en-KE')} — {t.note}
                   </p>
                 ))}
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+                  <button type="button" className="btn btn-primary" onClick={() => openInvoice(selectedOrder)}>
+                    Print invoice
+                  </button>
+                  <button type="button" className="btn btn-outline" onClick={() => openReceipt(selectedOrder)}>
+                    Print receipt
+                  </button>
+                </div>
               </div>
             )}
           </div>

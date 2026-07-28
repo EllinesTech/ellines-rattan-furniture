@@ -1,5 +1,6 @@
 import { formatKes } from '../utils/auth'
 import { splitEnquiryItems } from '../utils/enquiries'
+import './EnquiryItemsList.css'
 
 function ItemRow({ item, showPrices }) {
   return (
