@@ -78,7 +78,7 @@ export const PROCESS_STEPS = [
     step: '01',
     title: 'Consult & Measure',
     description:
-      'Share your space dimensions, style references, or a sketch. We advise on weave patterns, colours, and frame options.',
+      'Share your space dimensions, style references, or a sketch. We advise on weave patterns, colours, and frame options — steel, wood, aluminium, or materials you prefer.',
     image: '/images/projects/project-original-living-set-brown.jpg',
   },
   {
@@ -92,7 +92,7 @@ export const PROCESS_STEPS = [
     step: '03',
     title: 'Hand-Weave & Build',
     description:
-      'Skilled artisans in Nyeri weave premium synthetic rattan onto precision metal frames — stripe by stripe, piece by piece.',
+      'Skilled artisans in Nyeri weave premium synthetic rattan onto frames in steel, wood, aluminium, or other client-recommended materials — stripe by stripe, piece by piece.',
     image: '/images/projects/project-craftsmanship-weaving.jpg',
   },
   {
@@ -176,7 +176,7 @@ export const SERVICES = [
   {
     title: 'Armchairs & Lounge Seating',
     description:
-      'Statement armchairs with hand-woven synthetic rattan on sturdy metal frames — elegant, durable, and made to order.',
+      'Statement armchairs with hand-woven synthetic rattan on sturdy steel, wood, or aluminium frames — elegant, durable, and made to order.',
     icon: 'chair',
     image: '/images/projects/project-original-armchair-shaggy.jpg',
   },

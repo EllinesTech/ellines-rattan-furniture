@@ -28,7 +28,7 @@ export const COLLECTIONS = [
   },
   {
     name: 'Armchairs',
-    desc: 'Statement seating with hand-woven rattan on sturdy metal frames.',
+    desc: 'Statement seating with hand-woven rattan on sturdy steel, wood, or aluminium frames.',
     image: '/images/projects/project-original-armchair-shaggy.jpg',
     category: 'Armchairs',
   },
@@ -88,7 +88,7 @@ export const HOSPITALITY = {
 export const ABOUT_STORY = {
   intro: [
     'Ellines Rattan Furniture was born from a simple belief: Kenyan homes and hospitality spaces deserve furniture that is as beautiful as it is durable — crafted by hand, not mass-produced.',
-    'From our workshops in Nyeri and Nairobi, skilled artisans weave premium synthetic rattan onto precision metal frames, creating pieces that blend workshop tradition with modern design.',
+    'From our workshops in Nyeri and Nairobi, skilled artisans weave premium synthetic rattan onto frames in steel, wood, aluminium, or other materials you recommend — creating pieces that blend workshop tradition with modern design.',
   ],
   values: [
     {
@@ -157,7 +157,7 @@ export const ABOUT_TEAM = {
     {
       title: 'Production & Weaving',
       location: 'Nyeri Workshop',
-      desc: 'Our Nyeri atelier is where frames are welded, rattan is hand-woven, and every piece is quality-checked before delivery.',
+      desc: 'Our Nyeri atelier is where frames are built — steel, wood, aluminium, or your preferred material — rattan is hand-woven, and every piece is quality-checked before delivery.',
       image: '/images/projects/project-craftsmanship-weaving.jpg',
     },
     {
@@ -184,9 +184,9 @@ export const MATERIALS = [
     image: '/images/projects/project-craftsmanship-hand-weave.jpg',
   },
   {
-    title: 'Powder-Coated Metal Frames',
-    desc: 'Precision-welded steel or aluminium frames provide structural integrity. Finished with durable powder coating for rust resistance.',
-    care: 'Inspect frame joints annually. Touch up any chips promptly to protect against moisture.',
+    title: 'Steel, Wood & Aluminium Frames',
+    desc: 'We build frames in steel, wood, aluminium, or other materials to your recommendation — so each piece matches your design brief, load needs, and finish preference. Metal frames can be powder-coated for durability; timber frames are selected and finished for strength and style.',
+    care: 'Inspect frame joints annually. For coated metal, touch up chips promptly. For wood, avoid prolonged standing water and wipe dry after outdoor use.',
     image: '/images/projects/project-craftsmanship-overhead.jpg',
   },
   {

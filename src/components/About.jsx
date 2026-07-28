@@ -29,7 +29,7 @@ export default function About({ standalone = false }) {
             <p>
               At Ellines Rattan Furniture, every piece begins in our workshops in{' '}
               <strong>Nyeri</strong> and <strong>Nairobi</strong> — where skilled Kenyan
-              artisans weave premium synthetic rattan onto precision metal frames by hand.
+              artisans weave premium synthetic rattan onto frames in steel, wood, aluminium, or other materials you recommend — by hand.
             </p>
             <p>
               From bold black-and-white checkered patterns to warm brown weaves and geometric

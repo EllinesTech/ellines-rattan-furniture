@@ -96,7 +96,7 @@ export const PAGE_META = {
   materials: {
     title: 'Materials & Care | Ellines Rattan Furniture',
     description:
-      'Premium synthetic rattan, powder-coated frames, and care guides for your Ellines furniture.',
+      'Premium synthetic rattan, frames in steel, wood or aluminium, and care guides for your Ellines furniture.',
     heroImage: '/images/projects/project-craftsmanship-chevron-detail.jpg',
     heroPosition: 'center 35%',
     eyebrow: 'Quality',
