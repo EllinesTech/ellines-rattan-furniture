@@ -8,6 +8,8 @@ export default defineConfig({
   server: {
     port: 5175,
     strictPort: true,
+    // Listen on all interfaces — access via http://192.168.100.147:5175 when Ethernet is connected
+    host: true,
   },
   build: {
     outDir: 'dist',
