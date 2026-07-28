@@ -4,8 +4,13 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ── Ellines Rattan Furniture (shared project ellines-haven-web) ─────────
-    // Merge these blocks into Haven's live rules before deploying.
+    // SOURCE OF TRUTH for live deploys: Ellines Haven `firestore.rules`
+    // (merged Haven + Rattan). Do NOT deploy this fragment alone — it would
+    // wipe Haven permissions. Keep this file in sync with the Rattan block
+    // in Haven when adding collections.
     // Privileged writes require Firebase Auth (synced on app login).
+    // site_data (including rattan_* docs) is governed by Haven's open write
+    // rule for custom-auth admin; do not tighten that from this fragment.
 
     function signedIn() {
       return request.auth != null;
