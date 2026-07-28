@@ -35,8 +35,11 @@ export default function Hero() {
               cabinets, and outdoor sets woven by skilled Kenyan artisans.
             </p>
             <div className="hero__btns">
-              <Link to="/projects" className="btn btn-primary hero__cta-projects">
-                View Our Projects
+              <Link to="/shop" className="btn btn-primary hero__cta-primary">
+                Shop Collection
+              </Link>
+              <Link to="/services" className="btn btn-outline hero__cta-secondary">
+                Our Services
               </Link>
               <a
                 href={waUrl}
@@ -50,26 +53,21 @@ export default function Hero() {
           </div>
         </div>
 
-        <Link to="/projects" className="hero__scroll-cue" aria-label="View projects">
-          <span>Explore our work</span>
-          <div className="hero__scroll-arrow" />
-        </Link>
-      </section>
-
-      <div className="hero-trust">
-        <div className="container hero-trust__inner">
-          {HERO_TRUST.map((item, i) => (
-            <div key={item.title} className="hero-trust__item">
-              <span className="hero-trust__mark" aria-hidden="true" />
-              <div>
-                <strong>{item.title}</strong>
-                <span>{item.desc}</span>
+        <div className="hero-trust hero-trust--in-hero">
+          <div className="container hero-trust__inner">
+            {HERO_TRUST.map((item, i) => (
+              <div key={item.title} className="hero-trust__item">
+                <span className="hero-trust__mark" aria-hidden="true" />
+                <div>
+                  <strong>{item.title}</strong>
+                  <span>{item.desc}</span>
+                </div>
+                {i < HERO_TRUST.length - 1 && <div className="hero-trust__bar" aria-hidden="true" />}
               </div>
-              {i < HERO_TRUST.length - 1 && <div className="hero-trust__bar" aria-hidden="true" />}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }

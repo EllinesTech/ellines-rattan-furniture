@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ScrollProgress from '../components/ScrollProgress'
 import WhatsAppFloat from '../components/WhatsAppFloat'
+import CookieConsent from '../components/CookieConsent'
 import { PAGE_META } from '../data/pages'
 
 export default function Layout() {
@@ -14,10 +15,13 @@ export default function Layout() {
   }, [pathname])
 
   useEffect(() => {
-    const pageKey = pathname === '/'
-      ? 'home'
-      : pathname.slice(1).split('/')[0]
-    const meta = PAGE_META[pageKey] ?? PAGE_META.home
+    const metaKey = (() => {
+      if (pathname === '/') return 'home'
+      if (pathname === '/about/founder') return 'aboutFounder'
+      if (pathname === '/about/team') return 'aboutTeam'
+      return pathname.slice(1).split('/')[0]
+    })()
+    const meta = PAGE_META[metaKey] ?? PAGE_META.home
     document.title = meta.title
     const desc = document.querySelector('meta[name="description"]')
     if (desc) desc.setAttribute('content', meta.description)
@@ -32,6 +36,7 @@ export default function Layout() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <CookieConsent />
     </>
   )
 }

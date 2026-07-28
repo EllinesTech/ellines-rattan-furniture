@@ -64,14 +64,34 @@ export const PAGE_META = {
     sub: 'Visit our workshops or message us — we deliver across Kenya.',
   },
   about: {
-    title: 'Our Story | Ellines Rattan Furniture',
+    title: 'About Us | Ellines Rattan Furniture',
     description:
-      'Learn about Ellines Rattan Furniture — handcrafted synthetic rattan from workshops in Nyeri and Nairobi, Kenya.',
+      'Our story — handcrafted synthetic rattan from workshops in Nyeri and Nairobi, part of Ellines Group.',
     heroImage: '/images/projects/project-original-living-set-brown.jpg',
     heroPosition: 'center 42%',
-    eyebrow: 'Who We Are',
+    eyebrow: 'About Us',
     heading: 'Our Story',
-    sub: 'Kenyan craftsmanship, modern design, and furniture built to last.',
+    sub: 'Kenyan craftsmanship, Ellines Group, and furniture built to last.',
+  },
+  aboutTeam: {
+    title: 'The Team | Ellines Rattan Furniture',
+    description:
+      'Meet the workshop team behind Ellines Rattan Furniture — weavers, designers, and delivery specialists in Nyeri and Nairobi.',
+    heroImage: '/images/projects/project-craftsmanship-weaving.jpg',
+    heroPosition: 'center 38%',
+    eyebrow: 'About Us',
+    heading: 'The Team',
+    sub: 'The artisans and specialists who bring every piece to life.',
+  },
+  aboutFounder: {
+    title: 'The Founder | Ellines Rattan Furniture',
+    description:
+      'Meet Elijah Mwangi M, founder of Ellines Group — the vision behind Ellines Rattan Furniture and sister brands across Kenya.',
+    heroImage: '/images/founder/elijah-mwangi-founder.png',
+    heroPosition: 'center 18%',
+    eyebrow: 'About Us',
+    heading: 'The Founder',
+    sub: 'Leadership, vision, and the Ellines Group at large.',
   },
   materials: {
     title: 'Materials & Care | Ellines Rattan Furniture',
@@ -145,20 +165,31 @@ export const PAGE_META = {
   },
   privacy: {
     title: 'Privacy Policy | Ellines Rattan Furniture',
-    description: 'How Ellines Rattan Furniture collects and uses information when you contact us.',
+    description:
+      'How Ellines Rattan Furniture collects, uses, and protects customer data, quotes, cookies, and contact information.',
     heroImage: '/images/projects/project-craftsmanship-overhead.jpg',
     heroPosition: 'center 40%',
     eyebrow: 'Legal',
     heading: 'Privacy Policy',
-    sub: 'Your privacy matters to us.',
+    sub: 'Your privacy and how we handle customer data.',
   },
   terms: {
     title: 'Terms of Use | Ellines Rattan Furniture',
-    description: 'Terms of use for the Ellines Rattan Furniture website.',
+    description: 'Terms of use for the Ellines Rattan Furniture website, quotes, and custom furniture services.',
     heroImage: '/images/projects/project-craftsmanship-hand-weave.jpg',
     heroPosition: 'center 40%',
     eyebrow: 'Legal',
     heading: 'Terms of Use',
     sub: 'Guidelines for using our website and services.',
+  },
+  cookies: {
+    title: 'Cookie Policy | Ellines Rattan Furniture',
+    description:
+      'How Ellines Rattan Furniture uses cookies, local storage, and optional analytics — and how you can manage preferences.',
+    heroImage: '/images/projects/project-craftsmanship-overhead.jpg',
+    heroPosition: 'center 35%',
+    eyebrow: 'Legal',
+    heading: 'Cookie Policy',
+    sub: 'Essential cookies, optional analytics, and your choices.',
   },
 }

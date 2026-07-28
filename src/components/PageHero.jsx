@@ -1,9 +1,17 @@
 import OptimizedImage from './OptimizedImage'
 import './PageHero.css'
 
-export default function PageHero({ eyebrow, title, subtitle, image, position = 'center center' }) {
+export default function PageHero({
+  eyebrow,
+  title,
+  subtitle,
+  image,
+  position = 'center center',
+  actions,
+  compact = false,
+}) {
   return (
-    <section className="page-hero" aria-label={title}>
+    <section className={`page-hero ${compact ? 'page-hero--compact' : ''}`} aria-label={title}>
       <div className="page-hero__bg" aria-hidden="true">
         <OptimizedImage
           src={image}
@@ -21,6 +29,7 @@ export default function PageHero({ eyebrow, title, subtitle, image, position = '
         {eyebrow && <p className="page-hero__eyebrow">{eyebrow}</p>}
         <h1 className="page-hero__title">{title}</h1>
         {subtitle && <p className="page-hero__sub">{subtitle}</p>}
+        {actions && <div className="page-hero__actions">{actions}</div>}
       </div>
     </section>
   )

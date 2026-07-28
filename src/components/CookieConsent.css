@@ -1,0 +1,119 @@
+.cookie-consent {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 120;
+  padding: 12px max(16px, var(--safe-right)) max(12px, var(--safe-bottom)) max(16px, var(--safe-left));
+  pointer-events: none;
+}
+
+.cookie-consent__inner {
+  pointer-events: auto;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(18, 18, 28, 0.96);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: var(--r);
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+}
+
+.cookie-consent__copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.cookie-consent__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--gold-lt);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.cookie-consent__copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.cookie-consent__copy a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cookie-consent__actions {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cookie-consent__btn {
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+html.has-cookie-banner {
+  --wa-clearance: calc(168px + env(safe-area-inset-bottom, 0px));
+}
+
+html.has-cookie-banner .wa-float {
+  bottom: max(148px, calc(132px + var(--safe-bottom)));
+}
+
+@media (max-width: 768px) {
+  .cookie-consent__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .cookie-consent__actions {
+    width: 100%;
+  }
+
+  .cookie-consent__btn {
+    flex: 1;
+    min-width: 0;
+  }
+
+  html.has-cookie-banner {
+    --wa-clearance: calc(240px + env(safe-area-inset-bottom, 0px));
+  }
+
+  html.has-cookie-banner .wa-float {
+    bottom: max(220px, calc(200px + var(--safe-bottom)));
+  }
+}
+
+@media (max-width: 420px) {
+  .cookie-consent__actions {
+    flex-direction: column;
+  }
+
+  .cookie-consent__btn {
+    width: 100%;
+  }
+
+  html.has-cookie-banner .wa-float {
+    bottom: max(260px, calc(240px + var(--safe-bottom)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie-consent__inner {
+    backdrop-filter: none;
+  }
+}

@@ -45,11 +45,26 @@ export default function ShopPage() {
   return (
     <>
       <PageHero
+        compact
         eyebrow="Catalogue"
         title="Handcrafted Rattan Collection"
         subtitle="Browse workshop pieces — add to your quote list for a personalised estimate from our atelier."
         image="/images/projects/project-original-modular-sections.jpg"
         position="center 35%"
+        actions={
+          <>
+            <Link to="/quote" className="btn btn-primary">
+              View quote
+              {quoteCount > 0 && <span className="shop__quote-badge">{quoteCount}</span>}
+            </Link>
+            <a href={waLink} className="btn btn-wa" target="_blank" rel="noopener noreferrer">
+              WhatsApp Quote
+            </a>
+            <Link to="/services" className="btn btn-outline">
+              Custom Services
+            </Link>
+          </>
+        }
       />
 
       <section className="shop-trust">
@@ -80,7 +95,7 @@ export default function ShopPage() {
             </Link>
           </div>
 
-          <div className="shop__toolbar card">
+          <div className="shop__toolbar">
             <div className="shop__filters" role="tablist" aria-label="Product categories">
               {SHOP_CATEGORIES.map((cat) => (
                 <button
@@ -96,18 +111,36 @@ export default function ShopPage() {
               ))}
             </div>
             <div className="shop__search-wrap">
-              <svg className="shop__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <label className="sr-only" htmlFor="shop-search">Search products</label>
+              <svg className="shop__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="8" />
                 <path d="M21 21l-4.35-4.35" />
               </svg>
               <input
+                id="shop-search"
                 className="shop__search field"
                 type="search"
                 placeholder="Search by name or category…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                autoComplete="off"
               />
+              {search && (
+                <button
+                  type="button"
+                  className="shop__search-clear"
+                  onClick={() => setSearch('')}
+                  aria-label="Clear search"
+                >
+                  ×
+                </button>
+              )}
             </div>
+            <p className="shop__result-count" aria-live="polite">
+              {filtered.length} {filtered.length === 1 ? 'piece' : 'pieces'}
+              {category !== 'All' ? ` in ${category}` : ''}
+              {search.trim() ? ` matching “${search.trim()}”` : ''}
+            </p>
           </div>
 
           {filtered.length === 0 ? (

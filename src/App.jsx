@@ -13,6 +13,8 @@ const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
 const ServicesPage = lazy(() => import('./pages/ServicesPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
+const FounderPage = lazy(() => import('./pages/FounderPage'))
+const TeamPage = lazy(() => import('./pages/TeamPage'))
 const MaterialsPage = lazy(() => import('./pages/MaterialsPage'))
 const FaqPage = lazy(() => import('./pages/FaqPage'))
 const DeliveryPage = lazy(() => import('./pages/DeliveryPage'))
@@ -20,6 +22,7 @@ const CollectionsPage = lazy(() => import('./pages/CollectionsPage'))
 const HospitalityPage = lazy(() => import('./pages/HospitalityPage'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const TermsPage = lazy(() => import('./pages/TermsPage'))
+const CookiesPage = lazy(() => import('./pages/CookiesPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const ShopPage = lazy(() => import('./pages/ShopPage'))
 const QuotePage = lazy(() => import('./pages/QuotePage'))
@@ -88,11 +91,14 @@ export default function App() {
             <Route path="hospitality" element={<LazyPage Page={HospitalityPage} />} />
             <Route path="contact" element={<LazyPage Page={ContactPage} />} />
             <Route path="about" element={<LazyPage Page={AboutPage} />} />
+            <Route path="about/founder" element={<LazyPage Page={FounderPage} />} />
+            <Route path="about/team" element={<LazyPage Page={TeamPage} />} />
             <Route path="materials" element={<LazyPage Page={MaterialsPage} />} />
             <Route path="faq" element={<LazyPage Page={FaqPage} />} />
             <Route path="delivery" element={<LazyPage Page={DeliveryPage} />} />
             <Route path="privacy" element={<LazyPage Page={PrivacyPage} />} />
             <Route path="terms" element={<LazyPage Page={TermsPage} />} />
+            <Route path="cookies" element={<LazyPage Page={CookiesPage} />} />
             <Route path="*" element={<LazyPage Page={NotFoundPage} />} />
           </Route>
         </Routes>

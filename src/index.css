@@ -18,7 +18,7 @@
   --r: 12px;
   --r-sm: 6px;
   --r-lg: 20px;
-  --navbar-h: 80px;
+  --navbar-h: 64px;
   --container-pad: clamp(16px, 4vw, 28px);
   --section-pad: clamp(2rem, 5vw, 3.25rem);
   --wa-clearance: calc(72px + env(safe-area-inset-bottom, 0px));
@@ -156,6 +156,18 @@ canvas {
   background-clip: text;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -225,6 +237,45 @@ canvas {
   border: 1px solid var(--border);
   border-radius: var(--r);
   box-shadow: var(--sh-card);
+}
+
+.field {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.field::placeholder {
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+.field:hover {
+  border-color: rgba(201, 168, 76, 0.35);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+}
+
+input.field[type='search']::-webkit-search-decoration,
+input.field[type='search']::-webkit-search-cancel-button,
+input.field[type='search']::-webkit-search-results-button,
+input.field[type='search']::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @media (max-width: 768px) {

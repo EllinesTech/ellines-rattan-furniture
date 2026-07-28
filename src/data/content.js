@@ -10,6 +10,7 @@ export const FOOTER_LINKS = [
 export const LEGAL_LINKS = [
   { path: '/privacy', label: 'Privacy Policy' },
   { path: '/terms', label: 'Terms of Use' },
+  { path: '/cookies', label: 'Cookie Policy' },
 ]
 
 export const COLLECTIONS = [
@@ -106,10 +107,73 @@ export const ABOUT_STORY = {
       image: '/images/projects/project-original-living-set-wide.jpg',
     },
   ],
+  founder: {
+    name: 'Elijah Mwangi M',
+    role: 'Founder, Ellines Group',
+    image: '/images/founder/elijah-mwangi-founder.png',
+    paragraphs: [
+      'Ellines Rattan Furniture is part of a larger vision: building African brands that combine craftsmanship, technology, and lasting quality. Under the leadership of Elijah Mwangi M, Ellines Group grows businesses that serve real homes, venues, and teams across Kenya.',
+      'From workshop floors in Nyeri and Nairobi to digital platforms under Ellines Tech, the same standard applies — thoughtful design, reliable delivery, and work you can trust.',
+    ],
+  },
+  group: {
+    title: 'Ellines Group',
+    intro:
+      'Ellines Group is the parent company behind Ellines Tech, Ellines Haven, and Ellines Rattan — technology, publishing, and furniture under one vision.',
+    companies: [
+      {
+        name: 'Ellines Rattan',
+        tag: 'Furniture',
+        desc: 'Quality rattan furniture for homes and commercial spaces across Kenya — the commerce brand of Ellines Group.',
+        href: '/',
+        external: false,
+      },
+      {
+        name: 'Ellines Tech',
+        tag: 'Technology',
+        desc: 'Software development, AI, cloud, and digital transformation — the technology company of Ellines Group.',
+        href: 'https://tech.ellines.co.ke/',
+        external: true,
+      },
+      {
+        name: 'Ellines Haven',
+        tag: 'Publishing',
+        desc: 'Online books and stories by Elijah Mwangi M — a digital publishing platform within Ellines Group.',
+        href: 'https://tech.ellines.co.ke/',
+        external: true,
+      },
+    ],
+  },
   quote: {
     text: 'Crafted Designs with Beauty — that is not just our tagline. It is the standard we hold every piece to.',
     author: 'Ellines Rattan Furniture',
   },
+}
+
+export const ABOUT_TEAM = {
+  intro:
+    'Behind every Ellines piece is a workshop team — frame builders, weavers, finishers, and client specialists across our Nyeri production atelier and Nairobi showroom.',
+  members: [
+    {
+      title: 'Production & Weaving',
+      location: 'Nyeri Workshop',
+      desc: 'Our Nyeri atelier is where frames are welded, rattan is hand-woven, and every piece is quality-checked before delivery.',
+      image: '/images/projects/project-craftsmanship-weaving.jpg',
+    },
+    {
+      title: 'Design & Consultations',
+      location: 'Nairobi Workshop',
+      desc: 'The Nairobi team handles showroom visits, custom measurements, weave selection, and transparent workshop quotes.',
+      image: '/images/projects/workshop-nairobi-showroom.jpg',
+    },
+    {
+      title: 'Delivery & Aftercare',
+      location: 'Nationwide',
+      desc: 'From workshop to your home — our logistics and support team coordinates careful delivery and aftercare across Kenya.',
+      image: '/images/projects/project-original-living-set-wide.jpg',
+    },
+  ],
+  cta: 'Want to meet the people behind your furniture? Visit our workshops Mon – Sat, 8:00 AM – 6:00 PM.',
 }
 
 export const MATERIALS = [
@@ -167,6 +231,10 @@ export const FAQ_ITEMS = [
   {
     q: 'Is your furniture suitable for outdoor use?',
     a: 'Our synthetic rattan collections are designed for patios, terraces, and poolside lounges. We recommend covered outdoor areas for longest life; ask us about specific piece suitability.',
+  },
+  {
+    q: 'How do you handle my personal information?',
+    a: 'We use your contact and project details only to prepare quotes and fulfil orders. We do not sell your data. See our Privacy Policy and Cookie Policy for full details, and manage cookie preferences anytime from the footer.',
   },
   {
     q: 'How do I get a quote?',

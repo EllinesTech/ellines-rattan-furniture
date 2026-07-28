@@ -85,22 +85,6 @@
   margin-bottom: 6px;
 }
 
-.field {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.95rem;
-}
-
-.field:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
-}
-
 .admin-login__pw {
   position: relative;
 }

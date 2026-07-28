@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import About from '../components/About'
 import Process from '../components/Process'
@@ -14,6 +15,16 @@ export default function CraftsmanshipPage() {
         subtitle={meta.sub}
         image={meta.heroImage}
         position={meta.heroPosition}
+        actions={
+          <>
+            <Link to="/projects" className="btn btn-primary">
+              See Projects
+            </Link>
+            <Link to="/shop" className="btn btn-outline">
+              Shop Pieces
+            </Link>
+          </>
+        }
       />
       <About standalone />
       <Process />

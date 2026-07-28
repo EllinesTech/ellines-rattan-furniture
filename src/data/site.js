@@ -16,6 +16,11 @@ export const SITE = {
   },
   location: 'Nyeri & Nairobi, Kenya',
   hours: 'Mon – Sat, 8:00 AM – 6:00 PM',
+  group: {
+    name: 'Ellines Group',
+    url: 'https://tech.ellines.co.ke/',
+    founder: 'Elijah Mwangi M',
+  },
   workshops: [
     {
       city: 'Nairobi',
@@ -34,13 +39,22 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { path: '/', label: 'Home', id: 'home', end: true },
-  { path: '/shop', label: 'Shop', id: 'shop' },
-  { path: '/collections', label: 'Collections', id: 'collections' },
-  { path: '/projects', label: 'Projects', id: 'projects' },
-  { path: '/craftsmanship', label: 'Craftsmanship', id: 'craftsmanship' },
   { path: '/services', label: 'Services', id: 'services' },
+  { path: '/shop', label: 'Shop', id: 'shop' },
+  { path: '/craftsmanship', label: 'Craftsmanship', id: 'craftsmanship' },
+  { path: '/projects', label: 'Projects', id: 'projects' },
   { path: '/contact', label: 'Contact', id: 'contact' },
 ]
+
+export const ABOUT_DROPDOWN = {
+  label: 'About Us',
+  path: '/about',
+  id: 'about',
+  items: [
+    { path: '/about/team', label: 'The Team' },
+    { path: '/about/founder', label: 'The Founder' },
+  ],
+}
 
 export const HERO_IMAGE = {
   src: '/images/projects/project-original-living-set-wide.jpg',

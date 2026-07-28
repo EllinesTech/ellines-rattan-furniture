@@ -1,10 +1,13 @@
+import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import Services from '../components/Services'
 import Testimonials from '../components/Testimonials'
 import { PAGE_META } from '../data/pages'
+import { SITE } from '../data/site'
 
 export default function ServicesPage() {
   const meta = PAGE_META.services
+  const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
   return (
     <>
@@ -14,6 +17,19 @@ export default function ServicesPage() {
         subtitle={meta.sub}
         image={meta.heroImage}
         position={meta.heroPosition}
+        actions={
+          <>
+            <Link to="/shop" className="btn btn-primary">
+              Browse Shop
+            </Link>
+            <Link to="/quote" className="btn btn-outline">
+              Request Quote
+            </Link>
+            <a href={waUrl} className="btn btn-wa" target="_blank" rel="noopener noreferrer">
+              WhatsApp
+            </a>
+          </>
+        }
       />
       <Services standalone />
       <Testimonials />

@@ -126,8 +126,30 @@
   color: var(--muted);
 }
 
-.footer__legal a:hover {
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 2px;
+  max-width: 100%;
+  line-height: 1.7;
+}
+
+.footer__legal a:hover,
+.footer__cookie-btn:hover {
   color: var(--gold);
+}
+
+.footer__cookie-btn {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .footer__bottom a:hover {

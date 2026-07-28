@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FOOTER_LINKS, LEGAL_LINKS } from '../data/content'
+import { openCookieSettings } from './CookieConsent'
 import { NAV_LINKS, SITE } from '../data/site'
 import './Footer.css'
 
@@ -42,7 +43,10 @@ export default function Footer() {
             <p className="footer__tagline">{SITE.tagline}</p>
             <p className="footer__desc">
               Handcrafted synthetic rattan furniture — custom sofas, armchairs, cabinets,
-              tables, and outdoor sets from our workshops in Nyeri and Nairobi.
+              tables, and outdoor sets from our workshops in Nyeri and Nairobi. Part of{' '}
+              <a href="https://tech.ellines.co.ke/" target="_blank" rel="noopener noreferrer">
+                Ellines Group
+              </a>.
             </p>
           </div>
 
@@ -56,6 +60,9 @@ export default function Footer() {
               ))}
               <li>
                 <Link to="/hospitality" className="footer__nav-link">Hospitality &amp; Trade</Link>
+              </li>
+              <li>
+                <Link to="/about" className="footer__nav-link">Our Story</Link>
               </li>
             </ul>
           </div>
@@ -104,6 +111,10 @@ export default function Footer() {
                 <Link to={link.path}>{link.label}</Link>
               </span>
             ))}
+            {' · '}
+            <button type="button" className="footer__cookie-btn" onClick={openCookieSettings}>
+              Cookie settings
+            </button>
             {' · '}
             <a href="https://tech.ellines.co.ke/" target="_blank" rel="noopener noreferrer">
               Ellines Group

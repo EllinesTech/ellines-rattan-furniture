@@ -187,7 +187,7 @@
 }
 
 .legal-doc {
-  max-width: 760px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 32px 28px;
 }
@@ -195,14 +195,213 @@
 .legal-doc__title {
   font-size: 1.35rem;
   color: var(--gold-lt);
-  margin-bottom: 20px;
+  margin-bottom: 8px;
+}
+
+.legal-doc__updated {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-bottom: 1.5rem !important;
+}
+
+.legal-doc__section {
+  margin-bottom: 1.35rem;
+}
+
+.legal-doc__heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.08rem;
+  color: var(--text);
+  margin: 0 0 10px;
 }
 
 .legal-doc p {
   color: var(--muted);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   line-height: 1.75;
   font-size: 0.95rem;
+}
+
+.legal-doc__list {
+  margin: 0 0 12px 1.15rem;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.legal-doc__list li {
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.legal-doc__list li::marker {
+  color: var(--gold);
+}
+
+.about-founder {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+  margin: 2.75rem 0 1rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: linear-gradient(145deg, rgba(201, 168, 76, 0.07), rgba(18, 18, 28, 0.88));
+}
+
+.about-founder__media {
+  overflow: hidden;
+  border-radius: var(--r);
+  aspect-ratio: 4 / 3;
+  background: var(--surface);
+}
+
+.about-founder__media img,
+.about-founder__media picture,
+.about-founder__media picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.about-founder__copy {
+  min-width: 0;
+}
+
+.about-founder__copy h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  margin-bottom: 6px;
+}
+
+.about-founder__role {
+  color: var(--gold);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem !important;
+}
+
+.about-founder__copy p {
+  color: var(--muted);
+  margin-bottom: 12px;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.about-founder__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1.1rem;
+}
+
+.about-group {
+  margin: 2.5rem 0 0.5rem;
+}
+
+.about-group__grid {
+  margin-top: 0.5rem;
+}
+
+.about-group__card {
+  padding: 1.35rem 1.25rem 1.4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-group__tag {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.about-group__card h3 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.about-group__card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  flex: 1;
+  margin: 0;
+}
+
+.about-group__link {
+  color: var(--gold-lt);
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.about-group__link:hover {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-founder--page {
+  margin-top: 0;
+}
+
+.about-people {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 2.75rem 0 1rem;
+  padding: 1.5rem 1.75rem;
+  background: linear-gradient(145deg, rgba(201, 168, 76, 0.07), rgba(18, 18, 28, 0.88));
+}
+
+.about-people__copy h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+  margin-bottom: 8px;
+}
+
+.about-people__copy p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.65;
+  max-width: 520px;
+}
+
+.about-people__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.about-team__location {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.about-team__card .card__body {
+  gap: 6px;
+}
+
+.content-page__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 2rem;
 }
 
 @media (max-width: 640px) {
@@ -220,6 +419,40 @@
 
   .legal-doc {
     padding: 22px 16px;
+  }
+
+  .about-founder {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .about-founder__actions .btn {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .about-group__card {
+    padding: 1.15rem;
+  }
+
+  .about-people {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .about-people__copy p {
+    max-width: none;
+  }
+
+  .about-people__links {
+    justify-content: center;
+  }
+
+  .about-people__links .btn {
+    flex: 1;
+    min-width: 140px;
   }
 
   .faq-item__trigger {
