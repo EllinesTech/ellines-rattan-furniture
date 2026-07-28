@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { FAQ_ITEMS } from '../data/content'
 import { SITE } from '../data/site'
+import { usePageMeta } from '../hooks/usePageMeta'
 import Reveal from './Reveal'
 import './ContentPages.css'
 
 export default function FaqSection({ standalone = false }) {
+  const meta = usePageMeta('faq')
+  const items = meta.content?.faq?.length ? meta.content.faq : FAQ_ITEMS
   const [open, setOpen] = useState(0)
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
@@ -13,13 +16,13 @@ export default function FaqSection({ standalone = false }) {
       <div className="container">
         {!standalone && (
           <Reveal className="section-head section-head--center">
-            <p className="section-eyebrow">Questions</p>
-            <h2>Frequently Asked Questions</h2>
+            <p className="section-eyebrow">{meta.content?.sectionEyebrow || 'Questions'}</p>
+            <h2>{meta.content?.sectionHeading || 'Frequently Asked Questions'}</h2>
           </Reveal>
         )}
 
         <div className="faq-list">
-          {FAQ_ITEMS.map((item, i) => (
+          {items.map((item, i) => (
             <Reveal key={item.q} delay={i * 50}>
               <article className={`faq-item card ${open === i ? 'faq-item--open' : ''}`}>
                 <button

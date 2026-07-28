@@ -28,6 +28,9 @@ import {
 import { getRequestTypeLabel } from '../../utils/enquiries'
 import EnquiryItemsList from '../../components/EnquiryItemsList'
 import { listSubscriptions } from '../../utils/subscriptions'
+import PageCmsEditor, { buildPageDraft } from './PageCmsEditor'
+import { seedMediaLibrary, listMediaLibrary } from '../../utils/mediaLibrary'
+import { SEED_MEDIA_LIBRARY } from '../../data/seedMedia'
 
 const SUB_TABS = [
   { id: 'overview', label: 'Overview', icon: '🎛️' },
@@ -38,12 +41,6 @@ const SUB_TABS = [
   { id: 'marketing', label: 'Marketing', icon: '📣' },
 ]
 
-const SEED_MEDIA = [
-  { src: '/images/projects/project-original-living-set-wide.jpg', alt: 'Living set wide', category: 'Projects' },
-  { src: '/images/logos/ellines-rattan-logo-transparent.png', alt: 'Ellines logo', category: 'Brand' },
-  { src: '/images/projects/project-craftsmanship-weaving.jpg', alt: 'Craftsmanship weaving', category: 'Workshop' },
-]
-
 export default function GodModePanel() {
   const { user, sitePages, sitePagesSource, saveSitePages, firebaseReady, showToast } = useApp()
   const [sub, setSub] = useState('overview')
@@ -52,10 +49,11 @@ export default function GodModePanel() {
   const [enquiries, setEnquiries] = useState([])
   const [users, setUsers] = useState([])
   const [subscriptions, setSubscriptions] = useState([])
-  const [media, setMedia] = useState(SEED_MEDIA)
+  const [media, setMedia] = useState(SEED_MEDIA_LIBRARY)
   const [pageKey, setPageKey] = useState(Object.keys(PAGE_META)[0])
-  const [pageDraft, setPageDraft] = useState(PAGE_META[Object.keys(PAGE_META)[0]])
+  const [pageDraft, setPageDraft] = useState(() => buildPageDraft(Object.keys(PAGE_META)[0], null))
   const [saving, setSaving] = useState(false)
+  const [seedingMedia, setSeedingMedia] = useState(false)
   const [poster, setPoster] = useState({
     title: 'Handcrafted Rattan',
     subtitle: 'Workshop-direct pricing · Nairobi & Nyeri',
@@ -70,8 +68,12 @@ export default function GodModePanel() {
   const pageKeys = useMemo(() => Object.keys(sitePages || PAGE_META), [sitePages])
 
   useEffect(() => {
-    setPageDraft(sitePages?.[pageKey] || PAGE_META[pageKey] || {})
+    setPageDraft(buildPageDraft(pageKey, sitePages))
   }, [pageKey, sitePages])
+
+  useEffect(() => {
+    listMediaLibrary().then(setMedia).catch(() => setMedia(SEED_MEDIA_LIBRARY))
+  }, [firebaseReady])
 
   useEffect(() => {
     const unsub = subscribeOrders(setOrders)
@@ -143,11 +145,33 @@ export default function GodModePanel() {
     setSaving(true)
     try {
       await saveSitePages({ ...sitePages, [pageKey]: { ...pageDraft } })
-      showToast(`Page “${pageKey}” saved`)
+      showToast(`Page “${pageKey}” saved — live on the site`)
     } catch (e) {
       showToast(`Save failed: ${e.message}`)
     }
     setSaving(false)
+  }
+
+  const resetPage = () => {
+    setPageDraft(buildPageDraft(pageKey, null))
+    showToast('Draft reset to defaults (Save to publish)')
+  }
+
+  const importAllMedia = async () => {
+    setSeedingMedia(true)
+    try {
+      const result = await seedMediaLibrary()
+      const list = await listMediaLibrary()
+      setMedia(list)
+      showToast(
+        result.mode === 'local'
+          ? `Loaded ${result.total} site images locally`
+          : `Imported ${result.added} new images (${result.total} in library)`,
+      )
+    } catch (e) {
+      showToast(e.message || 'Media import failed — sign in again?')
+    }
+    setSeedingMedia(false)
   }
 
   const handleCreateOrder = async (enquiry) => {
@@ -289,32 +313,19 @@ export default function GodModePanel() {
       )}
 
       {sub === 'pages' && (
-        <div className="god-mode__split card" style={{ padding: '1.25rem' }}>
-          <div>
-            <label htmlFor="page-key">Page</label>
-            <select id="page-key" className="field" value={pageKey} onChange={(e) => setPageKey(e.target.value)}>
-              {pageKeys.map((k) => (
-                <option key={k} value={k}>{k}</option>
-              ))}
-            </select>
-            <p style={{ fontSize: '0.82rem', color: 'var(--muted)', marginTop: 8 }}>Source: {sitePagesSource}</p>
-          </div>
-          <div>
-            {['title', 'description', 'eyebrow', 'heading', 'sub', 'heroImage', 'heroPosition'].map((field) => (
-              <div className="form-group" key={field}>
-                <label htmlFor={`pg-${field}`}>{field}</label>
-                <input
-                  id={`pg-${field}`}
-                  className="field"
-                  value={pageDraft[field] || ''}
-                  onChange={(e) => setPageDraft((p) => ({ ...p, [field]: e.target.value }))}
-                />
-              </div>
-            ))}
-            <button type="button" className="btn btn-primary" onClick={savePage} disabled={saving}>
-              {saving ? 'Saving…' : 'Save page'}
-            </button>
-          </div>
+        <div className="card" style={{ padding: '1.25rem' }}>
+          <PageCmsEditor
+            pageKey={pageKey}
+            onPageKeyChange={setPageKey}
+            pageKeys={pageKeys}
+            draft={pageDraft}
+            onChange={setPageDraft}
+            media={media}
+            source={sitePagesSource}
+            saving={saving}
+            onSave={savePage}
+            onReset={resetPage}
+          />
         </div>
       )}
 
@@ -445,16 +456,23 @@ export default function GodModePanel() {
 
       {sub === 'media' && (
         <div className="card" style={{ padding: '1.25rem' }}>
-          <h2 style={{ fontSize: '1.05rem' }}>Media library</h2>
-          <p style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>
-            Upload images to Firebase Storage, or register an existing path under <code>public/images/</code>.
-          </p>
+          <div className="page-cms__list-head">
+            <div>
+              <h2 style={{ fontSize: '1.05rem' }}>Media library</h2>
+              <p style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>
+                All site images plus Storage uploads. Use these when editing page heroes and cards.
+              </p>
+            </div>
+            <button type="button" className="btn btn-primary" onClick={importAllMedia} disabled={seedingMedia}>
+              {seedingMedia ? 'Importing…' : 'Import all site images'}
+            </button>
+          </div>
           <div className="god-mode__media-grid">
             {media.map((m, i) => (
               <div key={m.id || m.src || i} className="god-mode__media-item">
                 <img src={m.src} alt={m.alt || ''} loading="lazy" />
                 <span>{m.alt || m.src}</span>
-                {m.id && (
+                {m.id && !String(m.id).startsWith('seed_') && (
                   <button
                     type="button"
                     className="btn btn-outline"

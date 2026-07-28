@@ -19,6 +19,13 @@ const TRUST_CUES = [
 export default function ShopPage() {
   const { activeProducts, addToQuote, quoteCount, showToast } = useApp()
   const meta = usePageMeta('shop')
+  const trustCues = meta.content?.trust?.length
+    ? meta.content.trust.map((t, i) => ({
+        icon: TRUST_CUES[i % TRUST_CUES.length].icon,
+        title: t.title,
+        desc: t.desc,
+      }))
+    : TRUST_CUES
   const [category, setCategory] = useState('All')
   const [search, setSearch] = useState('')
   const [addedId, setAddedId] = useState(null)
@@ -75,7 +82,7 @@ export default function ShopPage() {
 
       <section className="shop-trust">
         <div className="container shop-trust__grid">
-          {TRUST_CUES.map((cue) => (
+          {trustCues.map((cue) => (
             <div key={cue.title} className="shop-trust__item">
               <span className="shop-trust__icon">{cue.icon}</span>
               <div>

@@ -384,6 +384,81 @@
   padding: 6px;
 }
 
+.page-cms__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.page-cms__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.page-cms__hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.page-cms__panel {
+  margin-top: 0.5rem;
+}
+
+.page-cms__media-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.page-cms__media-row .field {
+  flex: 1;
+}
+
+.page-cms__preview {
+  margin-top: 8px;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--dim);
+}
+
+.page-cms__list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 1rem 0 0.75rem;
+}
+
+.page-cms__list-head h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.page-cms__picker {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.page-cms__picker-inner {
+  width: min(900px, 100%);
+  max-height: 85vh;
+  overflow: auto;
+  padding: 1.25rem;
+}
+
 @media (max-width: 900px) {
   .god-mode__split {
     grid-template-columns: 1fr;

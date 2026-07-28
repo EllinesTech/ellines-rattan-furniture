@@ -1,22 +1,27 @@
 import { MATERIALS } from '../data/content'
+import { usePageMeta } from '../hooks/usePageMeta'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './ContentPages.css'
 
 export default function MaterialsSection({ standalone = false }) {
+  const meta = usePageMeta('materials')
+  const c = meta.content || {}
+  const cards = c.cards?.length ? c.cards : MATERIALS
+
   return (
     <section className={`section content-page ${standalone ? 'content-page--standalone' : ''}`}>
       <div className="container">
         {!standalone && (
           <Reveal className="section-head section-head--center">
-            <p className="section-eyebrow">Quality</p>
-            <h2>Materials &amp; Care</h2>
-            <p>Premium materials chosen for beauty, durability, and Kenyan climates.</p>
+            <p className="section-eyebrow">{c.sectionEyebrow || 'Quality'}</p>
+            <h2>{c.sectionHeading || 'Materials & Care'}</h2>
+            <p>{c.sectionSub || 'Premium materials chosen for beauty, durability, and Kenyan climates.'}</p>
           </Reveal>
         )}
 
         <div className="card-grid card-grid--2">
-          {MATERIALS.map((item, i) => (
+          {cards.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>
               <article className="card card--interactive">
                 <span className="card__shine" aria-hidden="true" />
@@ -27,7 +32,7 @@ export default function MaterialsSection({ standalone = false }) {
                 <div className="card__body">
                   <h3 className="card__title">{item.title}</h3>
                   <p className="card__desc">{item.desc}</p>
-                  <p className="card__footer">Care: {item.care}</p>
+                  {item.care && <p className="card__footer">Care: {item.care}</p>}
                 </div>
               </article>
             </Reveal>

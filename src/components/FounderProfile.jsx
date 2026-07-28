@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom'
 import { ABOUT_STORY } from '../data/content'
+import { usePageMeta } from '../hooks/usePageMeta'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './ContentPages.css'
 
 export default function FounderProfile({ standalone = false }) {
-  const { founder } = ABOUT_STORY
+  const meta = usePageMeta('aboutFounder')
+  const c = meta.content || {}
+  const founder = ABOUT_STORY.founder
   if (!founder) return null
+
+  const image = c.cards?.[0]?.image || founder.image
+  const name = c.cards?.[0]?.title || founder.name
+  const role = c.cards?.[0]?.desc || founder.role
+  const paragraphs = c.intro?.length ? c.intro : founder.paragraphs
 
   return (
     <section className={`section content-page ${standalone ? 'content-page--standalone' : ''}`}>
@@ -14,8 +22,8 @@ export default function FounderProfile({ standalone = false }) {
         <Reveal className="about-founder about-founder--page">
           <div className="about-founder__media">
             <OptimizedImage
-              src={founder.image}
-              alt={`${founder.name}, Founder of Ellines Group`}
+              src={image}
+              alt={`${name}, Founder of Ellines Group`}
               loading="lazy"
               useThumb
               thumbWidth={960}
@@ -23,9 +31,9 @@ export default function FounderProfile({ standalone = false }) {
           </div>
           <div className="about-founder__copy">
             {!standalone && <p className="section-eyebrow">Meet the Founder</p>}
-            <h2>{founder.name}</h2>
-            <p className="about-founder__role">{founder.role}</p>
-            {founder.paragraphs.map((p) => (
+            <h2>{name}</h2>
+            <p className="about-founder__role">{role}</p>
+            {paragraphs.map((p) => (
               <p key={p.slice(0, 40)}>{p}</p>
             ))}
             <div className="about-founder__actions">
@@ -43,8 +51,8 @@ export default function FounderProfile({ standalone = false }) {
           <Reveal className="about-group" delay={120}>
             <div className="section-head section-head--center">
               <p className="section-eyebrow">Company Group</p>
-              <h2>{ABOUT_STORY.group.title}</h2>
-              <p>{ABOUT_STORY.group.intro}</p>
+              <h2>{c.groupTitle || ABOUT_STORY.group.title}</h2>
+              <p>{c.groupIntro || ABOUT_STORY.group.intro}</p>
             </div>
             <div className="card-grid card-grid--3 about-group__grid">
               {ABOUT_STORY.group.companies.map((company, i) => (

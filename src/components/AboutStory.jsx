@@ -1,30 +1,36 @@
 import { Link } from 'react-router-dom'
 import { ABOUT_STORY } from '../data/content'
+import { usePageMeta } from '../hooks/usePageMeta'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './ContentPages.css'
 
 export default function AboutStory({ standalone = false }) {
-  const { founder, group } = ABOUT_STORY
+  const meta = usePageMeta('about')
+  const c = meta.content || {}
+  const intro = c.intro?.length ? c.intro : ABOUT_STORY.intro
+  const cards = c.cards?.length ? c.cards : ABOUT_STORY.values
+  const founder = ABOUT_STORY.founder
+  const group = ABOUT_STORY.group
 
   return (
     <section className={`section content-page ${standalone ? 'content-page--standalone' : ''}`}>
       <div className="container">
         {!standalone && (
           <Reveal className="section-head section-head--center">
-            <p className="section-eyebrow">Our Story</p>
-            <h2>The Ellines Journey</h2>
+            <p className="section-eyebrow">{c.sectionEyebrow || 'Our Story'}</p>
+            <h2>{c.sectionHeading || 'The Ellines Journey'}</h2>
           </Reveal>
         )}
 
         <Reveal className="content-page__intro">
-          {ABOUT_STORY.intro.map((p) => (
+          {intro.map((p) => (
             <p key={p.slice(0, 40)}>{p}</p>
           ))}
         </Reveal>
 
         <div className="card-grid card-grid--3">
-          {ABOUT_STORY.values.map((item, i) => (
+          {cards.map((item, i) => (
             <Reveal key={item.title} delay={i * 80}>
               <article className="card card--interactive">
                 <span className="card__shine" aria-hidden="true" />
@@ -44,10 +50,10 @@ export default function AboutStory({ standalone = false }) {
           <Reveal className="about-people card" delay={120}>
             <div className="about-people__copy">
               <p className="section-eyebrow">People</p>
-              <h2>Meet the people behind Ellines</h2>
+              <h2>{c.peopleHeading || 'Meet the people behind Ellines'}</h2>
               <p>
-                From workshop artisans in Nyeri and Nairobi to {founder.name}, founder of Ellines Group —
-                discover the team and leadership behind every handcrafted piece.
+                {c.peopleText ||
+                  `From workshop artisans in Nyeri and Nairobi to ${founder.name}, founder of Ellines Group — discover the team and leadership behind every handcrafted piece.`}
               </p>
             </div>
             <div className="about-people__links">
@@ -61,8 +67,8 @@ export default function AboutStory({ standalone = false }) {
           <Reveal className="about-group" delay={160}>
             <div className="section-head section-head--center">
               <p className="section-eyebrow">Company Group</p>
-              <h2>{group.title}</h2>
-              <p>{group.intro}</p>
+              <h2>{c.groupTitle || group.title}</h2>
+              <p>{c.groupIntro || group.intro}</p>
             </div>
             <div className="card-grid card-grid--3 about-group__grid">
               {group.companies.map((company, i) => (
@@ -87,15 +93,14 @@ export default function AboutStory({ standalone = false }) {
           </Reveal>
         )}
 
-        <Reveal className="content-page__quote card" delay={200}>
-          <blockquote>
-            <p>&ldquo;{ABOUT_STORY.quote.text}&rdquo;</p>
-            <cite>— {ABOUT_STORY.quote.author}</cite>
-          </blockquote>
-          <Link to="/craftsmanship" className="btn btn-outline content-page__link">
-            See Our Craftsmanship
-          </Link>
-        </Reveal>
+        {(c.quote || ABOUT_STORY.quote) && (
+          <Reveal className="about-quote" delay={200}>
+            <blockquote>
+              <p>“{c.quote || ABOUT_STORY.quote.text}”</p>
+              <cite>— {c.quoteAuthor || ABOUT_STORY.quote.author}</cite>
+            </blockquote>
+          </Reveal>
+        )}
       </div>
     </section>
   )

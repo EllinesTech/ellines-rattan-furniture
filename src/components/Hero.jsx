@@ -6,9 +6,48 @@ import './Hero.css'
 
 export default function Hero() {
   const meta = usePageMeta('home')
+  const c = meta.content || {}
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
   const heroSrc = meta.heroImage || HERO_IMAGE.src
   const heroPos = meta.heroPosition || HERO_IMAGE.position
+  const trust = c.trust?.length
+    ? c.trust
+    : HERO_TRUST.map((t) => ({ title: t.title, desc: t.desc }))
+  const ctas = c.ctas?.length
+    ? c.ctas
+    : [
+        { label: 'Shop Collection', to: '/shop', variant: 'primary' },
+        { label: 'Our Services', to: '/services', variant: 'outline' },
+        { label: 'WhatsApp Quote', href: 'whatsapp', variant: 'wa' },
+      ]
+
+  const renderCta = (cta, i) => {
+    const cls =
+      cta.variant === 'primary'
+        ? 'btn btn-primary hero__cta-primary'
+        : cta.variant === 'wa'
+          ? 'btn btn-wa hero__cta-wa'
+          : 'btn btn-outline hero__cta-secondary'
+    if (cta.variant === 'wa' || cta.href === 'whatsapp') {
+      return (
+        <a key={i} href={waUrl} className={cls} target="_blank" rel="noopener noreferrer">
+          {cta.label}
+        </a>
+      )
+    }
+    if (cta.href) {
+      return (
+        <a key={i} href={cta.href} className={cls} target="_blank" rel="noopener noreferrer">
+          {cta.label}
+        </a>
+      )
+    }
+    return (
+      <Link key={i} to={cta.to || '/'} className={cls}>
+        {cta.label}
+      </Link>
+    )
+  }
 
   return (
     <>
@@ -38,35 +77,20 @@ export default function Hero() {
               {meta.sub ||
                 'Handcrafted synthetic rattan furniture — custom sofas, armchairs, cabinets, and outdoor sets woven by skilled Kenyan artisans.'}
             </p>
-            <div className="hero__btns">
-              <Link to="/shop" className="btn btn-primary hero__cta-primary">
-                Shop Collection
-              </Link>
-              <Link to="/services" className="btn btn-outline hero__cta-secondary">
-                Our Services
-              </Link>
-              <a
-                href={waUrl}
-                className="btn btn-wa hero__cta-wa"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp Quote
-              </a>
-            </div>
+            <div className="hero__btns">{ctas.map(renderCta)}</div>
           </div>
         </div>
 
         <div className="hero-trust hero-trust--in-hero">
           <div className="container hero-trust__inner">
-            {HERO_TRUST.map((item, i) => (
+            {trust.map((item, i) => (
               <div key={item.title} className="hero-trust__item">
                 <span className="hero-trust__mark" aria-hidden="true" />
                 <div>
                   <strong>{item.title}</strong>
                   <span>{item.desc}</span>
                 </div>
-                {i < HERO_TRUST.length - 1 && <div className="hero-trust__bar" aria-hidden="true" />}
+                {i < trust.length - 1 && <div className="hero-trust__bar" aria-hidden="true" />}
               </div>
             ))}
           </div>
