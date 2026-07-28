@@ -89,8 +89,8 @@ export const HERO_IMAGE = {
 
 export const HERO_TRUST = [
   { title: 'Two Workshops', desc: 'Nyeri & Nairobi' },
-  { title: 'Custom Designs', desc: 'Made to your space' },
-  { title: 'Premium Rattan', desc: 'Weather-resistant weave' },
+  { title: 'Any Space', desc: 'Bedroom to business' },
+  { title: 'Synthetic Rattan', desc: 'Weather-resistant weave' },
 ]
 
 export const ABOUT_STATS = [

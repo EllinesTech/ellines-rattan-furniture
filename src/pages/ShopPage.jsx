@@ -6,14 +6,22 @@ import Reveal from '../components/Reveal'
 import { useApp } from '../context/AppContext'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
+import {
+  ANY_SPACE_NOTE,
+  FRAME_CHOICE_NOTE,
+  PRICING_VARIES_NOTE,
+  WEAVE_MATERIAL,
+  WEAVE_NOTE,
+} from '../data/productOptions'
 import { formatKes } from '../utils/auth'
 import { SHOP_CATEGORIES } from '../data/seedProducts'
 import './ShopPage.css'
 
 const TRUST_CUES = [
-  { icon: '✦', title: 'Workshop-made', desc: 'Hand-woven in Nyeri & Nairobi' },
-  { icon: '◆', title: 'Custom quotes', desc: 'Tailored to your space & budget' },
-  { icon: '◇', title: 'Nationwide delivery', desc: 'Careful delivery across Kenya' },
+  { icon: '✦', title: 'Synthetic rattan', desc: 'Premium weather-resistant weave' },
+  { icon: '◆', title: 'Frame your way', desc: 'Metal, aluminium, wood & more' },
+  { icon: '◇', title: 'Prices vary', desc: 'Starting guides — final quote by options' },
+  { icon: '○', title: 'Any space', desc: 'Bedroom to business — tailored to fit' },
 ]
 
 export default function ShopPage() {
@@ -100,11 +108,27 @@ export default function ShopPage() {
             <div className="section-head">
               <span className="section-eyebrow">Shop</span>
               <h2>Workshop catalogue</h2>
-              <p>{activeProducts.length} pieces available — pricing is a starting guide; final quotes depend on size, weave, and finish.</p>
+              <p>
+                {activeProducts.length} pieces available — woven in {WEAVE_MATERIAL.toLowerCase()}.
+                {' '}{PRICING_VARIES_NOTE}
+              </p>
             </div>
             <Link to="/quote" className="btn btn-primary shop__quote-cta">
               View quote
               {quoteCount > 0 && <span className="shop__quote-badge">{quoteCount}</span>}
+            </Link>
+          </div>
+
+          <div className="shop__materials-note card">
+            <div>
+              <p>
+                <strong>Weave:</strong> {WEAVE_NOTE}{' '}
+                <strong>Frames:</strong> {FRAME_CHOICE_NOTE}
+              </p>
+              <p className="shop__materials-note-space">{ANY_SPACE_NOTE}</p>
+            </div>
+            <Link to="/materials" className="shop__materials-link">
+              Materials &amp; care →
             </Link>
           </div>
 
@@ -178,11 +202,18 @@ export default function ShopPage() {
                     <div className="shop-card__body card__body">
                       <h3 className="card__title">{product.title}</h3>
                       <p className="card__desc">{product.description}</p>
+                      <p className="shop-card__materials">
+                        <span>{product.weaveMaterial || WEAVE_MATERIAL} weave</span>
+                        <span>Frames: metal · aluminium · wood</span>
+                      </p>
                       <div className="shop-card__footer">
                         <span className="shop-card__price">
                           {product.quoteOnly
                             ? 'Price on request'
                             : `From ${formatKes(product.startingPrice)}`}
+                          {!product.quoteOnly && (
+                            <small className="shop-card__price-note">Base config · options vary</small>
+                          )}
                         </span>
                         <div className="shop-card__actions">
                           <button
@@ -204,7 +235,9 @@ export default function ShopPage() {
           <div className="shop__bottom-cta card">
             <div>
               <h3>Need something bespoke?</h3>
-              <p>Share dimensions, photos, or a sketch — we&apos;ll prepare a workshop quote.</p>
+              <p>
+                Tailored for any space — bedroom, living room, or business. Share dimensions or a sketch and we&apos;ll quote with your preferred frame material.
+              </p>
             </div>
             <div className="shop__bottom-actions">
               <Link to="/services" className="btn btn-outline">Request a service</Link>

@@ -16,19 +16,19 @@ export const LEGAL_LINKS = [
 export const COLLECTIONS = [
   {
     name: 'Living Sets',
-    desc: 'Coordinated lounge collections for living rooms, lounges, and open-plan spaces.',
+    desc: 'Coordinated lounge collections in synthetic rattan — for living rooms, lounges, and open-plan spaces.',
     image: '/images/projects/project-original-living-set-wide.jpg',
     category: 'Living Sets',
   },
   {
     name: 'Sofas & Sectionals',
-    desc: 'Modular and fixed sofas tailored to your layout, weave, and colour palette.',
+    desc: 'Modular and fixed sofas tailored to your layout, weave, and colour palette — home or hospitality.',
     image: '/images/projects/project-original-modular-sections.jpg',
     category: 'Sofas',
   },
   {
     name: 'Armchairs',
-    desc: 'Statement seating with hand-woven rattan on sturdy steel, wood, or aluminium frames.',
+    desc: 'Statement seating with hand-woven synthetic rattan on sturdy steel, wood, or aluminium frames.',
     image: '/images/projects/project-original-armchair-shaggy.jpg',
     category: 'Armchairs',
   },
@@ -46,7 +46,7 @@ export const COLLECTIONS = [
   },
   {
     name: 'Outdoor Seating',
-    desc: 'Weather-resistant benches and lounge pieces for patios and terraces.',
+    desc: 'Weather-resistant benches and lounge pieces for patios, terraces, and commercial outdoor areas.',
     image: '/images/projects/project-original-bench-brown.jpg',
     category: 'Seating',
   },
@@ -54,7 +54,7 @@ export const COLLECTIONS = [
 
 export const HOSPITALITY = {
   intro:
-    'Hotels, restaurants, cafés, and offices across Kenya trust Ellines for durable, custom rattan that elevates guest spaces and brand interiors.',
+    'Hotels, restaurants, cafés, and offices across Kenya trust Ellines for durable custom synthetic rattan — the same tailored craft we build for bedrooms and homes, scaled for guest spaces and brand interiors.',
   audiences: [
     {
       title: 'Hotels & Lodges',
@@ -79,7 +79,8 @@ export const HOSPITALITY = {
   ],
   benefits: [
     'Volume and multi-unit project capability',
-    'Consistent weave patterns across large orders',
+    'Consistent synthetic rattan weave across large orders',
+    'Frame options in metal, aluminium, wood, or powder-coated steel — prices vary by material',
     'Transparent workshop quotes for procurement',
     'Nationwide delivery and installation support',
   ],
@@ -179,13 +180,13 @@ export const ABOUT_TEAM = {
 export const MATERIALS = [
   {
     title: 'Premium Synthetic Rattan',
-    desc: 'Our primary weave material — UV-stabilised, weather-resistant, and available in black, white, brown, and custom colour combinations including checkered and chevron patterns.',
+    desc: 'Our primary weave material — UV-stabilised, weather-resistant, and available in black, white, brown, and custom colour combinations including checkered and chevron patterns. Tailored pieces suit any space, from bedroom to business.',
     care: 'Wipe with a damp cloth. Avoid harsh chemicals. Suitable for indoor and covered outdoor use.',
     image: '/images/projects/project-craftsmanship-hand-weave.jpg',
   },
   {
     title: 'Steel, Wood & Aluminium Frames',
-    desc: 'We build frames in steel, wood, aluminium, or other materials to your recommendation — so each piece matches your design brief, load needs, and finish preference. Metal frames can be powder-coated for durability; timber frames are selected and finished for strength and style.',
+    desc: 'Choose your frame — metal, aluminium, wood, powder-coated steel, or other materials to your recommendation. Prices vary by frame material and finish so each piece matches your brief, load needs, and budget.',
     care: 'Inspect frame joints annually. For coated metal, touch up chips promptly. For wood, avoid prolonged standing water and wipe dry after outdoor use.',
     image: '/images/projects/project-craftsmanship-overhead.jpg',
   },
@@ -206,11 +207,15 @@ export const MATERIALS = [
 export const FAQ_ITEMS = [
   {
     q: 'Do you make fully custom furniture?',
-    a: 'Yes. Share your dimensions, reference photos, or a sketch — our Nairobi team will design and quote a bespoke piece woven in our Nyeri atelier.',
+    a: 'Yes. Share your dimensions, reference photos, or a sketch — our Nairobi team will design and quote a bespoke piece woven in our Nyeri atelier. Our tailored furniture works in any space, from bedroom and living areas to hospitality and business interiors.',
   },
   {
     q: 'What is synthetic rattan and how is it different from natural rattan?',
     a: 'Synthetic rattan is a premium polyethylene weave designed for durability and weather resistance. It offers the look and feel of natural rattan with superior longevity in Kenyan sun and rain.',
+  },
+  {
+    q: 'What frame materials can I choose?',
+    a: 'Clients can choose metal, aluminium, wood, powder-coated steel, or another material you recommend. Starting catalogue prices are for a base configuration — frame material and finish change the final workshop quote.',
   },
   {
     q: 'How long does a custom order take?',
@@ -246,7 +251,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Do you publish service prices?',
-    a: 'Yes — our Services page lists starting prices for custom furniture, repairs, and consultation fees. Final quotes depend on size, weave, materials, and delivery. Shop catalogue items also show starting prices.',
+    a: 'Yes — our Services page lists starting prices for custom furniture, repairs, and consultation fees. Final quotes depend on size, weave, frame material, cushions, and delivery. Shop catalogue items also show starting prices for a base configuration.',
   },
   {
     q: 'How do I get a quote?',

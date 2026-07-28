@@ -20,6 +20,13 @@ export default function MaterialsSection({ standalone = false }) {
           </Reveal>
         )}
 
+        <Reveal className="content-page__intro">
+          <p>
+            Every Ellines piece is woven in premium synthetic rattan. Choose metal, aluminium, wood, or powder-coated
+            steel frames — prices vary by material and finish. Tailored furniture for any space, from bedroom to business.
+          </p>
+        </Reveal>
+
         <div className="card-grid card-grid--2">
           {cards.map((item, i) => (
             <Reveal key={item.title} delay={i * 70}>

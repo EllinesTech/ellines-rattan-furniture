@@ -7,8 +7,8 @@
 
 .shop-trust__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
 
 .shop-trust__item {
@@ -220,6 +220,54 @@
   overflow: hidden;
 }
 
+.shop-card__materials {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.shop-card__materials span:first-child {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.shop__materials-note {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.shop__materials-note p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.shop__materials-note strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.shop__materials-note-space {
+  margin-top: 0.45rem !important;
+}
+
+.shop__materials-link {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
 .shop-card__footer {
   display: flex;
   flex-direction: column;
@@ -229,10 +277,20 @@
 }
 
 .shop-card__price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   font-family: 'Playfair Display', serif;
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--gold-lt);
+}
+
+.shop-card__price-note {
+  font-family: var(--font-body, inherit);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--muted);
 }
 
 .shop-card__actions .btn {
@@ -289,10 +347,20 @@
   flex-wrap: wrap;
 }
 
+@media (max-width: 960px) {
+  .shop-trust__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .shop-trust__grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .shop__materials-note {
+    flex-direction: column;
   }
 
   .shop__toolbar {

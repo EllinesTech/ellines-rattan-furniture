@@ -12,6 +12,12 @@ import { FS } from '../firestorePaths'
 import { SEED_PRODUCTS } from '../data/seedProducts'
 import { PAGE_META } from '../data/pages'
 import {
+  WEAVE_MATERIAL,
+  findFrameOption,
+  normalizeFrameOptions,
+  resolveUnitPrice,
+} from '../data/productOptions'
+import {
   SERVICES,
   SERVICE_PRICING,
   BUDGET_TIERS,
@@ -68,6 +74,8 @@ function normalizeProduct(raw, index = 0) {
     description: raw.description || '',
     startingPrice: raw.quoteOnly ? null : (raw.startingPrice ?? null),
     quoteOnly: Boolean(raw.quoteOnly),
+    weaveMaterial: raw.weaveMaterial || WEAVE_MATERIAL,
+    frameOptions: normalizeFrameOptions(raw.frameOptions),
     active: raw.active !== false,
     featured: Boolean(raw.featured),
     sortOrder: raw.sortOrder ?? index,
@@ -111,7 +119,13 @@ export function AppProvider({ children }) {
     })
   }, [])
 
-  const addToQuote = useCallback((product, qty = 1) => {
+  const addToQuote = useCallback((product, qty = 1, options = {}) => {
+    const frameOptions = normalizeFrameOptions(product.frameOptions)
+    const preferred = options.frameMaterial || product.defaultFrameMaterial
+    const frame = findFrameOption(frameOptions, preferred)
+    const basePrice = product.quoteOnly ? null : product.startingPrice
+    const unitPrice = resolveUnitPrice(basePrice, frame, product.quoteOnly)
+
     setQuoteCart((prev) => {
       const existing = prev.find((item) => item.productId === product.id)
       if (existing) {
@@ -128,9 +142,14 @@ export function AppProvider({ children }) {
           title: product.title,
           category: product.category,
           src: product.src,
-          unitPrice: product.quoteOnly ? null : product.startingPrice,
+          basePrice,
+          unitPrice,
           quoteOnly: product.quoteOnly,
           itemType: 'product',
+          weaveMaterial: product.weaveMaterial || WEAVE_MATERIAL,
+          frameMaterial: frame?.label || null,
+          framePriceAdd: frame?.priceAdd || 0,
+          frameOptions,
           qty,
         },
       ]
@@ -180,6 +199,23 @@ export function AppProvider({ children }) {
       if (qty <= 0) return prev.filter((item) => item.productId !== productId)
       return prev.map((item) => (item.productId === productId ? { ...item, qty } : item))
     })
+  }, [setQuoteCart])
+
+  const updateQuoteFrame = useCallback((productId, frameMaterial) => {
+    setQuoteCart((prev) =>
+      prev.map((item) => {
+        if (item.productId !== productId || item.itemType === 'service') return item
+        const frame = findFrameOption(item.frameOptions, frameMaterial)
+        const basePrice = item.basePrice ?? (item.quoteOnly ? null : item.unitPrice)
+        return {
+          ...item,
+          frameMaterial: frame?.label || frameMaterial || null,
+          framePriceAdd: frame?.priceAdd || 0,
+          unitPrice: resolveUnitPrice(basePrice, frame, item.quoteOnly),
+          basePrice,
+        }
+      }),
+    )
   }, [setQuoteCart])
 
   const removeFromQuote = useCallback((productId) => {
@@ -513,6 +549,7 @@ export function AppProvider({ children }) {
     addToQuote,
     addServiceRequest,
     updateQuoteQty,
+    updateQuoteFrame,
     removeFromQuote,
     clearQuote,
     unreadEnquiries,

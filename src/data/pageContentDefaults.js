@@ -79,7 +79,8 @@ export const PAGE_CONTENT_DEFAULTS = {
   collections: {
     sectionEyebrow: 'Browse',
     sectionHeading: 'Our Collections',
-    sectionSub: 'Explore categories — every piece can be customised to your space.',
+    sectionSub:
+      'Explore categories — every piece is tailored for any space, from bedroom to business.',
     cards: COLLECTIONS.map((c) => ({
       title: c.name,
       desc: c.desc,
@@ -157,12 +158,13 @@ export const PAGE_CONTENT_DEFAULTS = {
   },
   shop: {
     intro: [
-      'Browse workshop pieces — add to your quote list for a personalised estimate from our atelier.',
+      'Browse workshop pieces in synthetic rattan — choose your frame, add to your quote, and request a personalised estimate. Tailored for any space, from bedroom to business.',
     ],
     trust: [
-      { title: 'Workshop-made', desc: 'Hand-woven in Nyeri & Nairobi' },
-      { title: 'Custom quotes', desc: 'Tailored to your space & budget' },
-      { title: 'Nationwide delivery', desc: 'Careful delivery across Kenya' },
+      { title: 'Synthetic rattan', desc: 'Premium weather-resistant weave' },
+      { title: 'Frame your way', desc: 'Metal, aluminium, wood & more' },
+      { title: 'Prices vary', desc: 'Starting guides — final quote by options' },
+      { title: 'Any space', desc: 'Bedroom to business — tailored to fit' },
     ],
   },
   contact: {
@@ -177,7 +179,7 @@ export const PAGE_CONTENT_DEFAULTS = {
   },
   quote: {
     intro: [
-      'Review your selections, share your details, and request a workshop estimate.',
+      'Review your selections, choose frame materials, and request a workshop estimate for home or business.',
     ],
   },
   privacy: { intro: [], bodyHtml: '' },

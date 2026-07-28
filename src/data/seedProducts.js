@@ -1,4 +1,8 @@
 import { GALLERY_ITEMS } from './gallery'
+import {
+  DEFAULT_FRAME_OPTIONS,
+  WEAVE_MATERIAL,
+} from './productOptions'
 
 /** Starting prices aligned with Kenya market (Kenty, Fair Price, Jardin Classics — Jul 2026). */
 const DEFAULT_PRICES = {
@@ -27,9 +31,11 @@ export function buildSeedProducts() {
       title: item.title,
       category: item.category,
       src: item.src,
-      description: `Handcrafted ${item.category.toLowerCase()} — custom weave, colour, and sizing available.`,
+      description: `Handcrafted ${item.category.toLowerCase()} in ${WEAVE_MATERIAL.toLowerCase()} — choose metal, aluminium, wood, or powder-coated steel frames. Colour, weave, and sizing available on request.`,
       startingPrice: quoteOnly ? null : DEFAULT_PRICES[item.category],
       quoteOnly,
+      weaveMaterial: WEAVE_MATERIAL,
+      frameOptions: DEFAULT_FRAME_OPTIONS.map((o) => ({ ...o })),
       active: true,
       featured: Boolean(item.featured),
       sortOrder: index,

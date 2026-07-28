@@ -57,7 +57,9 @@ export default function CollectionsSection({ standalone = false }) {
         </div>
 
         <Reveal className="content-page__cta card" delay={150}>
-          <p>Need something outside these collections? We build fully bespoke pieces.</p>
+          <p>
+            Need something outside these collections? We build tailored furniture for any space — bedroom to business.
+          </p>
           <Link to="/contact" className="btn btn-primary">
             Start a Custom Order
           </Link>

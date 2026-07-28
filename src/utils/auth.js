@@ -618,7 +618,9 @@ export function buildQuoteWhatsAppMessage(request) {
     lines.push('', '*Products:*')
     products.forEach((item) => {
       const price = item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)
-      lines.push(`• ${item.title} × ${item.qty} (${price})`)
+      const frame = item.frameMaterial ? ` · Frame: ${item.frameMaterial}` : ''
+      const weave = item.weaveMaterial ? ` · Weave: ${item.weaveMaterial}` : ''
+      lines.push(`• ${item.title} × ${item.qty} (${price})${weave}${frame}`)
     })
   }
 
@@ -626,7 +628,8 @@ export function buildQuoteWhatsAppMessage(request) {
     lines.push('', '*Items:*')
     request.items.forEach((item) => {
       const price = item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)
-      lines.push(`• ${item.title} × ${item.qty} (${price})`)
+      const frame = item.frameMaterial ? ` · Frame: ${item.frameMaterial}` : ''
+      lines.push(`• ${item.title} × ${item.qty} (${price})${frame}`)
     })
   }
   if (request.estimatedTotal > 0) {

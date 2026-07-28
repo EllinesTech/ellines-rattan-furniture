@@ -99,12 +99,12 @@ export const PAGE_META = {
   materials: {
     title: 'Materials & Care | Ellines Rattan Furniture',
     description:
-      'Premium synthetic rattan, frames in steel, wood or aluminium, and care guides for your Ellines furniture.',
+      'Premium synthetic rattan weave, frames in metal, wood or aluminium, and care guides — prices vary by options.',
     heroImage: '/images/projects/project-craftsmanship-chevron-detail.jpg',
     heroPosition: 'center 35%',
     eyebrow: 'Quality',
     heading: 'Materials & Care',
-    sub: 'Premium materials chosen for beauty, durability, and Kenyan climates.',
+    sub: 'Synthetic rattan weave with frame options you choose — built for any space, from bedroom to business.',
   },
   faq: {
     title: 'FAQ | Ellines Rattan Furniture',
@@ -129,32 +129,32 @@ export const PAGE_META = {
   shop: {
     title: 'Shop | Ellines Rattan Furniture',
     description:
-      'Browse handcrafted rattan furniture — living sets, sofas, armchairs, cabinets, and tables with starting prices. Build a custom quote.',
+      'Browse handcrafted synthetic rattan furniture — living sets, sofas, armchairs, cabinets, and tables. Choose metal, aluminium, or wood frames; prices vary. Tailored for any space from bedroom to business.',
     heroImage: '/images/projects/project-original-modular-sections.jpg',
     heroPosition: 'center 35%',
     eyebrow: 'Shop',
     heading: 'Rattan Furniture Catalogue',
-    sub: 'Add pieces to your quote list for a workshop estimate.',
+    sub: 'Synthetic rattan pieces with frame options you choose — tailored for any space, from bedroom to business.',
   },
   quote: {
     title: 'Request a Quote | Ellines Rattan Furniture',
     description:
-      'Build your custom rattan furniture quote — select products, share your details, and connect via WhatsApp or email.',
+      'Build your custom synthetic rattan furniture quote — select frame materials, share your details, and connect via WhatsApp or email.',
     heroImage: '/images/projects/project-original-armchair-shaggy.jpg',
     heroPosition: 'center 30%',
     eyebrow: 'Quote',
     heading: 'Build Your Quote',
-    sub: 'Review selections and request a workshop estimate.',
+    sub: 'Choose frame materials and request a workshop estimate — tailored furniture for home or business.',
   },
   collections: {
     title: 'Collections | Ellines Rattan Furniture',
     description:
-      'Explore Ellines rattan collections — living sets, sofas, armchairs, cabinets, tables, and outdoor seating.',
+      'Explore Ellines synthetic rattan collections — living sets, sofas, armchairs, cabinets, tables, and outdoor seating for home and business.',
     heroImage: '/images/projects/project-original-modular-grey-white.jpg',
     heroPosition: 'center 35%',
     eyebrow: 'Browse',
     heading: 'Our Collections',
-    sub: 'Find the piece that fits your space — then customise it to order.',
+    sub: 'Find the piece that fits any space — bedroom, lounge, or business — then customise it to order.',
   },
   hospitality: {
     title: 'Hospitality & Trade | Ellines Rattan Furniture',

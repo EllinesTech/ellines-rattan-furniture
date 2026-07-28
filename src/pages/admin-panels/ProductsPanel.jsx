@@ -1,5 +1,11 @@
 import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
+import {
+  DEFAULT_FRAME_OPTIONS,
+  formatFrameOptionsInput,
+  parseFrameOptionsInput,
+  WEAVE_MATERIAL,
+} from '../../data/productOptions'
 import { formatKes } from '../../utils/auth'
 
 export default function ProductsPanel() {
@@ -23,8 +29,15 @@ export default function ProductsPanel() {
       const normalized = draft.map((p) => ({
         ...p,
         startingPrice: p.quoteOnly ? null : Number(p.startingPrice) || null,
+        weaveMaterial: p.weaveMaterial || WEAVE_MATERIAL,
+        frameOptions: parseFrameOptionsInput(
+          typeof p.frameOptionsText === 'string'
+            ? p.frameOptionsText
+            : formatFrameOptionsInput(p.frameOptions || DEFAULT_FRAME_OPTIONS),
+        ),
       }))
       await saveProducts(normalized)
+      setDraft(normalized.map((p) => ({ ...p })))
       showToast('Products saved')
     } catch (e) {
       showToast(`Save failed: ${e.message}`)
@@ -64,6 +77,7 @@ export default function ProductsPanel() {
               <th>Title</th>
               <th>Category</th>
               <th>Starting price</th>
+              <th>Frame options</th>
               <th>Quote only</th>
               <th>Active</th>
               <th>Featured</th>
@@ -106,6 +120,19 @@ export default function ProductsPanel() {
                 </td>
                 <td>
                   <input
+                    type="text"
+                    title="Comma-separated frame materials"
+                    placeholder="Metal, Aluminium, Wood"
+                    value={
+                      product.frameOptionsText ??
+                      formatFrameOptionsInput(product.frameOptions || DEFAULT_FRAME_OPTIONS)
+                    }
+                    onChange={(e) => updateRow(product.id, { frameOptionsText: e.target.value })}
+                    style={{ minWidth: 160 }}
+                  />
+                </td>
+                <td>
+                  <input
                     type="checkbox"
                     checked={product.quoteOnly}
                     onChange={(e) =>
@@ -137,7 +164,8 @@ export default function ProductsPanel() {
       </div>
 
       <p style={{ marginTop: 12, fontSize: '0.82rem', color: 'var(--muted)' }}>
-        Preview: starting prices display as {formatKes(125000)} on the shop. Inactive products are hidden from the public catalogue.
+        Weave is {WEAVE_MATERIAL} site-wide. Frame options are comma-separated labels (price additives stay at 0
+        unless set in data). Starting prices display as {formatKes(125000)} — final quotes vary by frame and finish.
       </p>
 
       {toast && <div className="admin-toast">{toast}</div>}

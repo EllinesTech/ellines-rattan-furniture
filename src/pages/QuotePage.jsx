@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import PageHero from '../components/PageHero'
@@ -6,6 +6,12 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useApp } from '../context/AppContext'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
+import {
+  ANY_SPACE_NOTE,
+  DEFAULT_FRAME_OPTIONS,
+  normalizeFrameOptions,
+  WEAVE_MATERIAL,
+} from '../data/productOptions'
 import { db, isFirebaseConfigured } from '../firebase'
 import { FS } from '../firestorePaths'
 import {
@@ -43,6 +49,7 @@ export default function QuotePage() {
     quoteCount,
     quoteEstimate,
     updateQuoteQty,
+    updateQuoteFrame,
     removeFromQuote,
     clearQuote,
     firebaseReady,
@@ -67,6 +74,10 @@ export default function QuotePage() {
   const [submitted, setSubmitted] = useState(null)
   const [error, setError] = useState('')
   const [notificationEmail, setNotificationEmail] = useState(SITE.email)
+
+  const setField = useCallback((key, value) => {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }, [])
 
   useEffect(() => {
     if (user) {
@@ -200,7 +211,7 @@ export default function QuotePage() {
               <ul className="quote-success__steps">
                 <li>We review your selections within one business day</li>
                 <li>Our team contacts you via your preferred method</li>
-                <li>Final pricing depends on size, weave, and finish</li>
+                <li>Final pricing depends on size, weave, frame material, and finish</li>
               </ul>
               <div className="quote-success__actions">
                 <a href={submitted.waLink} target="_blank" rel="noopener noreferrer" className="btn btn-wa">
@@ -253,7 +264,9 @@ export default function QuotePage() {
                 <div className="quote__empty card">
                   <div className="quote__empty-icon" aria-hidden>🛋️</div>
                   <h2>Your quote list is empty</h2>
-                  <p>Add products from the shop or request a service — repairs, builds, consultation, and more.</p>
+                  <p>
+                    Add products or services for a workshop estimate. Tailored furniture for any space — from bedroom to business.
+                  </p>
                   <div className="quote__empty-actions">
                     <Link to="/services" className="btn btn-primary">Browse services</Link>
                     <Link to="/shop" className="btn btn-outline">Browse shop</Link>
@@ -268,68 +281,97 @@ export default function QuotePage() {
                         Clear all
                       </button>
                     </div>
+                    <p className="quote__materials-intro">
+                      Weave: {WEAVE_MATERIAL}. Choose a frame material per piece — prices vary by option.
+                      {' '}{ANY_SPACE_NOTE}
+                    </p>
                     <ul className="quote__items">
-                      {quoteCart.map((item) => (
-                        <li key={item.productId} className="quote__item">
-                          <div className="quote__item-media">
-                            {item.src ? (
-                              <OptimizedImage src={item.src} alt="" loading="lazy" />
-                            ) : (
-                              <div className="quote__item-placeholder" />
-                            )}
-                          </div>
-                          <div className="quote__item-info">
-                            <span className="quote__item-cat">
-                              {item.itemType === 'service' ? 'Service' : item.category}
-                            </span>
-                            <strong>{item.title}</strong>
-                            {item.serviceDescription && (
-                              <span className="quote__item-desc">{item.serviceDescription}</span>
-                            )}
-                            <span className="quote__item-price">
-                              {item.quoteOnly ? 'Price on request' : formatKes(item.unitPrice)}
-                            </span>
-                          </div>
-                          <div className="quote__item-qty">
-                            {item.itemType === 'service' ? (
-                              <span className="quote__item-service-qty" aria-label="Quantity">1</span>
-                            ) : (
-                              <>
-                                <button
-                                  type="button"
-                                  onClick={() => updateQuoteQty(item.productId, item.qty - 1)}
-                                  aria-label="Decrease quantity"
-                                >
-                                  −
-                                </button>
-                                <span>{item.qty}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => updateQuoteQty(item.productId, item.qty + 1)}
-                                  aria-label="Increase quantity"
-                                >
-                                  +
-                                </button>
-                              </>
-                            )}
-                          </div>
-                          <button
-                            type="button"
-                            className="quote__item-remove"
-                            onClick={() => removeFromQuote(item.productId)}
-                            aria-label="Remove item"
-                          >
-                            ✕
-                          </button>
-                        </li>
-                      ))}
+                      {quoteCart.map((item) => {
+                        const frameOptions = normalizeFrameOptions(
+                          item.frameOptions?.length ? item.frameOptions : DEFAULT_FRAME_OPTIONS,
+                        )
+                        return (
+                          <li key={item.productId} className="quote__item">
+                            <div className="quote__item-media">
+                              {item.src ? (
+                                <OptimizedImage src={item.src} alt="" loading="lazy" />
+                              ) : (
+                                <div className="quote__item-placeholder" />
+                              )}
+                            </div>
+                            <div className="quote__item-info">
+                              <span className="quote__item-cat">
+                                {item.itemType === 'service' ? 'Service' : item.category}
+                              </span>
+                              <strong>{item.title}</strong>
+                              {item.serviceDescription && (
+                                <span className="quote__item-desc">{item.serviceDescription}</span>
+                              )}
+                              {item.itemType !== 'service' && (
+                                <label className="quote__item-frame">
+                                  <span>Frame material</span>
+                                  <select
+                                    className="field"
+                                    value={item.frameMaterial || frameOptions[0]?.label || ''}
+                                    onChange={(e) => updateQuoteFrame(item.productId, e.target.value)}
+                                  >
+                                    {frameOptions.map((opt) => (
+                                      <option key={opt.id} value={opt.label}>
+                                        {opt.label}
+                                        {opt.priceAdd > 0 ? ` (+${formatKes(opt.priceAdd)})` : ''}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </label>
+                              )}
+                              <span className="quote__item-price">
+                                {item.quoteOnly ? 'Price on request' : formatKes(item.unitPrice)}
+                                {!item.quoteOnly && item.itemType !== 'service' && (
+                                  <small> Indicative · frame affects final quote</small>
+                                )}
+                              </span>
+                            </div>
+                            <div className="quote__item-qty">
+                              {item.itemType === 'service' ? (
+                                <span className="quote__item-service-qty" aria-label="Quantity">1</span>
+                              ) : (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => updateQuoteQty(item.productId, item.qty - 1)}
+                                    aria-label="Decrease quantity"
+                                  >
+                                    −
+                                  </button>
+                                  <span>{item.qty}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => updateQuoteQty(item.productId, item.qty + 1)}
+                                    aria-label="Increase quantity"
+                                  >
+                                    +
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                            <button
+                              type="button"
+                              className="quote__item-remove"
+                              onClick={() => removeFromQuote(item.productId)}
+                              aria-label="Remove item"
+                            >
+                              ✕
+                            </button>
+                          </li>
+                        )
+                      })}
                     </ul>
                   </div>
 
                   <form className="quote__form card" onSubmit={handleSubmit} id="quote-form">
                     <h2>Your details</h2>
                     <p className="quote__form-intro">
-                      We&apos;ll use these details to prepare your workshop estimate.
+                      We&apos;ll use these details to prepare your workshop estimate for home or business.
                       {user ? ` Signed in as ${user.name}.` : ''}
                     </p>
 
@@ -491,7 +533,7 @@ export default function QuotePage() {
                         rows={4}
                         value={form.notes}
                         onChange={(e) => setField('notes', e.target.value)}
-                        placeholder="Dimensions, colours, timeline, or reference photos…"
+                        placeholder="Space type (bedroom, lounge, office…), dimensions, colours, timeline…"
                       />
                     </div>
 
@@ -518,12 +560,12 @@ export default function QuotePage() {
                   <strong>{quoteEstimate > 0 ? formatKes(quoteEstimate) : 'Custom quote'}</strong>
                 </div>
                 <p className="quote-summary__note">
-                  Final pricing depends on size, weave pattern, and finish. Delivery quoted separately.
+                  Indicative total for a base configuration. Frame material, size, and finish change the final workshop quote. Delivery quoted separately.
                 </p>
                 <ul className="quote-summary__trust">
-                  <li>✦ Workshop-direct pricing</li>
-                  <li>✦ Flexible budgets for every client</li>
-                  <li>✦ Response within 1 business day</li>
+                  <li>✦ Synthetic rattan weave</li>
+                  <li>✦ Frame: metal, aluminium, wood &amp; more</li>
+                  <li>✦ Tailored for any space — bedroom to business</li>
                 </ul>
                 {quoteCart.length > 0 && (
                   <a href="#quote-form" className="btn btn-primary quote-summary__cta">

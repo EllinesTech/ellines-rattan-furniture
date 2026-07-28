@@ -100,12 +100,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .quote__list-head h2,
 .quote__form h2 {
   font-size: 1.25rem;
+}
+
+.quote__materials-intro {
+  margin: 0 0 1rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.quote__item-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.quote__item-frame .field {
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.quote__item-price small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--muted);
 }
 
 .quote__form-intro {

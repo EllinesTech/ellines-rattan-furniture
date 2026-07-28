@@ -10,6 +10,13 @@ function ItemRow({ item, showPrices }) {
         {item.itemType === 'service' && item.serviceDescription && (
           <p className="enquiry-items__desc">{item.serviceDescription}</p>
         )}
+        {item.itemType !== 'service' && (item.frameMaterial || item.weaveMaterial) && (
+          <p className="enquiry-items__desc">
+            {[item.weaveMaterial && `Weave: ${item.weaveMaterial}`, item.frameMaterial && `Frame: ${item.frameMaterial}`]
+              .filter(Boolean)
+              .join(' · ')}
+          </p>
+        )}
       </div>
       <span className="enquiry-items__meta">
         {item.itemType === 'service' ? 'Service' : item.category}
