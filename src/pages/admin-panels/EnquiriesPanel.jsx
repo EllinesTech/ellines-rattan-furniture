@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   collection,
   doc,
@@ -17,6 +18,10 @@ import {
   loadLocalQuoteRequests,
   updateLocalQuoteRequest,
 } from '../../utils/auth'
+import EnquiryItemsList from '../../components/EnquiryItemsList'
+import { useApp } from '../../context/AppContext'
+import { getRequestTypeLabel, enquirySummary } from '../../utils/enquiries'
+import { createOrderFromEnquiry } from '../../utils/orders'
 
 const STATUS_OPTIONS = ['new', 'reviewing', 'quoted', 'won', 'lost']
 
@@ -61,10 +66,12 @@ function playNotifSound() {
 }
 
 export default function EnquiriesPanel() {
+  const { user, showToast } = useApp()
   const [enquiries, setEnquiries] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
   const [selected, setSelected] = useState(null)
+  const [creatingOrder, setCreatingOrder] = useState(false)
   const prevIds = useRef(new Set())
   const mounted = useRef(false)
   const firebaseReady = isFirebaseConfigured()
@@ -140,6 +147,8 @@ export default function EnquiriesPanel() {
   })
 
   const unreadCount = enquiries.filter((q) => q.read !== true).length
+  const serviceCount = enquiries.filter((q) => q.requestType === 'service_request').length
+  const budgetCount = enquiries.filter((q) => q.requestType === 'budget_request').length
 
   const markRead = async (enquiry, read = true) => {
     if (enquiry._local) {
@@ -166,6 +175,20 @@ export default function EnquiriesPanel() {
         { status, read: true, updatedAt: serverTimestamp() },
         { merge: true },
       )
+    }
+  }
+
+  async function handleCreateOrder() {
+    if (!selected || creatingOrder) return
+    setCreatingOrder(true)
+    try {
+      const order = await createOrderFromEnquiry(selected, user)
+      showToast?.(`Order ${order.orderNumber} created`)
+      if (selected.status !== 'won') await updateStatus(selected, 'won')
+    } catch (err) {
+      showToast?.(err?.message || 'Could not create order')
+    } finally {
+      setCreatingOrder(false)
     }
   }
 
@@ -198,6 +221,8 @@ export default function EnquiriesPanel() {
                 · <strong style={{ color: '#e8832a' }}>{unreadCount} unread</strong>
               </>
             )}
+            {serviceCount > 0 && <> · {serviceCount} service</>}
+            {budgetCount > 0 && <> · {budgetCount} budget</>}
           </p>
         </div>
       </div>
@@ -220,7 +245,11 @@ export default function EnquiriesPanel() {
           {loading ? (
             <p style={{ padding: 24, color: 'var(--muted)' }}>Loading enquiries…</p>
           ) : filtered.length === 0 ? (
-            <p style={{ padding: 24, color: 'var(--muted)', textAlign: 'center' }}>No enquiries yet</p>
+            <div className="dash-empty" style={{ padding: '2.5rem 1.5rem' }}>
+              <h3>No enquiries yet</h3>
+              <p>Quote and service requests from the shop and services page will appear here.</p>
+              <Link to="/shop" className="btn btn-outline" style={{ marginTop: 12 }}>View shop</Link>
+            </div>
           ) : (
             <table className="admin-table">
               <thead>
@@ -255,9 +284,9 @@ export default function EnquiriesPanel() {
                         )}
                       </td>
                       <td style={{ textTransform: 'capitalize' }}>
-                        {(q.requestType || 'formal_quote').replace('_', ' ')}
+                        {getRequestTypeLabel(q.requestType)}
                       </td>
-                      <td>{q.estimatedTotal > 0 ? formatKes(q.estimatedTotal) : '—'}</td>
+                      <td>{q.estimatedTotal > 0 ? formatKes(q.estimatedTotal) : enquirySummary(q.items)}</td>
                       <td>
                         <span
                           className="badge"
@@ -293,21 +322,13 @@ export default function EnquiriesPanel() {
               <div>📞 {selected.customer?.phone}</div>
               <div>✉️ {selected.customer?.email || '—'}</div>
               <div>📍 {selected.customer?.location || '—'}</div>
-              {selected.budget && <div>💰 Budget: {selected.budget}</div>}
+                  {selected.budget && <div>💰 Budget: {selected.budget}</div>}
+              {selected.budgetTier && <div>📊 Tier: {selected.budgetTier}</div>}
+              <div>📋 {getRequestTypeLabel(selected.requestType)}</div>
               <div>Preferred: {selected.preferredContact}</div>
             </div>
 
-            <h3 style={{ fontSize: '0.9rem', marginBottom: 8 }}>Items</h3>
-            <ul style={{ listStyle: 'none', marginBottom: 16, fontSize: '0.88rem' }}>
-              {(selected.items || []).map((item) => (
-                <li key={`${item.productId}-${item.title}`} style={{ padding: '6px 0', borderBottom: '1px solid var(--dim)' }}>
-                  {item.title} × {item.qty}{' '}
-                  <span style={{ color: 'var(--muted)' }}>
-                    ({item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)})
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <EnquiryItemsList items={selected.items || []} />
 
             {selected.notes && (
               <>
@@ -343,6 +364,14 @@ export default function EnquiriesPanel() {
                   Mark read
                 </button>
               )}
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleCreateOrder}
+                disabled={creatingOrder}
+              >
+                {creatingOrder ? 'Creating…' : 'Create order'}
+              </button>
             </div>
           </div>
         )}

@@ -1,9 +1,9 @@
 import PageHero from '../components/PageHero'
 import TeamSection from '../components/TeamSection'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function TeamPage() {
-  const meta = PAGE_META.aboutTeam
+  const meta = usePageMeta('aboutTeam')
   return (
     <>
       <PageHero

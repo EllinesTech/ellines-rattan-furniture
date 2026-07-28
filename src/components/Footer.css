@@ -70,7 +70,7 @@
 
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.4fr 0.9fr 0.9fr 1.1fr;
+  grid-template-columns: 1.4fr 1fr 0.9fr 0.9fr 1.1fr;
   gap: 36px;
   margin-bottom: 40px;
 }
@@ -192,6 +192,40 @@
 
 .footer__bottom a:hover {
   color: var(--gold);
+}
+
+.footer__newsletter h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.footer__newsletter p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.footer__newsletter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer__newsletter-row .field {
+  flex: 1;
+  min-width: 140px;
+}
+
+.footer__newsletter-ok {
+  font-size: 0.82rem;
+  color: var(--ok);
+  margin-top: 8px;
+}
+
+.footer__newsletter-err {
+  font-size: 0.82rem;
+  color: #f5a8a0;
+  margin-top: 8px;
 }
 
 @media (max-width: 768px) {

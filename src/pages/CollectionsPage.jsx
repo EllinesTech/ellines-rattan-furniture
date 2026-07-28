@@ -1,9 +1,9 @@
 import PageHero from '../components/PageHero'
 import CollectionsSection from '../components/CollectionsSection'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function CollectionsPage() {
-  const meta = PAGE_META.collections
+  const meta = usePageMeta('collections')
   return (
     <>
       <PageHero

@@ -13,6 +13,11 @@ import { db, isFirebaseConfigured, SUPER_ADMIN_EMAIL as ENV_SUPER_ADMIN_EMAIL } 
 import { FS } from '../firestorePaths'
 import { storePasswordValue, verifyPassword } from './passwordSecurity'
 import { ROLES } from './roles'
+import {
+  ALL_PERMISSIONS,
+  DEFAULT_ADMIN_PERMISSIONS,
+  normalizePermissions,
+} from './permissions'
 
 const DEV_ADMIN_KEY = 'er_dev_admin_hash'
 const LOCAL_QUOTES_KEY = 'er_local_quote_requests'
@@ -30,6 +35,16 @@ export {
   getPostLoginRoute,
   getRoleLabel,
 } from './roles'
+
+export {
+  PERMISSIONS,
+  ALL_PERMISSIONS,
+  PERMISSION_LABELS,
+  DEFAULT_ADMIN_PERMISSIONS,
+  getUserPermissions,
+  hasPermission,
+  canManageAdmins,
+} from './permissions'
 
 export function isDevAdminMode() {
   return !isFirebaseConfigured() && Boolean(import.meta.env.VITE_DEV_ADMIN_PASSWORD)
@@ -176,6 +191,128 @@ export async function loginPortalUser(email, password) {
   }
 }
 
+export async function listAdminAccounts() {
+  if (isFirebaseConfigured() && db) {
+    try {
+      const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
+      if (!snap.exists()) return []
+      const admins = snap.data()?.accounts || []
+      return admins.map((a) => ({
+        ...a,
+        permissions: a.role === ROLES.SUPERADMIN ? ALL_PERMISSIONS : normalizePermissions(a.permissions),
+      }))
+    } catch (e) {
+      console.warn('[listAdminAccounts]', e.message)
+    }
+  }
+  return []
+}
+
+export async function createAdminAccount({ name, email, phone, password, permissions }, createdBy) {
+  const emailKey = email.toLowerCase().trim()
+  const existing = await findUserByEmail(emailKey)
+  if (existing) throw new Error('A user with this email already exists.')
+
+  const snap = isFirebaseConfigured() && db
+    ? await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
+    : null
+  const admins = snap?.exists() ? snap.data()?.accounts || [] : []
+  if (admins.some((a) => (a.email || '').toLowerCase() === emailKey)) {
+    throw new Error('This email is already an admin account.')
+  }
+
+  const hashed = await storePasswordValue(password)
+  const perms = normalizePermissions(permissions?.length ? permissions : DEFAULT_ADMIN_PERMISSIONS)
+  const entry = {
+    email: emailKey,
+    name: name.trim(),
+    phone: (phone || '').trim(),
+    role: ROLES.ADMIN,
+    permissions: perms,
+    id: `admin_${Date.now()}`,
+    password: hashed,
+    createdBy: createdBy?.email || null,
+    createdAt: new Date().toISOString(),
+    active: true,
+  }
+
+  if (isFirebaseConfigured() && db) {
+    const pwMap = snap?.data()?.pwOverrides || {}
+    await setDoc(
+      doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS),
+      {
+        accounts: [...admins, entry],
+        pwOverrides: { ...pwMap, [emailKey]: hashed },
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true },
+    )
+  }
+
+  return { ...entry, password: undefined }
+}
+
+export async function updateAdminAccount(email, patch, actor) {
+  const emailKey = email.toLowerCase().trim()
+  if (!isFirebaseConfigured() || !db) throw new Error('Firebase required to manage admins.')
+
+  const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
+  const data = snap.exists() ? snap.data() || {} : {}
+  const admins = data.accounts || []
+  const target = admins.find((a) => (a.email || '').toLowerCase() === emailKey)
+  if (!target) throw new Error('Admin account not found.')
+  if (target.role === ROLES.SUPERADMIN) throw new Error('Cannot modify the super admin account here.')
+
+  const nextAccounts = admins.map((a) => {
+    if ((a.email || '').toLowerCase() !== emailKey) return a
+    const updated = { ...a, ...patch, email: emailKey }
+    if (patch.permissions) {
+      updated.permissions = normalizePermissions(patch.permissions)
+    }
+    if (patch.password) {
+      delete updated.password
+    }
+    updated.updatedBy = actor?.email || null
+    updated.updatedAt = new Date().toISOString()
+    return updated
+  })
+
+  const payload = { accounts: nextAccounts, updatedAt: serverTimestamp() }
+  if (patch.password) {
+    const hashed = await storePasswordValue(patch.password)
+    payload.pwOverrides = { ...(data.pwOverrides || {}), [emailKey]: hashed }
+  }
+
+  await setDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS), payload, { merge: true })
+  return nextAccounts.find((a) => (a.email || '').toLowerCase() === emailKey)
+}
+
+export async function removeAdminAccount(email, actor) {
+  const emailKey = email.toLowerCase().trim()
+  if (!isFirebaseConfigured() || !db) throw new Error('Firebase required to manage admins.')
+
+  const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
+  const data = snap.exists() ? snap.data() || {} : {}
+  const admins = data.accounts || []
+  const target = admins.find((a) => (a.email || '').toLowerCase() === emailKey)
+  if (!target) throw new Error('Admin account not found.')
+  if (target.role === ROLES.SUPERADMIN) throw new Error('Cannot remove the super admin account.')
+
+  const pwMap = { ...(data.pwOverrides || {}) }
+  delete pwMap[emailKey]
+
+  await setDoc(
+    doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS),
+    {
+      accounts: admins.filter((a) => (a.email || '').toLowerCase() !== emailKey),
+      pwOverrides: pwMap,
+      updatedAt: serverTimestamp(),
+      lastRemovedBy: actor?.email || null,
+    },
+    { merge: true },
+  )
+}
+
 export async function createStaffAccount({ name, email, phone, password }, createdBy) {
   const emailKey = email.toLowerCase().trim()
   const existing = await findUserByEmail(emailKey)
@@ -268,7 +405,12 @@ export async function checkAdminCredentials(email, password) {
             { merge: true },
           )
         }
-        return byEmail
+        return {
+          ...byEmail,
+          permissions: byEmail.role === ROLES.SUPERADMIN
+            ? ALL_PERMISSIONS
+            : normalizePermissions(byEmail.permissions || DEFAULT_ADMIN_PERMISSIONS),
+        }
       }
 
       if (admins.length === 0 && emailKey === superEmail) {
@@ -279,6 +421,7 @@ export async function checkAdminCredentials(email, password) {
           name: 'Admin',
           id: 'admin01',
           password: hashed,
+          permissions: ALL_PERMISSIONS,
         }
         await setDoc(
           doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS),
@@ -330,6 +473,9 @@ export async function authenticateUser(email, password) {
       name: admin.name || 'Admin',
       email: admin.email,
       role: admin.role || ROLES.ADMIN,
+      permissions: admin.role === ROLES.SUPERADMIN
+        ? ALL_PERMISSIONS
+        : normalizePermissions(admin.permissions || DEFAULT_ADMIN_PERMISSIONS),
     }
   }
 
@@ -420,10 +566,17 @@ export function buildWhatsAppLink({ phone, message }) {
 }
 
 export function buildQuoteWhatsAppMessage(request) {
+  const typeLabels = {
+    budget_request: 'budget estimate',
+    service_request: 'service request',
+    formal_quote: 'formal quote',
+  }
+  const requestLabel = typeLabels[request.requestType] || 'quote'
+
   const lines = [
     `Hello Ellines Rattan Furniture,`,
     ``,
-    `I would like to request a ${request.requestType === 'budget_request' ? 'budget estimate' : 'formal quote'}.`,
+    `I would like to submit a ${requestLabel}.`,
     ``,
     `*Name:* ${request.customer.name}`,
     `*Phone:* ${request.customer.phone}`,
@@ -432,11 +585,35 @@ export function buildQuoteWhatsAppMessage(request) {
     `*Preferred contact:* ${request.preferredContact}`,
   ]
   if (request.budget) lines.push(`*Budget:* ${request.budget}`)
-  lines.push('', '*Items:*')
-  request.items.forEach((item) => {
-    const price = item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)
-    lines.push(`• ${item.title} × ${item.qty} (${price})`)
-  })
+  if (request.budgetTier) lines.push(`*Budget tier:* ${request.budgetTier}`)
+
+  const services = (request.items || []).filter((i) => i.itemType === 'service')
+  const products = (request.items || []).filter((i) => i.itemType !== 'service')
+
+  if (services.length) {
+    lines.push('', '*Services requested:*')
+    services.forEach((item) => {
+      const price = item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)
+      lines.push(`• ${item.title} × ${item.qty} (${price})`)
+      if (item.serviceDescription) lines.push(`  _${item.serviceDescription}_`)
+    })
+  }
+
+  if (products.length) {
+    lines.push('', '*Products:*')
+    products.forEach((item) => {
+      const price = item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)
+      lines.push(`• ${item.title} × ${item.qty} (${price})`)
+    })
+  }
+
+  if (!services.length && !products.length && request.items?.length) {
+    lines.push('', '*Items:*')
+    request.items.forEach((item) => {
+      const price = item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)
+      lines.push(`• ${item.title} × ${item.qty} (${price})`)
+    })
+  }
   if (request.estimatedTotal > 0) {
     lines.push('', `*Estimated total:* ${formatKes(request.estimatedTotal)}`)
   }
@@ -445,8 +622,13 @@ export function buildQuoteWhatsAppMessage(request) {
 }
 
 export function buildQuoteMailto(request, toEmail) {
+  const typeLabels = {
+    budget_request: 'Budget request',
+    service_request: 'Service request',
+    formal_quote: 'Quote request',
+  }
   const subject = encodeURIComponent(
-    `${request.requestType === 'budget_request' ? 'Budget request' : 'Quote request'} — ${request.customer.name}`,
+    `${typeLabels[request.requestType] || 'Quote request'} — ${request.customer.name}`,
   )
   const body = encodeURIComponent(buildQuoteWhatsAppMessage(request))
   return `mailto:${toEmail}?subject=${subject}&body=${body}`

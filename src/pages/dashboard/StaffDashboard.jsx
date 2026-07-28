@@ -8,6 +8,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import { useApp } from '../../context/AppContext'
+import EnquiryItemsList from '../../components/EnquiryItemsList'
 import { db, isFirebaseConfigured } from '../../firebase'
 import { FS } from '../../firestorePaths'
 import { SITE } from '../../data/site'
@@ -19,29 +20,19 @@ import {
   loadLocalQuoteRequests,
   updateLocalQuoteRequest,
 } from '../../utils/auth'
+import {
+  STATUS_OPTIONS,
+  STATUS_LABELS,
+  FILTER_LABELS,
+  getRequestTypeLabel,
+  fmtEnquiryDate,
+  enquirySummary,
+} from '../../utils/enquiries'
 import { getRoleLabel } from '../../utils/roles'
 import './Dashboard.css'
 
-const STATUS_OPTIONS = ['new', 'reviewing', 'quoted', 'won', 'lost']
-
-function fmtDate(value) {
-  if (!value) return '—'
-  try {
-    const d = value?.toDate ? value.toDate() : new Date(value)
-    return d.toLocaleDateString('en-KE', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
-  } catch {
-    return '—'
-  }
-}
-
 export default function StaffDashboard() {
-  const { user, setUser } = useApp()
+  const { user, setUser, isSuperAdmin } = useApp()
   const navigate = useNavigate()
   const [enquiries, setEnquiries] = useState([])
   const [loading, setLoading] = useState(true)
@@ -83,7 +74,7 @@ export default function StaffDashboard() {
   }, [firebaseReady])
 
   const myEnquiries = enquiries.filter((q) => {
-    if (user?.role === 'superadmin') return true
+    if (isSuperAdmin) return true
     if (!q.assignedTo) return q.status === 'new' || !q.status
     return q.assignedTo === user?.id || q.assignedTo === user?.email
   })
@@ -95,9 +86,9 @@ export default function StaffDashboard() {
   })
 
   const newCount = myEnquiries.filter((q) => (q.status === 'new' || !q.status) && !q.read).length
+  const serviceCount = myEnquiries.filter((q) => q.requestType === 'service_request').length
 
-  const updateStatus = async (enquiry, status) => {
-    const patch = { status, read: true, assignedTo: user?.id || user?.email }
+  const patchEnquiry = async (enquiry, patch) => {
     if (enquiry._local) {
       updateLocalQuoteRequest(enquiry.id, patch)
       setEnquiries((prev) => prev.map((q) => (q.id === enquiry.id ? { ...q, ...patch } : q)))
@@ -113,17 +104,17 @@ export default function StaffDashboard() {
     }
   }
 
-  const assignToMe = async (enquiry) => {
-    const patch = { assignedTo: user?.id || user?.email, read: true }
-    if (enquiry._local) {
-      updateLocalQuoteRequest(enquiry.id, patch)
-      setEnquiries((prev) => prev.map((q) => (q.id === enquiry.id ? { ...q, ...patch } : q)))
-      if (selected?.id === enquiry.id) setSelected((s) => ({ ...s, ...patch }))
-      return
-    }
-    if (firebaseReady && db) {
-      await setDoc(doc(db, FS.QUOTE_REQUESTS, enquiry.id), { ...patch, updatedAt: serverTimestamp() }, { merge: true })
-    }
+  const updateStatus = (enquiry, status) =>
+    patchEnquiry(enquiry, { status, read: true, assignedTo: user?.id || user?.email })
+
+  const assignToMe = (enquiry) =>
+    patchEnquiry(enquiry, { assignedTo: user?.id || user?.email, read: true })
+
+  const markRead = (enquiry) => patchEnquiry(enquiry, { read: true })
+
+  const openEnquiry = (enquiry) => {
+    setSelected(enquiry)
+    if (!enquiry.read) markRead(enquiry)
   }
 
   const signOut = () => {
@@ -136,6 +127,10 @@ export default function StaffDashboard() {
         phone: selected.customer?.phone || SITE.phones[0].tel,
         message: buildQuoteWhatsAppMessage(selected),
       })
+    : '#'
+
+  const mailLink = selected
+    ? buildQuoteMailto(selected, selected.customer?.email || SITE.email)
     : '#'
 
   return (
@@ -151,6 +146,9 @@ export default function StaffDashboard() {
           </Link>
           <div className="dash__nav">
             <span className="dash__role-badge">{getRoleLabel(user?.role)}</span>
+            {isSuperAdmin && (
+              <Link to="/admin" className="btn btn-outline">Admin panel</Link>
+            )}
             <Link to="/shop" className="btn btn-outline">Shop</Link>
             <button type="button" className="btn btn-outline" onClick={signOut}>Sign out</button>
           </div>
@@ -159,7 +157,7 @@ export default function StaffDashboard() {
 
       <main className="dash__main">
         <div className="dash__hero">
-          <h1>Quote enquiries</h1>
+          <h1>Quote &amp; service enquiries</h1>
           <p>Review assigned requests, update status, and contact customers directly.</p>
         </div>
 
@@ -178,6 +176,10 @@ export default function StaffDashboard() {
             </div>
             <div className="dash-stat__label">Quoted</div>
           </div>
+          <div className="dash-stat">
+            <div className="dash-stat__value">{serviceCount}</div>
+            <div className="dash-stat__label">Service requests</div>
+          </div>
         </div>
 
         <div className="dash-split">
@@ -193,23 +195,24 @@ export default function StaffDashboard() {
                   className={`dash-filter-btn ${filter === f ? 'dash-filter-btn--active' : ''}`}
                   onClick={() => setFilter(f)}
                 >
-                  {f}
+                  {FILTER_LABELS[f] || f}
                 </button>
               ))}
             </div>
-            <div className="dash-card__body" style={{ maxHeight: '60vh', overflow: 'auto' }}>
+            <div className="dash-card__body dash-table-wrap">
               {loading ? (
                 <p className="dash-empty">Loading…</p>
               ) : filtered.length === 0 ? (
                 <div className="dash-empty">
                   <h3>No enquiries</h3>
-                  <p>New quote requests will appear here.</p>
+                  <p>New quote and service requests will appear here.</p>
                 </div>
               ) : (
                 <table className="dash-table">
                   <thead>
                     <tr>
                       <th>Customer</th>
+                      <th>Type</th>
                       <th>Status</th>
                       <th>Date</th>
                     </tr>
@@ -218,24 +221,26 @@ export default function StaffDashboard() {
                     {filtered.map((q) => (
                       <tr
                         key={q.id}
-                        className={selected?.id === q.id ? 'dash-table__row--active' : ''}
-                        onClick={() => setSelected(q)}
+                        className={`${selected?.id === q.id ? 'dash-table__row--active' : ''}${q.read === false ? ' dash-table__row--unread' : ''}`}
+                        onClick={() => openEnquiry(q)}
                         style={{ cursor: 'pointer' }}
                       >
                         <td>
                           <strong>{q.customer?.name || '—'}</strong>
-                          <div style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>
-                            {q.customer?.phone}
-                          </div>
+                          <div className="dash-table__sub">{q.customer?.phone}</div>
+                          <div className="dash-table__sub">{enquirySummary(q.items)}</div>
+                        </td>
+                        <td>
+                          <span className={`dash-type dash-type--${q.requestType || 'formal_quote'}`}>
+                            {getRequestTypeLabel(q.requestType)}
+                          </span>
                         </td>
                         <td>
                           <span className={`dash-status dash-status--${q.status || 'new'}`}>
-                            {q.status || 'new'}
+                            {STATUS_LABELS[q.status] || q.status || 'new'}
                           </span>
                         </td>
-                        <td style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>
-                          {fmtDate(q.createdAt)}
-                        </td>
+                        <td className="dash-table__date">{fmtEnquiryDate(q.createdAt, true)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -248,7 +253,7 @@ export default function StaffDashboard() {
             <div className="dash-card">
               <div className="dash-card__head">
                 <h2>{selected.customer?.name}</h2>
-                <button type="button" onClick={() => setSelected(null)} style={{ color: 'var(--muted)' }}>
+                <button type="button" onClick={() => setSelected(null)} className="dash-close-btn" aria-label="Close">
                   ✕
                 </button>
               </div>
@@ -257,35 +262,26 @@ export default function StaffDashboard() {
                   <div>📞 {selected.customer?.phone}</div>
                   <div>✉️ {selected.customer?.email || '—'}</div>
                   <div>📍 {selected.customer?.location || '—'}</div>
+                  <div>📋 {getRequestTypeLabel(selected.requestType)}</div>
                   {selected.budget && <div>💰 Budget: {selected.budget}</div>}
+                  {selected.budgetTier && <div>📊 Tier: {selected.budgetTier}</div>}
                   <div>Preferred: {selected.preferredContact}</div>
                   {selected.estimatedTotal > 0 && (
                     <div>Estimate: {formatKes(selected.estimatedTotal)}</div>
                   )}
+                  {selected.assignedTo && <div>Assigned: {selected.assignedTo}</div>}
                 </div>
 
-                <h3 style={{ fontSize: '0.9rem', marginBottom: 8 }}>Items</h3>
-                <ul className="dash-detail__items">
-                  {(selected.items || []).map((item) => (
-                    <li key={`${item.productId}-${item.title}`}>
-                      {item.title} × {item.qty}{' '}
-                      <span style={{ color: 'var(--muted)' }}>
-                        ({item.quoteOnly ? 'Quote only' : formatKes(item.unitPrice)})
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <EnquiryItemsList items={selected.items || []} />
 
                 {selected.notes && (
                   <>
-                    <h3 style={{ fontSize: '0.9rem', marginBottom: 6 }}>Notes</h3>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: 16, whiteSpace: 'pre-wrap' }}>
-                      {selected.notes}
-                    </p>
+                    <h3 className="dash-detail__heading">Notes</h3>
+                    <p className="dash-detail__notes">{selected.notes}</p>
                   </>
                 )}
 
-                <div className="dash-filters" style={{ padding: '0 0 16px', border: 'none' }}>
+                <div className="dash-filters dash-filters--inline">
                   {STATUS_OPTIONS.map((s) => (
                     <button
                       key={s}
@@ -293,18 +289,24 @@ export default function StaffDashboard() {
                       className={`dash-filter-btn ${selected.status === s ? 'dash-filter-btn--active' : ''}`}
                       onClick={() => updateStatus(selected, s)}
                     >
-                      {s}
+                      {STATUS_LABELS[s]}
                     </button>
                   ))}
                 </div>
 
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <div className="dash-detail__actions">
                   <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-wa">
-                    WhatsApp customer
+                    WhatsApp
                   </a>
+                  <a href={mailLink} className="btn btn-outline">Email</a>
                   {!selected.assignedTo && (
                     <button type="button" className="btn btn-outline" onClick={() => assignToMe(selected)}>
                       Assign to me
+                    </button>
+                  )}
+                  {selected.read === false && (
+                    <button type="button" className="btn btn-outline" onClick={() => markRead(selected)}>
+                      Mark read
                     </button>
                   )}
                 </div>

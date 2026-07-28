@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import LegalSection from '../components/LegalSection'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 
 const TERMS_SECTIONS = [
@@ -74,7 +74,7 @@ const TERMS_SECTIONS = [
 ]
 
 export default function TermsPage() {
-  const meta = PAGE_META.terms
+  const meta = usePageMeta('terms')
   return (
     <>
       <PageHero

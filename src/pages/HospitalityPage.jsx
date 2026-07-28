@@ -1,9 +1,9 @@
 import PageHero from '../components/PageHero'
 import HospitalitySection from '../components/HospitalitySection'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function HospitalityPage() {
-  const meta = PAGE_META.hospitality
+  const meta = usePageMeta('hospitality')
   return (
     <>
       <PageHero

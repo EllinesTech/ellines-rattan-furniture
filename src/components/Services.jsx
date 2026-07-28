@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom'
-import { SERVICE_PRICING, SERVICES, SITE, WHY_CHOOSE } from '../data/site'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
+import { SERVICE_PRICING, SERVICES, SITE, WHY_CHOOSE, BUDGET_TIERS, BUDGET_NOTE } from '../data/site'
 import { formatKes } from '../utils/auth'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
@@ -52,6 +54,14 @@ const ICONS = {
   ),
 }
 
+const CUSTOM_SERVICE_STUB = {
+  title: 'Custom service',
+  icon: 'craft',
+  image: '/images/projects/project-craftsmanship-weaving.jpg',
+  pricing: { type: 'quote' },
+  description: 'Tell us what you need and our workshop will respond with options.',
+}
+
 function formatServicePrice(pricing) {
   if (!pricing) return null
   if (pricing.type === 'quote') return 'Price on request'
@@ -66,8 +76,131 @@ function formatTierPrice(item) {
   return `From ${formatKes(item.price)}`
 }
 
+function ServiceRequestModal({ onClose, onSubmit }) {
+  const [title, setTitle] = useState('')
+  const [details, setDetails] = useState('')
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [onClose])
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!title.trim()) {
+      setError('Please describe the service you need.')
+      return
+    }
+    onSubmit({ title: title.trim(), details: details.trim() })
+  }
+
+  return (
+    <div className="services-modal" role="dialog" aria-modal="true" aria-labelledby="services-modal-title">
+      <button type="button" className="services-modal__backdrop" onClick={onClose} aria-label="Close" />
+      <div className="services-modal__panel card">
+        <div className="services-modal__head">
+          <h2 id="services-modal-title">Custom service request</h2>
+          <button type="button" className="services-modal__close" onClick={onClose} aria-label="Close">
+            ✕
+          </button>
+        </div>
+        <p className="services-modal__intro">
+          Describe what you need — repairs, a one-off build, consultation, or anything not listed.
+          We welcome all budgets.
+        </p>
+        {error && <div className="services-modal__error" role="alert">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="custom-service-title">What service do you need? *</label>
+            <input
+              id="custom-service-title"
+              className="field"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. Re-weave patio chairs, custom bar stools…"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="custom-service-details">Additional details</label>
+            <textarea
+              id="custom-service-details"
+              className="field"
+              rows={4}
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+              placeholder="Dimensions, photos you can share, timeline, budget…"
+            />
+          </div>
+          <div className="services-modal__actions">
+            <button type="button" className="btn btn-outline" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Continue to request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 export default function Services({ standalone = false }) {
+  const { siteContent, addServiceRequest, showToast, quoteCount } = useApp()
+  const navigate = useNavigate()
+  const [customOpen, setCustomOpen] = useState(false)
+  const [requestedId, setRequestedId] = useState(null)
+
+  const services = siteContent?.services || SERVICES
+  const servicePricing = siteContent?.servicePricing || SERVICE_PRICING
+  const budgetTiers = siteContent?.budgetTiers || BUDGET_TIERS
+  const budgetNote = siteContent?.budgetNote || BUDGET_NOTE
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
+
+  const goToServiceQuote = (service, options = {}) => {
+    addServiceRequest(service, options)
+    const label = options.customTitle || options.pricingItemName || service.title
+    setRequestedId(service.title)
+    setTimeout(() => setRequestedId(null), 2000)
+    showToast(`“${label}” added to your request`, {
+      actionHref: '/quote',
+      actionLabel: `Continue (${quoteCount + 1})`,
+    })
+    navigate('/quote', { state: { requestType: 'service_request' } })
+  }
+
+  const handlePricingItemRequest = (item, tierGroup) => {
+    const stub = {
+      title: item.name,
+      icon: 'craft',
+      pricing: {
+        type: item.type === 'quote' ? 'quote' : item.type,
+        amount: item.price,
+      },
+      description: item.detail || tierGroup,
+    }
+    goToServiceQuote(stub, { pricingItemName: item.name })
+  }
+
+  const handleCustomSubmit = ({ title, details }) => {
+    addServiceRequest(CUSTOM_SERVICE_STUB, { customTitle: title, customDescription: details })
+    setCustomOpen(false)
+    showToast('Custom service added — complete your details', {
+      actionHref: '/quote',
+      actionLabel: 'Continue',
+    })
+    navigate('/quote', { state: { requestType: 'service_request' } })
+  }
 
   return (
     <section id={standalone ? undefined : 'services'} className={`section services ${standalone ? 'services--page' : ''}`}>
@@ -78,7 +211,7 @@ export default function Services({ standalone = false }) {
             <h2>Custom Rattan Furniture &amp; Care</h2>
             <p>
               New builds, repairs at a reasonable price, and paid furniture consultation —
-              from our Nyeri and Nairobi workshops.
+              from our Nyeri and Nairobi workshops. Tap any service to request it.
             </p>
           </Reveal>
         )}
@@ -97,7 +230,7 @@ export default function Services({ standalone = false }) {
             <div>
               <p className="section-eyebrow">Transparent pricing</p>
               <h2>Service pricing guide</h2>
-              <p>{SERVICE_PRICING.note}</p>
+              <p>{servicePricing.note}</p>
             </div>
             <Link to="/shop" className="btn btn-outline services-pricing__shop-link">
               View shop catalogue
@@ -105,7 +238,7 @@ export default function Services({ standalone = false }) {
           </div>
 
           <div className="services-pricing__grid">
-            {SERVICE_PRICING.tiers.map((tier) => (
+            {servicePricing.tiers.map((tier) => (
               <div key={tier.group} className="services-pricing__tier">
                 <h3>{tier.group}</h3>
                 <ul className="services-pricing__list">
@@ -115,7 +248,16 @@ export default function Services({ standalone = false }) {
                         <span className="services-pricing__name">{item.name}</span>
                         {item.detail && <span className="services-pricing__detail">{item.detail}</span>}
                       </div>
-                      <span className="services-pricing__price">{formatTierPrice(item)}</span>
+                      <div className="services-pricing__row-actions">
+                        <span className="services-pricing__price">{formatTierPrice(item)}</span>
+                        <button
+                          type="button"
+                          className="services-pricing__request-btn"
+                          onClick={() => handlePricingItemRequest(item, tier.group)}
+                        >
+                          Request
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -123,11 +265,36 @@ export default function Services({ standalone = false }) {
             ))}
           </div>
 
-          <p className="services-pricing__footnote">{SERVICE_PRICING.deliveryNote}</p>
+          <p className="services-pricing__footnote">{servicePricing.deliveryNote}</p>
+        </Reveal>
+
+        <Reveal className="services-budget card" delay={100}>
+          <div className="services-budget__head">
+            <p className="section-eyebrow">For every budget</p>
+            <h2>Custom budget options</h2>
+            <p>{budgetNote}</p>
+          </div>
+          <div className="services-budget__grid">
+            {budgetTiers.map((tier) => (
+              <div key={tier.id} className="services-budget__tier">
+                <strong>{tier.label}</strong>
+                <span className="services-budget__range">{tier.range}</span>
+                <p>{tier.note}</p>
+              </div>
+            ))}
+          </div>
+          <Link to="/quote" className="btn btn-primary services-budget__cta">
+            Request a budget-friendly quote
+          </Link>
+        </Reveal>
+
+        <Reveal className="services__section-head" delay={60}>
+          <h2>Our services</h2>
+          <p>Press any service below to add it to your request, or describe a custom need.</p>
         </Reveal>
 
         <div className="services__grid">
-          {SERVICES.map((service, i) => (
+          {services.map((service, i) => (
             <Reveal key={service.title} delay={i * 70}>
               <article className="services__card card card--interactive">
                 <span className="card__shine" aria-hidden="true" />
@@ -147,10 +314,37 @@ export default function Services({ standalone = false }) {
                   {service.pricing?.note && (
                     <p className="services__price-note">{service.pricing.note}</p>
                   )}
+                  <button
+                    type="button"
+                    className={`btn btn-primary services__request-btn ${requestedId === service.title ? 'services__request-btn--done' : ''}`}
+                    onClick={() => goToServiceQuote(service)}
+                  >
+                    {requestedId === service.title ? 'Added — opening quote…' : 'Request this service'}
+                  </button>
                 </div>
               </article>
             </Reveal>
           ))}
+
+          <Reveal delay={services.length * 70}>
+            <article className="services__card services__card--custom card card--interactive">
+              <div className="services__custom-inner">
+                <div className="services__icon">{ICONS.craft}</div>
+                <h3>Custom service request</h3>
+                <p>
+                  Need something not listed? Repairs, unusual sizes, hospitality projects,
+                  or a mix of services — tell us what you have in mind.
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-outline services__request-btn"
+                  onClick={() => setCustomOpen(true)}
+                >
+                  Describe your need
+                </button>
+              </div>
+            </article>
+          </Reveal>
         </div>
 
         <Reveal className="services__cta-band" delay={150}>
@@ -159,8 +353,11 @@ export default function Services({ standalone = false }) {
             <p>Share photos, dimensions, or a sketch — we will confirm pricing before any work begins.</p>
           </div>
           <div className="services__cta-btns">
+            <button type="button" className="btn btn-outline" onClick={() => setCustomOpen(true)}>
+              Custom service
+            </button>
             <Link to="/quote" className="btn btn-outline">
-              Build a quote
+              View quote builder
             </Link>
             <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
               WhatsApp Quote
@@ -168,6 +365,13 @@ export default function Services({ standalone = false }) {
           </div>
         </Reveal>
       </div>
+
+      {customOpen && (
+        <ServiceRequestModal
+          onClose={() => setCustomOpen(false)}
+          onSubmit={handleCustomSubmit}
+        />
+      )}
     </section>
   )
 }

@@ -144,6 +144,13 @@
   margin-bottom: 1.5rem;
 }
 
+.quote__empty-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .quote__items {
   list-style: none;
   display: flex;
@@ -202,6 +209,21 @@
 .quote__item-price {
   color: var(--muted);
   font-size: 0.82rem;
+}
+
+.quote__item-desc {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 2px 0 4px;
+}
+
+.quote__item-service-qty {
+  min-width: 30px;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted);
 }
 
 .quote__item-qty {
@@ -265,6 +287,10 @@
   margin-bottom: 1.5rem;
 }
 
+.quote__type--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .quote__type-option {
   display: flex;
   gap: 10px;
@@ -294,6 +320,67 @@
 .quote__type-option--active {
   border-color: rgba(201, 168, 76, 0.5);
   background: rgba(201, 168, 76, 0.08);
+}
+
+.quote__budget-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: var(--r-sm);
+  background: rgba(201, 168, 76, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.quote__budget-intro {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  line-height: 1.55;
+}
+
+.quote__budget-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.quote__budget-tier {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.quote__budget-tier input {
+  accent-color: var(--gold);
+  margin-top: 3px;
+}
+
+.quote__budget-tier strong {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.quote__budget-tier small {
+  display: block;
+  color: var(--gold);
+  font-size: 0.75rem;
+  margin: 2px 0;
+}
+
+.quote__budget-tier em {
+  display: block;
+  font-style: normal;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.quote__budget-tier--active {
+  border-color: rgba(201, 168, 76, 0.5);
+  background: rgba(201, 168, 76, 0.1);
 }
 
 .quote__error {
@@ -476,6 +563,10 @@
   }
 
   .quote__type {
+    grid-template-columns: 1fr;
+  }
+
+  .quote__type--three {
     grid-template-columns: 1fr;
   }
 

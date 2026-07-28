@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import Gallery from '../components/Gallery'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function ProjectsPage() {
-  const meta = PAGE_META.projects
+  const meta = usePageMeta('projects')
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import LegalSection from '../components/LegalSection'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 
 const PRIVACY_SECTIONS = [
@@ -86,7 +86,7 @@ const PRIVACY_SECTIONS = [
 ]
 
 export default function PrivacyPage() {
-  const meta = PAGE_META.privacy
+  const meta = usePageMeta('privacy')
   return (
     <>
       <PageHero

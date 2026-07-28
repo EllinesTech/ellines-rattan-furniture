@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import PageHero from '../components/PageHero'
 import OptimizedImage from '../components/OptimizedImage'
@@ -18,9 +18,8 @@ import {
 import './QuotePage.css'
 
 const STEPS = [
-  { id: 1, label: 'Review items' },
-  { id: 2, label: 'Your details' },
-  { id: 3, label: 'Send request' },
+  { id: 1, label: 'Add items' },
+  { id: 2, label: 'Submit request' },
 ]
 
 const EMPTY_FORM = {
@@ -29,12 +28,14 @@ const EMPTY_FORM = {
   email: '',
   location: '',
   budget: '',
+  budgetTier: '',
   notes: '',
   preferredContact: 'whatsapp',
   requestType: 'formal_quote',
 }
 
 export default function QuotePage() {
+  const location = useLocation()
   const {
     quoteCart,
     quoteCount,
@@ -44,9 +45,21 @@ export default function QuotePage() {
     clearQuote,
     firebaseReady,
     user,
+    siteContent,
   } = useApp()
 
-  const [step, setStep] = useState(1)
+  const budgetTiers = siteContent?.budgetTiers || []
+  const budgetNote = siteContent?.budgetNote || ''
+
+  const hasServiceItems = useMemo(
+    () => quoteCart.some((item) => item.itemType === 'service'),
+    [quoteCart],
+  )
+  const hasProductItems = useMemo(
+    () => quoteCart.some((item) => item.itemType !== 'service'),
+    [quoteCart],
+  )
+
   const [form, setForm] = useState(EMPTY_FORM)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(null)
@@ -71,22 +84,33 @@ export default function QuotePage() {
   }, [])
 
   useEffect(() => {
-    if (quoteCart.length === 0) setStep(1)
-    else if (step === 1 && quoteCart.length > 0) setStep(2)
-  }, [quoteCart.length, step])
+    if (hasServiceItems && !hasProductItems) {
+      setForm((prev) => (prev.requestType === 'formal_quote' ? { ...prev, requestType: 'service_request' } : prev))
+    }
+  }, [hasServiceItems, hasProductItems])
 
-  const setField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }))
+  useEffect(() => {
+    if (location.state?.requestType) {
+      setForm((prev) => ({ ...prev, requestType: location.state.requestType }))
+    }
+  }, [location.state?.requestType])
+
+  const displayStep = quoteCart.length === 0 ? 1 : 2
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
     if (!quoteCart.length) {
-      setError('Add at least one product from the shop.')
+      setError('Add at least one product from the shop or a service from our Services page.')
       return
     }
     if (!form.name.trim() || !form.phone.trim()) {
       setError('Name and phone are required.')
+      return
+    }
+    if (form.requestType === 'budget_request' && !form.budget.trim() && !form.budgetTier) {
+      setError('Please select a budget tier or enter your budget range.')
       return
     }
 
@@ -100,6 +124,7 @@ export default function QuotePage() {
         location: form.location.trim(),
       },
       budget: form.budget.trim(),
+      budgetTier: form.budgetTier || null,
       notes: form.notes.trim(),
       preferredContact: form.preferredContact,
       requestType: form.requestType,
@@ -134,7 +159,6 @@ export default function QuotePage() {
       setSubmitted({ ...saved, waLink, mailLink })
       clearQuote()
       setForm(EMPTY_FORM)
-      setStep(3)
     } catch (err) {
       setError(err.message || 'Could not submit your request. Please try WhatsApp instead.')
     }
@@ -213,7 +237,7 @@ export default function QuotePage() {
             {STEPS.map((s) => (
               <div
                 key={s.id}
-                className={`quote-step ${step >= s.id ? 'quote-step--active' : ''} ${step === s.id ? 'quote-step--current' : ''}`}
+                className={`quote-step ${displayStep >= s.id ? 'quote-step--active' : ''} ${displayStep === s.id ? 'quote-step--current' : ''}`}
               >
                 <span className="quote-step__num">{s.id}</span>
                 <span className="quote-step__label">{s.label}</span>
@@ -227,8 +251,11 @@ export default function QuotePage() {
                 <div className="quote__empty card">
                   <div className="quote__empty-icon" aria-hidden>🛋️</div>
                   <h2>Your quote list is empty</h2>
-                  <p>Browse our workshop catalogue and add pieces you&apos;d like estimated.</p>
-                  <Link to="/shop" className="btn btn-primary">Browse shop</Link>
+                  <p>Add products from the shop or request a service — repairs, builds, consultation, and more.</p>
+                  <div className="quote__empty-actions">
+                    <Link to="/services" className="btn btn-primary">Browse services</Link>
+                    <Link to="/shop" className="btn btn-outline">Browse shop</Link>
+                  </div>
                 </div>
               ) : (
                 <>
@@ -250,28 +277,39 @@ export default function QuotePage() {
                             )}
                           </div>
                           <div className="quote__item-info">
-                            <span className="quote__item-cat">{item.category}</span>
+                            <span className="quote__item-cat">
+                              {item.itemType === 'service' ? 'Service' : item.category}
+                            </span>
                             <strong>{item.title}</strong>
+                            {item.serviceDescription && (
+                              <span className="quote__item-desc">{item.serviceDescription}</span>
+                            )}
                             <span className="quote__item-price">
                               {item.quoteOnly ? 'Price on request' : formatKes(item.unitPrice)}
                             </span>
                           </div>
                           <div className="quote__item-qty">
-                            <button
-                              type="button"
-                              onClick={() => updateQuoteQty(item.productId, item.qty - 1)}
-                              aria-label="Decrease quantity"
-                            >
-                              −
-                            </button>
-                            <span>{item.qty}</span>
-                            <button
-                              type="button"
-                              onClick={() => updateQuoteQty(item.productId, item.qty + 1)}
-                              aria-label="Increase quantity"
-                            >
-                              +
-                            </button>
+                            {item.itemType === 'service' ? (
+                              <span className="quote__item-service-qty" aria-label="Quantity">1</span>
+                            ) : (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuoteQty(item.productId, item.qty - 1)}
+                                  aria-label="Decrease quantity"
+                                >
+                                  −
+                                </button>
+                                <span>{item.qty}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuoteQty(item.productId, item.qty + 1)}
+                                  aria-label="Increase quantity"
+                                >
+                                  +
+                                </button>
+                              </>
+                            )}
                           </div>
                           <button
                             type="button"
@@ -297,7 +335,22 @@ export default function QuotePage() {
                       <div className="quote__error" role="alert">{error}</div>
                     )}
 
-                    <div className="quote__type">
+                    <div className={`quote__type ${hasServiceItems ? 'quote__type--three' : ''}`}>
+                      {hasServiceItems && (
+                        <label className={`quote__type-option ${form.requestType === 'service_request' ? 'quote__type-option--active' : ''}`}>
+                          <input
+                            type="radio"
+                            name="requestType"
+                            value="service_request"
+                            checked={form.requestType === 'service_request'}
+                            onChange={() => setField('requestType', 'service_request')}
+                          />
+                          <span>
+                            <strong>Service request</strong>
+                            <small>Workshop service — build, repair, or consultation</small>
+                          </span>
+                        </label>
+                      )}
                       <label className={`quote__type-option ${form.requestType === 'formal_quote' ? 'quote__type-option--active' : ''}`}>
                         <input
                           type="radio"
@@ -321,10 +374,42 @@ export default function QuotePage() {
                         />
                         <span>
                           <strong>Budget request</strong>
-                          <small>Options within your price range</small>
+                          <small>Options within your price range — all incomes welcome</small>
                         </span>
                       </label>
                     </div>
+
+                    {form.requestType === 'budget_request' && (
+                      <div className="quote__budget-section">
+                        <p className="quote__budget-intro">{budgetNote}</p>
+                        <div className="quote__budget-tiers">
+                          {budgetTiers.map((tier) => (
+                            <label
+                              key={tier.id}
+                              className={`quote__budget-tier ${form.budgetTier === tier.id ? 'quote__budget-tier--active' : ''}`}
+                            >
+                              <input
+                                type="radio"
+                                name="budgetTier"
+                                value={tier.id}
+                                checked={form.budgetTier === tier.id}
+                                onChange={() => {
+                                  setField('budgetTier', tier.id)
+                                  if (tier.range && tier.id !== 'flexible') {
+                                    setField('budget', tier.range)
+                                  }
+                                }}
+                              />
+                              <span>
+                                <strong>{tier.label}</strong>
+                                <small>{tier.range}</small>
+                                {tier.note && <em>{tier.note}</em>}
+                              </span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="quote__fields">
                       <div className="form-group">
@@ -369,13 +454,16 @@ export default function QuotePage() {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="quote-budget">Budget range (optional)</label>
+                        <label htmlFor="quote-budget">
+                          {form.requestType === 'budget_request' ? 'Your budget (required if no tier selected) *' : 'Budget range (optional)'}
+                        </label>
                         <input
                           id="quote-budget"
                           className="field"
                           value={form.budget}
                           onChange={(e) => setField('budget', e.target.value)}
-                          placeholder="e.g. KSh 150,000 – 200,000"
+                          placeholder="e.g. KSh 80,000 or pay in 3 instalments"
+                          required={form.requestType === 'budget_request' && !form.budgetTier}
                         />
                       </div>
                       <div className="form-group">
@@ -410,7 +498,7 @@ export default function QuotePage() {
                       className="btn btn-primary quote__submit"
                       disabled={submitting}
                     >
-                      {submitting ? 'Submitting…' : 'Submit quote request'}
+                      {submitting ? 'Submitting…' : form.requestType === 'service_request' ? 'Submit service request' : 'Submit quote request'}
                     </button>
                   </form>
                 </>
@@ -432,7 +520,7 @@ export default function QuotePage() {
                 </p>
                 <ul className="quote-summary__trust">
                   <li>✦ Workshop-direct pricing</li>
-                  <li>✦ Hand-woven in Kenya</li>
+                  <li>✦ Flexible budgets for every client</li>
                   <li>✦ Response within 1 business day</li>
                 </ul>
                 {quoteCart.length > 0 && (

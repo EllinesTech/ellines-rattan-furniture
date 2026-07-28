@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ScrollProgress from '../components/ScrollProgress'
@@ -9,6 +10,7 @@ import { PAGE_META } from '../data/pages'
 
 export default function Layout() {
   const { pathname } = useLocation()
+  const { sitePages } = useApp()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -21,11 +23,11 @@ export default function Layout() {
       if (pathname === '/about/team') return 'aboutTeam'
       return pathname.slice(1).split('/')[0]
     })()
-    const meta = PAGE_META[metaKey] ?? PAGE_META.home
+    const meta = (sitePages && sitePages[metaKey]) || PAGE_META[metaKey] || PAGE_META.home
     document.title = meta.title
     const desc = document.querySelector('meta[name="description"]')
     if (desc) desc.setAttribute('content', meta.description)
-  }, [pathname])
+  }, [pathname, sitePages])
 
   return (
     <>

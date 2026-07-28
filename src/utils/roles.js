@@ -33,7 +33,7 @@ export function canAccessAdmin(user) {
 }
 
 export function canAccessStaff(user) {
-  return isStaffRole(user) || isSuperAdmin(user)
+  return isStaffRole(user) || isSuperAdmin(user) || isAdminRole(user)
 }
 
 export function canAccessClientDashboard(user) {

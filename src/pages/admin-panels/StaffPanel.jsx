@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useApp } from '../../context/AppContext'
 import { createStaffAccount, listStaffOnly } from '../../utils/auth'
+import { PERMISSIONS } from '../../utils/permissions'
 import { getRoleLabel } from '../../utils/roles'
 
 const EMPTY_FORM = { name: '', email: '', phone: '', password: '' }
 
 export default function StaffPanel() {
-  const { user, isSuperAdmin } = useApp()
+  const { user, isSuperAdmin, hasPermission } = useApp()
   const [staff, setStaff] = useState([])
   const [form, setForm] = useState(EMPTY_FORM)
   const [loading, setLoading] = useState(true)
@@ -24,6 +25,17 @@ export default function StaffPanel() {
   useEffect(() => {
     loadStaff()
   }, [])
+
+  if (!hasPermission(PERMISSIONS.STAFF) && !isSuperAdmin) {
+    return (
+      <div>
+        <div className="admin-panel__head">
+          <h1>Staff accounts</h1>
+          <p>You do not have permission to manage staff. Contact the super admin.</p>
+        </div>
+      </div>
+    )
+  }
 
   const handleCreate = async (e) => {
     e.preventDefault()

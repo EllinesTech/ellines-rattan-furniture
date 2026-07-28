@@ -1,12 +1,13 @@
 import { GALLERY_ITEMS } from './gallery'
 
+/** Starting prices aligned with Kenya market (Kenty, Fair Price, Jardin Classics — Jul 2026). */
 const DEFAULT_PRICES = {
-  'Living Sets': 185000,
-  Sofas: 145000,
-  Armchairs: 65000,
-  Cabinets: 55000,
-  Tables: 35000,
-  Seating: 45000,
+  'Living Sets': 165000,
+  Sofas: 125000,
+  Armchairs: 45000,
+  Cabinets: 45000,
+  Tables: 28000,
+  Seating: 32000,
   Craftsmanship: null,
 }
 

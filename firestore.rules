@@ -29,5 +29,23 @@ service cloud.firestore {
       allow create: if true;
       allow update, delete: if true;
     }
+
+    match /rattan_orders/{orderId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+
+    match /rattan_media/{mediaId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+
+    match /rattan_subscriptions/{subId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
   }
 }

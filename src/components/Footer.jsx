@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FOOTER_LINKS, LEGAL_LINKS } from '../data/content'
 import { openCookieSettings } from './CookieConsent'
+import NewsletterForm from './NewsletterForm'
 import { NAV_LINKS, SITE } from '../data/site'
 import './Footer.css'
 
@@ -98,6 +99,10 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
+          </div>
+
+          <div>
+            <NewsletterForm />
           </div>
 
           <div>

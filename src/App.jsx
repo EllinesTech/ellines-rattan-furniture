@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
+import AppToast from './components/AppToast'
 import Layout from './layouts/Layout'
 import AdminRoute from './components/AdminRoute'
 import StaffRoute from './components/StaffRoute'
@@ -52,6 +53,7 @@ export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
+        <AppToast />
         <Routes>
           <Route path="/admin/login" element={<LazyPage Page={AdminLogin} />} />
           <Route path="/account/login" element={<LazyPage Page={AccountLogin} />} />

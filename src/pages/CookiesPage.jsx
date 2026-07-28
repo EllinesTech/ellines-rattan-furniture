@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import LegalSection from '../components/LegalSection'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 
 const COOKIE_SECTIONS = [
@@ -50,7 +50,7 @@ const COOKIE_SECTIONS = [
 ]
 
 export default function CookiesPage() {
-  const meta = PAGE_META.cookies
+  const meta = usePageMeta('cookies')
   return (
     <>
       <PageHero

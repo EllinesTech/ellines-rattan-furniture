@@ -50,11 +50,11 @@ function isAboutActive(pathname) {
 }
 
 function NavLinksBeforeAbout() {
-  return NAV_LINKS.filter((link) => link.path !== '/contact').slice(0, 2)
+  return NAV_LINKS.slice(0, 2)
 }
 
 function NavLinksAfterAbout() {
-  return NAV_LINKS.filter((link) => link.path !== '/contact').slice(2)
+  return NAV_LINKS.slice(2)
 }
 
 function AboutDropdown({ pathname, onNavigate }) {

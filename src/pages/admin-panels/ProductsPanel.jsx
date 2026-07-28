@@ -137,7 +137,7 @@ export default function ProductsPanel() {
       </div>
 
       <p style={{ marginTop: 12, fontSize: '0.82rem', color: 'var(--muted)' }}>
-        Preview: starting prices display as {formatKes(145000)} on the shop. Inactive products are hidden from the public catalogue.
+        Preview: starting prices display as {formatKes(125000)} on the shop. Inactive products are hidden from the public catalogue.
       </p>
 
       {toast && <div className="admin-toast">{toast}</div>}

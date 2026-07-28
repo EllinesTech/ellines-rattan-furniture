@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import Services from '../components/Services'
 import Testimonials from '../components/Testimonials'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 
 export default function ServicesPage() {
-  const meta = PAGE_META.services
+  const meta = usePageMeta('services')
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
   return (

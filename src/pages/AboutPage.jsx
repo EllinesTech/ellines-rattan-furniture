@@ -1,9 +1,9 @@
 import PageHero from '../components/PageHero'
 import AboutStory from '../components/AboutStory'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function AboutPage() {
-  const meta = PAGE_META.about
+  const meta = usePageMeta('about')
   return (
     <>
       <PageHero eyebrow={meta.eyebrow} title={meta.heading} subtitle={meta.sub} image={meta.heroImage} position={meta.heroPosition} />

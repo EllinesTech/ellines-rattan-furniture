@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import About from '../components/About'
 import Process from '../components/Process'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function CraftsmanshipPage() {
-  const meta = PAGE_META.craftsmanship
+  const meta = usePageMeta('craftsmanship')
 
   return (
     <>

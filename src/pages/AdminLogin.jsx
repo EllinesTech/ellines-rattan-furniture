@@ -63,6 +63,7 @@ export default function AdminLogin() {
         email: account.email,
         phone: account.phone,
         role: account.role || 'admin',
+        permissions: account.permissions,
       })
       const target = location.state?.from?.pathname || getPostLoginRoute(account)
       navigate(target, { replace: true })

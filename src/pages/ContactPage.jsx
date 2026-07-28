@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import Contact from '../components/Contact'
-import { PAGE_META } from '../data/pages'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 
 export default function ContactPage() {
-  const meta = PAGE_META.contact
+  const meta = usePageMeta('contact')
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
   return (

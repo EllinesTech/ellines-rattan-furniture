@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero'
 import OptimizedImage from '../components/OptimizedImage'
 import Reveal from '../components/Reveal'
 import { useApp } from '../context/AppContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { SITE } from '../data/site'
 import { formatKes } from '../utils/auth'
 import { SHOP_CATEGORIES } from '../data/seedProducts'
@@ -16,7 +17,8 @@ const TRUST_CUES = [
 ]
 
 export default function ShopPage() {
-  const { activeProducts, addToQuote, quoteCount } = useApp()
+  const { activeProducts, addToQuote, quoteCount, showToast } = useApp()
+  const meta = usePageMeta('shop')
   const [category, setCategory] = useState('All')
   const [search, setSearch] = useState('')
   const [addedId, setAddedId] = useState(null)
@@ -38,6 +40,10 @@ export default function ShopPage() {
     addToQuote(product, 1)
     setAddedId(product.id)
     setTimeout(() => setAddedId(null), 1800)
+    showToast(`Added “${product.title}” to your quote`, {
+      actionHref: '/quote',
+      actionLabel: `View quote (${quoteCount + 1})`,
+    })
   }
 
   const waLink = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
@@ -46,11 +52,11 @@ export default function ShopPage() {
     <>
       <PageHero
         compact
-        eyebrow="Catalogue"
-        title="Handcrafted Rattan Collection"
-        subtitle="Browse workshop pieces — add to your quote list for a personalised estimate from our atelier."
-        image="/images/projects/project-original-modular-sections.jpg"
-        position="center 35%"
+        eyebrow={meta.eyebrow}
+        title={meta.heading}
+        subtitle={meta.sub}
+        image={meta.heroImage}
+        position={meta.heroPosition}
         actions={
           <>
             <Link to="/quote" className="btn btn-primary">
@@ -194,6 +200,7 @@ export default function ShopPage() {
               <p>Share dimensions, photos, or a sketch — we&apos;ll prepare a workshop quote.</p>
             </div>
             <div className="shop__bottom-actions">
+              <Link to="/services" className="btn btn-outline">Request a service</Link>
               <Link to="/quote" className="btn btn-primary">Build a quote</Link>
               <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-wa">
                 WhatsApp us
@@ -202,6 +209,16 @@ export default function ShopPage() {
           </div>
         </div>
       </section>
+
+      {quoteCount > 0 && (
+        <div className="shop-sticky-bar shop-sticky-bar--visible">
+          <div className="shop-sticky-bar__copy">
+            <strong>{quoteCount} in your quote</strong>
+            Ready to submit?
+          </div>
+          <Link to="/quote" className="btn btn-primary">View quote</Link>
+        </div>
+      )}
     </>
   )
 }
