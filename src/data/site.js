@@ -34,6 +34,32 @@ export const SITE = {
       image: '/images/projects/project-craftsmanship-overhead.jpg',
     },
   ],
+  social: [
+    {
+      id: 'facebook',
+      label: 'Facebook',
+      handle: 'Ellinesrattanfurniture',
+      href: 'https://www.facebook.com/Ellinesrattanfurniture',
+    },
+    {
+      id: 'instagram',
+      label: 'Instagram',
+      handle: '@ellinesrattanfurniture',
+      href: 'https://www.instagram.com/ellinesrattanfurniture/',
+    },
+    {
+      id: 'youtube',
+      label: 'YouTube',
+      handle: '@EllinesRattanFurniture',
+      href: 'https://www.youtube.com/@EllinesRattanFurniture',
+    },
+    {
+      id: 'linkedin',
+      label: 'LinkedIn',
+      handle: 'Ellines Rattan Furniture',
+      href: 'https://www.linkedin.com/in/ellines-rattan-furniture-40a983266',
+    },
+  ],
 }
 
 export const NAV_LINKS = [

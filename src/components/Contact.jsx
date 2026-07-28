@@ -72,6 +72,24 @@ export default function Contact({ standalone = false }) {
               </a>
             </div>
 
+            <div className="contact__social" aria-label="Follow Ellines Rattan Furniture">
+              <p className="contact__social-label">Follow us</p>
+              <div className="contact__social-links">
+                {SITE.social.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    className="contact__social-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <strong>{item.label}</strong>
+                    <span>{item.handle}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <a href={waUrl} className="btn btn-primary btn-wa contact__cta" target="_blank" rel="noopener noreferrer">
               Message on WhatsApp
             </a>
