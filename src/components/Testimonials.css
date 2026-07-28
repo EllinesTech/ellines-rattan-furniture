@@ -50,6 +50,46 @@
   margin-top: 2px;
 }
 
+.testimonials__photo {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.testimonials__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.testimonials__ba {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.testimonials__ba figure {
+  margin: 0;
+}
+
+.testimonials__ba img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border: 1px solid rgba(201, 168, 76, 0.12);
+}
+
+.testimonials__ba figcaption {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
 @media (max-width: 960px) {
   .testimonials__track {
     grid-template-columns: repeat(2, minmax(0, 1fr));

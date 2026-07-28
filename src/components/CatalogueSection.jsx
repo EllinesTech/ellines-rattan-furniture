@@ -10,9 +10,10 @@ import './ContentPages.css'
 import './CatalogueSection.css'
 
 export default function CatalogueSection({ standalone = false }) {
-  const { activeProducts } = useApp()
+  const { activeProducts, pageContent } = useApp()
   const meta = usePageMeta('catalogue')
   const c = meta.content || {}
+  const brochurePdfUrl = (pageContent?.brochurePdfUrl || '').trim()
   const intro = c.intro?.length
     ? c.intro
     : [
@@ -55,8 +56,19 @@ export default function CatalogueSection({ standalone = false }) {
             {WEAVE_NOTE} {FRAME_CHOICE_NOTE} {PRICING_VARIES_NOTE}
           </p>
           <div className="content-page__cta-row">
-            <button type="button" className="btn btn-primary" onClick={handlePrint}>
-              Print / Save PDF
+            {brochurePdfUrl ? (
+              <a
+                href={brochurePdfUrl}
+                className="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+              >
+                Download PDF brochure
+              </a>
+            ) : null}
+            <button type="button" className={`btn ${brochurePdfUrl ? 'btn-outline' : 'btn-primary'}`} onClick={handlePrint}>
+              {brochurePdfUrl ? 'Print this page' : 'Print / Save PDF'}
             </button>
             <Link to="/shop" className="btn btn-outline">
               Open shop

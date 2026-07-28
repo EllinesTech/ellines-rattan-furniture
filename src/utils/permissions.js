@@ -7,6 +7,7 @@ export const PERMISSIONS = {
   ADMINS: 'admins',
   SETTINGS: 'settings',
   CONTROL: 'control',
+  CMS: 'cms',
 }
 
 export const ALL_PERMISSIONS = Object.values(PERMISSIONS)
@@ -19,6 +20,7 @@ export const PERMISSION_LABELS = {
   [PERMISSIONS.ADMINS]: 'Create & manage admins',
   [PERMISSIONS.SETTINGS]: 'Platform settings',
   [PERMISSIONS.CONTROL]: 'Control Center (god mode)',
+  [PERMISSIONS.CMS]: 'CMS — stories, testimonials, site extras',
 }
 
 /** Default permissions for new admin accounts (everything except admins & settings). */
@@ -27,6 +29,7 @@ export const DEFAULT_ADMIN_PERMISSIONS = [
   PERMISSIONS.PRODUCTS,
   PERMISSIONS.SERVICES,
   PERMISSIONS.STAFF,
+  PERMISSIONS.CMS,
 ]
 
 export function normalizePermissions(list) {

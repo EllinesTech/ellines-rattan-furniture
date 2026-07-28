@@ -33,6 +33,8 @@ import {
   canAccessStaff,
 } from '../utils/roles'
 import { hasPermission, getUserPermissions, DEFAULT_ADMIN_PERMISSIONS } from '../utils/permissions'
+import { mergePageContent, subscribePageContent } from '../utils/cms'
+import { DEFAULT_PAGE_CONTENT } from '../data/seedPageContent'
 
 const Ctx = createContext(null)
 
@@ -99,6 +101,7 @@ export function AppProvider({ children }) {
   const [siteContentSource, setSiteContentSource] = useState(isFirebaseConfigured() ? 'loading' : 'static')
   const [sitePages, setSitePagesState] = useState(PAGE_META)
   const [sitePagesSource, setSitePagesSource] = useState(isFirebaseConfigured() ? 'loading' : 'static')
+  const [pageContent, setPageContent] = useState(() => mergePageContent(DEFAULT_PAGE_CONTENT))
   const [toast, setToast] = useState(null)
   const [firebaseReady] = useState(isFirebaseConfigured())
 
@@ -489,6 +492,12 @@ export function AppProvider({ children }) {
     }
   }, [firebaseReady])
 
+  // Page extras (brochure PDF, calendly, financing, trade copy)
+  useEffect(() => {
+    const unsub = subscribePageContent(setPageContent)
+    return () => unsub?.()
+  }, [firebaseReady])
+
   // Unread enquiries count
   useEffect(() => {
     const countLocal = () => {
@@ -539,6 +548,8 @@ export function AppProvider({ children }) {
     sitePages,
     sitePagesSource,
     saveSitePages,
+    pageContent,
+    setPageContent,
     hasPermission: userHasPermission,
     userPermissions: getUserPermissions(user),
     toast,

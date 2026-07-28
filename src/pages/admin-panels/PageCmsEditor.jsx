@@ -31,6 +31,8 @@ const PAGE_LABELS = {
   guide: 'Measurement Guide',
   visit: 'Book a Visit',
   catalogue: 'Catalogue',
+  stories: 'Stories / Journal',
+  financing: 'Financing',
   privacy: 'Privacy',
   terms: 'Terms',
   cookies: 'Cookies',

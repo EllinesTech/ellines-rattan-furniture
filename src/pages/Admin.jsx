@@ -8,6 +8,10 @@ import SettingsPanel from './admin-panels/SettingsPanel'
 import AdminsPanel from './admin-panels/AdminsPanel'
 import ServicesPanel from './admin-panels/ServicesPanel'
 import GodModePanel from './admin-panels/GodModePanel'
+import TestimonialsPanel from './admin-panels/TestimonialsPanel'
+import StoriesPanel from './admin-panels/StoriesPanel'
+import BookingsPanel from './admin-panels/BookingsPanel'
+import SiteExtrasPanel from './admin-panels/SiteExtrasPanel'
 import { PERMISSIONS } from '../utils/permissions'
 import { getRoleLabel } from '../utils/roles'
 import { signOutUser } from '../utils/auth'
@@ -15,8 +19,12 @@ import './Admin.css'
 
 const TAB_DEFS = [
   { id: 'enquiries', label: 'Enquiries', icon: '📋', permission: PERMISSIONS.ENQUIRIES },
+  { id: 'bookings', label: 'Bookings', icon: '📅', permission: PERMISSIONS.ENQUIRIES },
   { id: 'products', label: 'Products', icon: '🛋️', permission: PERMISSIONS.PRODUCTS },
   { id: 'services', label: 'Services', icon: '🔧', permission: PERMISSIONS.SERVICES },
+  { id: 'testimonials', label: 'Testimonials', icon: '⭐', permission: PERMISSIONS.CMS },
+  { id: 'stories', label: 'Stories', icon: '✍️', permission: PERMISSIONS.CMS },
+  { id: 'extras', label: 'Site extras', icon: '📎', permission: PERMISSIONS.CMS },
   { id: 'staff', label: 'Staff', icon: '👥', permission: PERMISSIONS.STAFF },
   { id: 'admins', label: 'Admins', icon: '🛡️', permission: PERMISSIONS.ADMINS, superOnly: true },
   { id: 'control', label: 'Control', icon: '🎛️', permission: PERMISSIONS.CONTROL, superOnly: true },
@@ -127,6 +135,10 @@ export default function Admin() {
         {tab === 'products' && <ProductsPanel />}
         {tab === 'services' && <ServicesPanel />}
         {tab === 'enquiries' && <EnquiriesPanel />}
+        {tab === 'bookings' && <BookingsPanel />}
+        {tab === 'testimonials' && <TestimonialsPanel />}
+        {tab === 'stories' && <StoriesPanel />}
+        {tab === 'extras' && <SiteExtrasPanel />}
         {tab === 'staff' && <StaffPanel />}
         {tab === 'admins' && <AdminsPanel />}
         {tab === 'control' && <GodModePanel />}

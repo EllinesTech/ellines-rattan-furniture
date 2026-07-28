@@ -117,6 +117,12 @@ export default function Footer() {
                 <Link to="/hospitality" className="footer__nav-link">Hospitality &amp; Trade</Link>
               </li>
               <li>
+                <Link to="/stories" className="footer__nav-link">Project Stories</Link>
+              </li>
+              <li>
+                <Link to="/financing" className="footer__nav-link">Financing</Link>
+              </li>
+              <li>
                 <Link to="/about" className="footer__nav-link">Our Story</Link>
               </li>
             </ul>

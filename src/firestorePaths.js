@@ -8,6 +8,7 @@ export const FS = {
   PRODUCTS_CATALOGUE: 'products_catalogue',
   SITE_CONTENT: 'rattan_site_content',
   SITE_PAGES: 'rattan_site_pages',
+  PAGE_CONTENT: 'rattan_page_content',
   ORDER_COUNTER: 'rattan_order_counter',
   ADMIN_CREDENTIALS: 'rattan_admin_credentials',
   ADMIN_SETTINGS: 'rattan_admin_settings',
@@ -16,4 +17,8 @@ export const FS = {
   ORDERS: 'rattan_orders',
   MEDIA: 'rattan_media',
   SUBSCRIPTIONS: 'rattan_subscriptions',
+  TESTIMONIALS: 'rattan_testimonials',
+  POSTS: 'rattan_posts',
+  VISIT_BOOKINGS: 'rattan_visit_bookings',
+  TRADE_ENQUIRIES: 'rattan_trade_enquiries',
 }

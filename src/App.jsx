@@ -24,6 +24,9 @@ const HospitalityPage = lazy(() => import('./pages/HospitalityPage'))
 const GuidePage = lazy(() => import('./pages/GuidePage'))
 const VisitPage = lazy(() => import('./pages/VisitPage'))
 const CataloguePage = lazy(() => import('./pages/CataloguePage'))
+const StoriesPage = lazy(() => import('./pages/StoriesPage'))
+const StoryDetailPage = lazy(() => import('./pages/StoryDetailPage'))
+const FinancingPage = lazy(() => import('./pages/FinancingPage'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const TermsPage = lazy(() => import('./pages/TermsPage'))
 const CookiesPage = lazy(() => import('./pages/CookiesPage'))
@@ -97,6 +100,9 @@ export default function App() {
             <Route path="guide" element={<LazyPage Page={GuidePage} />} />
             <Route path="visit" element={<LazyPage Page={VisitPage} />} />
             <Route path="catalogue" element={<LazyPage Page={CataloguePage} />} />
+            <Route path="stories" element={<LazyPage Page={StoriesPage} />} />
+            <Route path="stories/:slug" element={<LazyPage Page={StoryDetailPage} />} />
+            <Route path="financing" element={<LazyPage Page={FinancingPage} />} />
             <Route path="contact" element={<LazyPage Page={ContactPage} />} />
             <Route path="about" element={<LazyPage Page={AboutPage} />} />
             <Route path="about/founder" element={<LazyPage Page={FounderPage} />} />

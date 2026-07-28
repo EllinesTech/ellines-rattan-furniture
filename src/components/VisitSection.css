@@ -24,6 +24,20 @@
   margin-bottom: 1.25rem;
 }
 
+.visit-calendly {
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.visit-calendly .visit-form-wrap__title {
+  text-align: center;
+}
+
+.visit-success {
+  text-align: left;
+}
+
 .visit-form {
   display: flex;
   flex-direction: column;
@@ -40,7 +54,8 @@
 }
 
 .visit-form input,
-.visit-form textarea {
+.visit-form textarea,
+.visit-form select {
   width: 100%;
   padding: 12px 14px;
   border-radius: var(--r);
@@ -52,7 +67,8 @@
 }
 
 .visit-form input:focus,
-.visit-form textarea:focus {
+.visit-form textarea:focus,
+.visit-form select:focus {
   outline: none;
   border-color: rgba(201, 168, 76, 0.55);
   box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12);

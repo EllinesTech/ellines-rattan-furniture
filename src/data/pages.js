@@ -194,7 +194,27 @@ export const PAGE_META = {
     heroPosition: 'center 35%',
     eyebrow: 'Workshop Catalogue',
     heading: 'Printable Catalogue',
-    sub: 'Browse current pieces, note starting prices, then print or save as PDF from your browser.',
+    sub: 'Browse current pieces, note starting prices, then print or download the PDF brochure when available.',
+  },
+  stories: {
+    title: 'Project Stories | Ellines Rattan Furniture',
+    description:
+      'Workshop notes and project stories from Ellines Rattan Furniture — custom builds across Kenya homes and hospitality.',
+    heroImage: '/images/projects/project-original-living-set-wide.jpg',
+    heroPosition: 'center 40%',
+    eyebrow: 'Journal',
+    heading: 'Project Stories',
+    sub: 'Workshop notes, hospitality installs, and custom builds from Nyeri & Nairobi.',
+  },
+  financing: {
+    title: 'Financing & Payments | Ellines Rattan Furniture',
+    description:
+      'Deposit, staged payments, and M-Pesa-friendly workshop terms for custom synthetic rattan furniture in Kenya.',
+    heroImage: '/images/projects/project-original-coffee-table.jpg',
+    heroPosition: 'center 40%',
+    eyebrow: 'Payment & Financing',
+    heading: 'Workshop-friendly payments',
+    sub: 'Clear deposits and staged milestones for custom furniture builds.',
   },
   privacy: {
     title: 'Privacy Policy | Ellines Rattan Furniture',
