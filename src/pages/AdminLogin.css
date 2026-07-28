@@ -1,0 +1,145 @@
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--grad-bg);
+}
+
+.admin-login__wrap {
+  width: 100%;
+  max-width: 420px;
+}
+
+.admin-login__card {
+  padding: 2rem;
+}
+
+.admin-login__top {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-login__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.admin-login__brand img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.admin-login__top h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.admin-login__top p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.admin-login__banner {
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.admin-login__banner code {
+  font-size: 0.78rem;
+  color: var(--gold-lt);
+}
+
+.admin-login__banner--warn {
+  background: rgba(232, 131, 42, 0.12);
+  border: 1px solid rgba(232, 131, 42, 0.35);
+  color: #f0c090;
+}
+
+.admin-login__banner--info {
+  background: rgba(74, 158, 255, 0.1);
+  border: 1px solid rgba(74, 158, 255, 0.25);
+  color: #9ec8ff;
+}
+
+.admin-login__form .form-group {
+  margin-bottom: 1rem;
+}
+
+.admin-login__form label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.field {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+}
+
+.admin-login__pw {
+  position: relative;
+}
+
+.admin-login__pw .field {
+  padding-right: 44px;
+}
+
+.admin-login__pw-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  padding: 4px;
+}
+
+.admin-login__error {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #f5a8a0;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+
+.admin-login__submit {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.admin-login__back {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.admin-login__back a:hover {
+  color: var(--gold);
+}

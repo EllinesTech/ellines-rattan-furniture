@@ -1,0 +1,27 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Site configuration, product catalogue, admin credentials, admin settings.
+    // Tighten with Firebase Auth custom claims before production hardening.
+    match /site_data/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Portal users — clients and staff (passwords stored hashed client-side).
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+
+    // Customer quote submissions and admin/staff status updates.
+    match /quote_requests/{requestId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+  }
+}

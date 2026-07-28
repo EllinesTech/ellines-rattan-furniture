@@ -103,6 +103,26 @@ export const PAGE_META = {
     heading: 'Delivery & Warranty',
     sub: 'From workshop to your home — with support every step of the way.',
   },
+  shop: {
+    title: 'Shop | Ellines Rattan Furniture',
+    description:
+      'Browse handcrafted rattan furniture — living sets, sofas, armchairs, cabinets, and tables with starting prices. Build a custom quote.',
+    heroImage: '/images/projects/project-original-modular-sections.jpg',
+    heroPosition: 'center 35%',
+    eyebrow: 'Shop',
+    heading: 'Rattan Furniture Catalogue',
+    sub: 'Add pieces to your quote list for a workshop estimate.',
+  },
+  quote: {
+    title: 'Request a Quote | Ellines Rattan Furniture',
+    description:
+      'Build your custom rattan furniture quote — select products, share your details, and connect via WhatsApp or email.',
+    heroImage: '/images/projects/project-original-armchair-shaggy.jpg',
+    heroPosition: 'center 30%',
+    eyebrow: 'Quote',
+    heading: 'Build Your Quote',
+    sub: 'Review selections and request a workshop estimate.',
+  },
   collections: {
     title: 'Collections | Ellines Rattan Furniture',
     description:

@@ -1,0 +1,146 @@
+.account-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--grad-bg);
+}
+
+.account-login__wrap {
+  width: 100%;
+  max-width: 440px;
+}
+
+.account-login__card {
+  padding: 2rem;
+}
+
+.account-login__top {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.account-login__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.25rem;
+  color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
+.account-login__top h1 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.account-login__top p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.account-login__banner {
+  background: rgba(232, 131, 42, 0.1);
+  border: 1px solid rgba(232, 131, 42, 0.3);
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  font-size: 0.82rem;
+  color: #f0c090;
+  margin-bottom: 1rem;
+}
+
+.account-login__tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  background: var(--surface);
+  padding: 4px;
+  border-radius: var(--r-sm);
+}
+
+.account-login__tabs button {
+  padding: 10px;
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.account-login__tab--active {
+  background: rgba(201, 168, 76, 0.15);
+  color: var(--gold) !important;
+}
+
+.account-login__form .form-group {
+  margin-bottom: 1rem;
+}
+
+.account-login__form label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.account-login__pw {
+  position: relative;
+}
+
+.account-login__pw .field {
+  width: 100%;
+  padding-right: 44px;
+}
+
+.account-login__pw-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  padding: 4px;
+}
+
+.account-login__error {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #f5a8a0;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+
+.account-login__submit {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.account-login__team {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.account-login__team a {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.account-login__back {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.account-login__back a:hover {
+  color: var(--gold);
+}

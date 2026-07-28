@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
   min-height: var(--navbar-h);
-  gap: 24px;
+  gap: 16px;
 }
 
 .nav__brand {
@@ -27,8 +27,7 @@
   align-items: center;
   gap: 12px;
   color: inherit;
-  flex-shrink: 1;
-  min-width: 0;
+  flex-shrink: 0;
   text-decoration: none;
 }
 
@@ -63,17 +62,20 @@
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav__link {
   position: relative;
-  padding: 8px 12px;
-  font-size: 0.86rem;
+  padding: 8px 10px;
+  font-size: 0.82rem;
   color: var(--muted);
   border-radius: var(--r-sm);
   transition: color 0.2s, background 0.2s;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav__link:hover {
@@ -86,22 +88,84 @@
   background: rgba(201, 168, 76, 0.12);
 }
 
-.nav__link--active::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--dim);
+}
+
+.nav__quote-link,
+.nav__account-link {
+  position: relative;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav__quote-link {
+  color: var(--gold);
+}
+
+.nav__quote-link:hover {
+  background: rgba(201, 168, 76, 0.1);
+}
+
+.nav__account-link {
+  color: var(--muted);
+}
+
+.nav__account-link:hover {
+  color: var(--gold-lt);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav__quote-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 9px;
   background: var(--gold);
+  color: var(--on-gold);
+  font-size: 0.68rem;
+  font-weight: 800;
 }
 
 .nav__cta {
-  margin-left: 8px;
-  padding: 8px 18px;
-  font-size: 0.82rem;
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  margin-left: 4px;
+}
+
+.nav__mobile-actions {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav__quote-mobile {
+  position: relative;
+  padding: 8px;
+  color: var(--gold);
+}
+
+.nav__quote-mobile .nav__quote-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  min-width: 16px;
+  height: 16px;
+  font-size: 0.62rem;
 }
 
 .nav__toggle {
@@ -135,7 +199,18 @@
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .nav__link {
+    padding: 8px 8px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .nav__mobile-actions {
+    display: flex;
+  }
+
   .nav__toggle {
     display: flex;
   }
@@ -144,16 +219,18 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: min(320px, 88vw);
+    width: min(340px, 90vw);
     height: 100dvh;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
     padding: calc(var(--navbar-h) + 8px) 0 24px;
     background: rgba(10, 10, 15, 0.98);
     border-left: 1px solid var(--border);
     transform: translateX(100%);
     transition: transform 0.3s ease;
     z-index: 101;
+    gap: 0;
   }
 
   .nav__links--open {
@@ -161,26 +238,39 @@
   }
 
   .nav__link {
-    padding: 18px 28px;
-    font-size: 1.05rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px 28px;
+    font-size: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 0;
-    color: var(--muted);
   }
 
   .nav__link--active {
-    color: var(--gold-lt);
-    background: transparent;
+    background: rgba(201, 168, 76, 0.08);
   }
 
-  .nav__link--active::after {
-    bottom: 10px;
+  .nav__actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 16px 24px 0;
+    padding: 16px 0 0;
+    border-left: none;
+    border-top: 1px solid var(--dim);
+    gap: 8px;
+  }
+
+  .nav__quote-link,
+  .nav__account-link {
+    padding: 14px 16px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--dim);
   }
 
   .nav__cta {
-    margin: 20px 24px 0;
+    margin: 0;
     justify-content: center;
+    padding: 14px 16px;
   }
 
   .nav__backdrop {
