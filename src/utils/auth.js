@@ -18,6 +18,11 @@ import {
   DEFAULT_ADMIN_PERMISSIONS,
   normalizePermissions,
 } from './permissions'
+import {
+  syncFirebaseAuthSession,
+  provisionFirebaseAuthUser,
+  clearFirebaseAuthSession,
+} from './firebaseAuthSession'
 
 const DEV_ADMIN_KEY = 'er_dev_admin_hash'
 const LOCAL_QUOTES_KEY = 'er_local_quote_requests'
@@ -153,6 +158,7 @@ export async function registerClient({ name, email, phone, password }) {
       ...userData,
       createdAt: serverTimestamp(),
     })
+    await syncFirebaseAuthSession(emailKey, password)
     return { id: ref.id, ...userData, password: undefined }
   }
 
@@ -181,6 +187,8 @@ export async function loginPortalUser(email, password) {
       saveLocalUsers(users)
     }
   }
+
+  await syncFirebaseAuthSession(emailKey, password)
 
   return {
     id: user.id,
@@ -249,6 +257,7 @@ export async function createAdminAccount({ name, email, phone, password, permiss
     )
   }
 
+  await provisionFirebaseAuthUser(emailKey, password)
   return { ...entry, password: undefined }
 }
 
@@ -344,6 +353,7 @@ export async function createStaffAccount({ name, email, phone, password }, creat
       ...userData,
       createdAt: serverTimestamp(),
     })
+    await provisionFirebaseAuthUser(emailKey, password)
     return { id: ref.id, ...userData, password: undefined }
   }
 
@@ -468,6 +478,7 @@ export async function checkAdminCredentials(email, password) {
 export async function authenticateUser(email, password) {
   const admin = await checkAdminCredentials(email, password)
   if (admin) {
+    await syncFirebaseAuthSession(email, password)
     return {
       id: admin.id || 'admin01',
       name: admin.name || 'Admin',
@@ -483,6 +494,10 @@ export async function authenticateUser(email, password) {
   if (portal) return portal
 
   return null
+}
+
+export async function signOutUser() {
+  await clearFirebaseAuthSession()
 }
 
 export async function updateSuperAdminEmail(newEmail, currentPassword, currentUser) {

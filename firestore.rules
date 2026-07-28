@@ -4,48 +4,50 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ── Ellines Rattan Furniture (shared project ellines-haven-web) ─────────
-    // These rules are the Rattan *additions* expected in the live project.
-    // DO NOT deploy this file alone over Haven — it would wipe Haven rules.
-    // Deploy via Haven's firestore.rules (which merges Haven + Rattan rules),
-    // or paste the Rattan match blocks into the Firebase Console.
+    // Merge these blocks into Haven's live rules before deploying.
+    // Privileged writes require Firebase Auth (synced on app login).
 
-    // Site config docs used by Rattan (and Haven). Doc IDs are namespaced
-    // where they would collide (rattan_admin_credentials, rattan_admin_settings).
-    match /site_data/{docId} {
-      allow read: if true;
-      allow write: if true;
+    function signedIn() {
+      return request.auth != null;
     }
 
-    // Rattan portal users (clients / staff) — NOT Haven's `users` collection.
+    function isValidEmail(value) {
+      return value is string && value.size() > 3 && value.size() < 320;
+    }
+
+    match /site_data/{docId} {
+      allow read: if true;
+      allow write: if signedIn();
+    }
+
     match /rattan_users/{userId} {
       allow read: if true;
       allow create: if true;
-      allow update, delete: if true;
+      allow update, delete: if signedIn();
     }
 
-    // Customer quote submissions and admin/staff status updates.
     match /quote_requests/{requestId} {
       allow read: if true;
-      allow create: if true;
-      allow update, delete: if true;
+      allow create: if request.resource.data.keys().hasAny(['customer', 'items'])
+        && request.resource.data.customer is map;
+      allow update, delete: if signedIn();
     }
 
     match /rattan_orders/{orderId} {
       allow read: if true;
-      allow create: if true;
-      allow update, delete: if true;
+      allow create, update, delete: if signedIn();
     }
 
     match /rattan_media/{mediaId} {
       allow read: if true;
-      allow create: if true;
-      allow update, delete: if true;
+      allow create, update, delete: if signedIn();
     }
 
     match /rattan_subscriptions/{subId} {
-      allow read: if true;
-      allow create: if true;
-      allow update, delete: if true;
+      allow read: if signedIn();
+      allow create: if request.resource.data.email is string
+        && isValidEmail(request.resource.data.email);
+      allow update, delete: if signedIn();
     }
   }
 }

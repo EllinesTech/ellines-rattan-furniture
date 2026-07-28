@@ -11,6 +11,7 @@ import {
   buildWhatsAppLink,
   formatKes,
   loadLocalQuoteRequests,
+  signOutUser,
 } from '../../utils/auth'
 import {
   subscribeOrders,
@@ -120,7 +121,8 @@ export default function ClientDashboard() {
     return () => unsubs.forEach((u) => u())
   }, [firebaseReady, user?.id, user?.email])
 
-  const signOut = () => {
+  const signOut = async () => {
+    await signOutUser()
     setUser(null)
     navigate('/account/login', { replace: true })
   }

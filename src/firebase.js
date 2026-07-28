@@ -9,6 +9,8 @@
  */
 import { initializeApp } from 'firebase/app'
 import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -32,9 +34,13 @@ export function isFirebaseConfigured() {
 
 let app = null
 let db = null
+let auth = null
+let storage = null
 
 if (isFirebaseConfigured()) {
   app = initializeApp(firebaseConfig)
+  auth = getAuth(app)
+  storage = getStorage(app)
   try {
     db = initializeFirestore(app, {
       localCache: persistentLocalCache({
@@ -47,4 +53,4 @@ if (isFirebaseConfigured()) {
   }
 }
 
-export { app, db }
+export { app, db, auth, storage }

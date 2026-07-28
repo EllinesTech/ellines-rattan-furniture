@@ -179,6 +179,24 @@ export default function GodModePanel() {
     setMedia(snap.docs.map((d) => ({ id: d.id, ...d.data() })))
   }
 
+  const uploadMedia = async (file, meta) => {
+    const { uploadMediaFile } = await import('../../utils/media')
+    const item = await uploadMediaFile(file, { ...meta, uploadedBy: user?.email })
+    setMedia((prev) => [item, ...prev.filter((m) => m.src !== item.src)])
+    showToast('Image uploaded to Storage')
+  }
+
+  const removeMedia = async (item) => {
+    try {
+      const { deleteMediaItem } = await import('../../utils/media')
+      if (item.id) await deleteMediaItem(item)
+      setMedia((prev) => prev.filter((m) => m.id !== item.id && m.src !== item.src))
+      showToast('Media removed')
+    } catch (e) {
+      showToast(e.message || 'Could not remove media')
+    }
+  }
+
   const downloadPoster = () => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -428,16 +446,28 @@ export default function GodModePanel() {
       {sub === 'media' && (
         <div className="card" style={{ padding: '1.25rem' }}>
           <h2 style={{ fontSize: '1.05rem' }}>Media library</h2>
-          <p style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>Manage images used across the site. Upload files to <code>public/images/</code> then register paths here.</p>
+          <p style={{ fontSize: '0.88rem', color: 'var(--muted)' }}>
+            Upload images to Firebase Storage, or register an existing path under <code>public/images/</code>.
+          </p>
           <div className="god-mode__media-grid">
             {media.map((m, i) => (
               <div key={m.id || m.src || i} className="god-mode__media-item">
                 <img src={m.src} alt={m.alt || ''} loading="lazy" />
                 <span>{m.alt || m.src}</span>
+                {m.id && (
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    style={{ margin: 6, padding: '4px 8px', fontSize: '0.72rem' }}
+                    onClick={() => removeMedia(m)}
+                  >
+                    Remove
+                  </button>
+                )}
               </div>
             ))}
           </div>
-          <MediaAddForm onAdd={saveMediaItem} />
+          <MediaAddForm onAdd={saveMediaItem} onUpload={uploadMedia} />
         </div>
       )}
 
@@ -512,27 +542,76 @@ export default function GodModePanel() {
   )
 }
 
-function MediaAddForm({ onAdd }) {
+function MediaAddForm({ onAdd, onUpload }) {
   const [form, setForm] = useState({ src: '', alt: '', category: 'Projects' })
+  const [uploading, setUploading] = useState(false)
+  const [file, setFile] = useState(null)
+
   return (
-    <form
-      style={{ marginTop: '1rem' }}
-      onSubmit={(e) => {
-        e.preventDefault()
-        onAdd(form)
-        setForm({ src: '', alt: '', category: 'Projects' })
-      }}
-    >
-      <div className="form-group">
-        <label>Image path</label>
-        <input className="field" value={form.src} onChange={(e) => setForm((p) => ({ ...p, src: e.target.value }))} placeholder="/images/projects/…" required />
-      </div>
-      <div className="form-group">
-        <label>Alt text</label>
-        <input className="field" value={form.alt} onChange={(e) => setForm((p) => ({ ...p, alt: e.target.value }))} required />
-      </div>
-      <button type="submit" className="btn btn-outline">Add media</button>
-    </form>
+    <div style={{ marginTop: '1rem' }}>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault()
+          if (!file || !onUpload) return
+          setUploading(true)
+          try {
+            await onUpload(file, { alt: form.alt, category: form.category })
+            setFile(null)
+            setForm({ src: '', alt: '', category: 'Projects' })
+            e.target.reset?.()
+          } catch (err) {
+            alert(err.message || 'Upload failed')
+          }
+          setUploading(false)
+        }}
+      >
+        <h3 style={{ fontSize: '0.95rem', marginBottom: 8 }}>Upload image</h3>
+        <div className="form-group">
+          <label htmlFor="media-file">Image file</label>
+          <input
+            id="media-file"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            className="field"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="media-alt-up">Alt text</label>
+          <input
+            id="media-alt-up"
+            className="field"
+            value={form.alt}
+            onChange={(e) => setForm((p) => ({ ...p, alt: e.target.value }))}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary" disabled={uploading || !file}>
+          {uploading ? 'Uploading…' : 'Upload to Storage'}
+        </button>
+      </form>
+
+      <form
+        style={{ marginTop: '1.5rem' }}
+        onSubmit={(e) => {
+          e.preventDefault()
+          onAdd(form)
+          setForm({ src: '', alt: '', category: 'Projects' })
+        }}
+      >
+        <h3 style={{ fontSize: '0.95rem', marginBottom: 8 }}>Or register path</h3>
+        <div className="form-group">
+          <label htmlFor="media-src">Image path</label>
+          <input id="media-src" className="field" value={form.src} onChange={(e) => setForm((p) => ({ ...p, src: e.target.value }))} placeholder="/images/projects/…" required />
+        </div>
+        <div className="form-group">
+          <label htmlFor="media-alt">Alt text</label>
+          <input id="media-alt" className="field" value={form.alt} onChange={(e) => setForm((p) => ({ ...p, alt: e.target.value }))} required />
+        </div>
+        <button type="submit" className="btn btn-outline">Add media path</button>
+      </form>
+    </div>
   )
 }
 

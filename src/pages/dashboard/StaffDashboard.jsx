@@ -29,6 +29,15 @@ import {
   enquirySummary,
 } from '../../utils/enquiries'
 import { getRoleLabel } from '../../utils/roles'
+import { signOutUser } from '../../utils/auth'
+import {
+  subscribeOrders,
+  updateOrder,
+  openInvoice,
+  openReceipt,
+  ORDER_STATUSES,
+  ORDER_STATUS_LABELS,
+} from '../../utils/orders'
 import './Dashboard.css'
 
 export default function StaffDashboard() {
@@ -38,7 +47,21 @@ export default function StaffDashboard() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('all')
   const [selected, setSelected] = useState(null)
+  const [orders, setOrders] = useState([])
+  const [selectedOrder, setSelectedOrder] = useState(null)
+  const [view, setView] = useState('enquiries')
   const firebaseReady = isFirebaseConfigured()
+
+  useEffect(() => {
+    const unsub = subscribeOrders(setOrders)
+    return () => unsub?.()
+  }, [])
+
+  useEffect(() => {
+    if (!selectedOrder) return
+    const fresh = orders.find((o) => o.id === selectedOrder.id)
+    if (fresh) setSelectedOrder(fresh)
+  }, [orders])
 
   useEffect(() => {
     const mergeLocal = (remote = []) => {
@@ -117,7 +140,8 @@ export default function StaffDashboard() {
     if (!enquiry.read) markRead(enquiry)
   }
 
-  const signOut = () => {
+  const signOut = async () => {
+    await signOutUser()
     setUser(null)
     navigate('/admin/login', { replace: true })
   }
@@ -180,8 +204,145 @@ export default function StaffDashboard() {
             <div className="dash-stat__value">{serviceCount}</div>
             <div className="dash-stat__label">Service requests</div>
           </div>
+          <div className="dash-stat">
+            <div className="dash-stat__value">{orders.length}</div>
+            <div className="dash-stat__label">Orders</div>
+          </div>
         </div>
 
+        <div className="dash-filters" style={{ marginBottom: '1rem' }}>
+          <button
+            type="button"
+            className={`dash-filter-btn ${view === 'enquiries' ? 'dash-filter-btn--active' : ''}`}
+            onClick={() => setView('enquiries')}
+          >
+            Enquiries
+          </button>
+          <button
+            type="button"
+            className={`dash-filter-btn ${view === 'orders' ? 'dash-filter-btn--active' : ''}`}
+            onClick={() => setView('orders')}
+          >
+            Orders ({orders.length})
+          </button>
+        </div>
+
+        {view === 'orders' ? (
+          <div className="dash-split">
+            <div className="dash-card">
+              <div className="dash-card__head">
+                <h2>Orders &amp; tracking</h2>
+              </div>
+              <div className="dash-card__body dash-table-wrap">
+                {orders.length === 0 ? (
+                  <div className="dash-empty">
+                    <h3>No orders yet</h3>
+                    <p>Create an order from a won enquiry in Admin → Enquiries or Control.</p>
+                  </div>
+                ) : (
+                  <table className="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((o) => (
+                        <tr
+                          key={o.id}
+                          className={selectedOrder?.id === o.id ? 'dash-table__row--active' : ''}
+                          onClick={() => setSelectedOrder(o)}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <td>
+                            <strong>{o.orderNumber}</strong>
+                            <div className="dash-table__sub">{o.invoiceNumber}</div>
+                          </td>
+                          <td>{o.customer?.name || '—'}</td>
+                          <td>{ORDER_STATUS_LABELS[o.status] || o.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+            {selectedOrder ? (
+              <div className="dash-card">
+                <div className="dash-card__head">
+                  <h2>{selectedOrder.orderNumber}</h2>
+                  <button type="button" onClick={() => setSelectedOrder(null)} className="dash-close-btn" aria-label="Close">
+                    ✕
+                  </button>
+                </div>
+                <div className="dash-detail">
+                  <div className="dash-detail__meta">
+                    <div>Invoice: {selectedOrder.invoiceNumber}</div>
+                    <div>Receipt: {selectedOrder.receiptNumber}</div>
+                    <div>Payment: {selectedOrder.paymentStatus || 'unpaid'}</div>
+                    <div>📞 {selectedOrder.customer?.phone || '—'}</div>
+                  </div>
+                  <EnquiryItemsList items={selectedOrder.items || []} showPrices={false} />
+                  <div className="form-group">
+                    <label htmlFor="staff-order-status">Update status</label>
+                    <select
+                      id="staff-order-status"
+                      className="field"
+                      value={selectedOrder.status}
+                      onChange={async (e) => {
+                        const status = e.target.value
+                        await updateOrder(selectedOrder.id, {
+                          status,
+                          trackingNote: `Status → ${ORDER_STATUS_LABELS[status]}`,
+                        }, user)
+                      }}
+                    >
+                      {ORDER_STATUSES.map((s) => (
+                        <option key={s} value={s}>{ORDER_STATUS_LABELS[s]}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="staff-track-note">Add tracking note</label>
+                    <input
+                      id="staff-track-note"
+                      className="field"
+                      placeholder="Press Enter to save"
+                      onKeyDown={async (e) => {
+                        if (e.key === 'Enter' && e.target.value.trim()) {
+                          await updateOrder(selectedOrder.id, { trackingNote: e.target.value.trim() }, user)
+                          e.target.value = ''
+                        }
+                      }}
+                    />
+                  </div>
+                  {(selectedOrder.tracking || []).slice().reverse().map((t, i) => (
+                    <p key={`${t.at}-${i}`} style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>
+                      {new Date(t.at).toLocaleString('en-KE')} — {t.note}
+                    </p>
+                  ))}
+                  <div className="dash-detail__actions">
+                    <button type="button" className="btn btn-primary" onClick={() => openInvoice(selectedOrder)}>
+                      Print invoice
+                    </button>
+                    <button type="button" className="btn btn-outline" onClick={() => openReceipt(selectedOrder)}>
+                      Print receipt
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="dash-card">
+                <div className="dash-empty">
+                  <h3>Select an order</h3>
+                  <p>Update production status, tracking notes, and print documents.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
         <div className="dash-split">
           <div className="dash-card">
             <div className="dash-card__head">
@@ -321,6 +482,7 @@ export default function StaffDashboard() {
             </div>
           )}
         </div>
+        )}
       </main>
     </div>
   )

@@ -10,6 +10,7 @@ import ServicesPanel from './admin-panels/ServicesPanel'
 import GodModePanel from './admin-panels/GodModePanel'
 import { PERMISSIONS } from '../utils/permissions'
 import { getRoleLabel } from '../utils/roles'
+import { signOutUser } from '../utils/auth'
 import './Admin.css'
 
 const TAB_DEFS = [
@@ -43,7 +44,8 @@ export default function Admin() {
     }
   }, [tabs, tab])
 
-  const signOut = () => {
+  const signOut = async () => {
+    await signOutUser()
     setUser(null)
     navigate('/admin/login', { replace: true })
   }

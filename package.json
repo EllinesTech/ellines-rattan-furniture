@@ -10,10 +10,12 @@
     "preview:pages": "wrangler pages dev dist --port 5174",
     "cf-build": "npm install && npm run build",
     "deploy:firebase": "npm run build && firebase deploy --only hosting",
-    "deploy:firebase:rules": "echo Merge Rattan rules into Haven before deploying && firebase deploy --only firestore:rules",
+    "deploy:firebase:rules": "echo Merge Rattan rules into Haven before deploying && firebase deploy --only firestore:rules,storage",
     "deploy:firebase:hosting": "npm run build && firebase deploy --only hosting",
+    "deploy:firebase:storage": "firebase deploy --only storage",
     "deploy:pages": "npm run build && wrangler pages deploy dist --project-name ellines-rattan-furniture",
     "deploy": "npm run build && wrangler pages deploy dist --project-name ellines-rattan-furniture --commit-dirty=true",
+    "deploy:rules": "firebase deploy --only firestore:rules,storage",
     "images:polish": "node scripts/polish-images.mjs",
     "images:hero": "node scripts/compose-hero-images.mjs",
     "images:webp": "node scripts/generate-webp.mjs"
