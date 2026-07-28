@@ -139,7 +139,7 @@ export const ABOUT_STORY = {
         name: 'Ellines Haven',
         tag: 'Publishing',
         desc: 'Online books and stories by Elijah Mwangi M — a digital publishing platform within Ellines Group.',
-        href: 'https://tech.ellines.co.ke/',
+        href: 'https://haven.ellines.co.ke/',
         external: true,
       },
     ],
