@@ -32,14 +32,9 @@ export default function FounderProfile({ standalone = false }) {
               <Link to="/contact" className="btn btn-primary">
                 Visit our workshops
               </Link>
-              <a
-                href="https://tech.ellines.co.ke/"
-                className="btn btn-outline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ellines Group
-              </a>
+              <Link to="/about/team" className="btn btn-outline">
+                The Team
+              </Link>
             </div>
           </div>
         </Reveal>

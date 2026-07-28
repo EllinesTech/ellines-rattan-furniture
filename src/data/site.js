@@ -18,7 +18,6 @@ export const SITE = {
   hours: 'Mon – Sat, 8:00 AM – 6:00 PM',
   group: {
     name: 'Ellines Group',
-    url: 'https://tech.ellines.co.ke/',
     founder: 'Elijah Mwangi M',
   },
   workshops: [

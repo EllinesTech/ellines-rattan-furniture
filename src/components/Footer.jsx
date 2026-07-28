@@ -43,10 +43,8 @@ export default function Footer() {
             <p className="footer__tagline">{SITE.tagline}</p>
             <p className="footer__desc">
               Handcrafted synthetic rattan furniture — custom sofas, armchairs, cabinets,
-              tables, and outdoor sets from our workshops in Nyeri and Nairobi. Part of{' '}
-              <a href="https://tech.ellines.co.ke/" target="_blank" rel="noopener noreferrer">
-                Ellines Group
-              </a>.
+              tables, and outdoor sets from our workshops in Nyeri and Nairobi. Part of
+              Ellines Group.
             </p>
           </div>
 
@@ -117,7 +115,11 @@ export default function Footer() {
             </button>
             {' · '}
             <a href="https://tech.ellines.co.ke/" target="_blank" rel="noopener noreferrer">
-              Ellines Group
+              Ellines Tech
+            </a>
+            {' · '}
+            <a href="https://haven.ellines.co.ke/" target="_blank" rel="noopener noreferrer">
+              Ellines Haven
             </a>
           </p>
         </div>
