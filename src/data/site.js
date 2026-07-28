@@ -139,7 +139,7 @@ export const WHY_CHOOSE = [
   { title: 'Workshop-direct pricing', desc: 'No middlemen — buy straight from our Nyeri & Nairobi ateliers' },
   { title: 'Weather-resistant rattan', desc: 'Premium synthetic weave built for Kenyan sun and rain' },
   { title: 'Fully custom builds', desc: 'Any size, colour, or pattern — your space, your design' },
-  { title: 'Nationwide delivery', desc: 'We deliver finished pieces across Kenya with care' },
+  { title: 'Repair & consultation', desc: 'Reasonable-price repairs, plus paid furniture consultation' },
 ]
 
 export const FEATURED_SHOWCASE = [
@@ -207,6 +207,20 @@ export const SERVICES = [
       'Bring your reference or sketch. Our Nyeri and Nairobi workshops weave every piece by hand with precision and care.',
     icon: 'craft',
     image: '/images/projects/project-craftsmanship-weaving.jpg',
+  },
+  {
+    title: 'Rattan Furniture Repair',
+    description:
+      'We repair and re-weave rattan furniture at a reasonable price — loose weaves, damaged sections, frame touch-ups, and refreshes for pieces you already love.',
+    icon: 'repair',
+    image: '/images/projects/project-craftsmanship-hand-weave.jpg',
+  },
+  {
+    title: 'Furniture Consultation',
+    description:
+      'Paid consultation for layout, weave selection, frame materials, and project planning — workshop advice tailored to your space, budget, and style. Fees apply.',
+    icon: 'consult',
+    image: '/images/projects/workshop-nairobi-showroom.jpg',
   },
 ]
 

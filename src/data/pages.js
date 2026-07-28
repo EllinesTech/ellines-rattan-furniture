@@ -46,12 +46,12 @@ export const PAGE_META = {
   services: {
     title: 'Services | Ellines Rattan Furniture',
     description:
-      'Custom sofas, armchairs, cabinets, tables, outdoor sets, and bespoke rattan furniture made in Kenya.',
+      'Custom rattan furniture, repairs at reasonable prices, and paid furniture consultation — workshops in Nyeri and Nairobi, Kenya.',
     heroImage: '/images/projects/project-original-armchair-shaggy.jpg',
     heroPosition: 'center 30%',
-    eyebrow: 'What We Make',
-    heading: 'Custom Rattan Furniture',
-    sub: 'From a single accent chair to a full outdoor lounge.',
+    eyebrow: 'What We Offer',
+    heading: 'Custom Rattan Furniture & Care',
+    sub: 'New builds, repairs, and paid consultation — from a single chair to a full lounge.',
   },
   contact: {
     title: 'Contact | Ellines Rattan Furniture',

@@ -237,6 +237,14 @@ export const FAQ_ITEMS = [
     a: 'We use your contact and project details only to prepare quotes and fulfil orders. We do not sell your data. See our Privacy Policy and Cookie Policy for full details, and manage cookie preferences anytime from the footer.',
   },
   {
+    q: 'Do you repair rattan furniture?',
+    a: 'Yes. We repair and re-weave rattan furniture at a reasonable price — including loose or damaged weaves and frame touch-ups. Send photos on WhatsApp for a repair quote.',
+  },
+  {
+    q: 'Do you offer furniture consultation?',
+    a: 'Yes. We provide rattan furniture consultation at a fee — covering layout, weave and colour choices, frame materials (steel, wood, aluminium, or your preference), and project planning. Contact us to book.',
+  },
+  {
     q: 'How do I get a quote?',
     a: 'WhatsApp is the fastest way — message us with your project details at 0748 255 466. You can also call or email info@ellines.co.ke.',
   },
@@ -250,7 +258,7 @@ export const DELIVERY_INFO = {
   ],
   warranty: [
     { title: 'Workshop Guarantee', desc: 'We stand behind every build with workshop-direct support. Structural frame issues from manufacturing are covered.' },
-    { title: 'Weave Integrity', desc: 'Normal weave wear under standard residential use is expected over time. We offer repair and re-weave services.' },
+    { title: 'Weave Integrity', desc: 'Normal weave wear under standard residential use is expected over time. We offer repair and re-weave services at a reasonable price.' },
     { title: 'Aftercare Support', desc: 'Questions after delivery? Contact us anytime — we are here to help maintain your furniture for years.' },
   ],
 }

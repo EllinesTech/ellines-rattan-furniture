@@ -39,8 +39,8 @@ export default function About({ standalone = false }) {
             <ul className="about__list">
               <li>Premium synthetic rattan — weather-resistant &amp; long-lasting</li>
               <li>Custom sizes, colours, and weave patterns</li>
+              <li>Repairs at a reasonable price · paid furniture consultation</li>
               <li>Nairobi showroom · Nyeri production atelier</li>
-              <li>Direct workshop pricing with personal consultation</li>
             </ul>
           </Reveal>
 

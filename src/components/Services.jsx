@@ -37,6 +37,18 @@ const ICONS = {
       <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
     </svg>
   ),
+  repair: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
+    </svg>
+  ),
+  consult: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20v-1a5 5 0 015-5h4a5 5 0 015 5v1" />
+      <path d="M18 4l2 2-2 2M6 4L4 6l2 2" />
+    </svg>
+  ),
 }
 
 export default function Services({ standalone = false }) {
@@ -47,11 +59,11 @@ export default function Services({ standalone = false }) {
       <div className="container">
         {!standalone && (
           <Reveal className="section-head section-head--center">
-            <p className="section-eyebrow">What We Make</p>
-            <h2>Custom Rattan Furniture</h2>
+            <p className="section-eyebrow">What We Offer</p>
+            <h2>Custom Rattan Furniture &amp; Care</h2>
             <p>
-              From a single accent chair to a full outdoor lounge — hand-woven in our
-              Nyeri and Nairobi workshops.
+              New builds, repairs at a reasonable price, and paid furniture consultation —
+              from our Nyeri and Nairobi workshops.
             </p>
           </Reveal>
         )}
