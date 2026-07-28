@@ -8,6 +8,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import { db, isFirebaseConfigured } from '../firebase'
+import { FS } from '../firestorePaths'
 import { SEED_PRODUCTS } from '../data/seedProducts'
 import { loadLocalQuoteRequests, loadAdminSettings } from '../utils/auth'
 import {
@@ -39,7 +40,7 @@ function saveJson(key, value) {
   localStorage.setItem(key, JSON.stringify(value))
 }
 
-const PRODUCTS_DOC = () => (db ? doc(db, 'site_data', 'products_catalogue') : null)
+const PRODUCTS_DOC = () => (db ? doc(db, FS.SITE_DATA, FS.PRODUCTS_CATALOGUE) : null)
 
 function normalizeProduct(raw, index = 0) {
   return {
@@ -158,7 +159,7 @@ export function AppProvider({ children }) {
     if (!firebaseReady || !db) return undefined
 
     const unsub = onSnapshot(
-      doc(db, 'site_data', 'admin_settings'),
+      doc(db, FS.SITE_DATA, FS.ADMIN_SETTINGS),
       (snap) => {
         if (snap.exists()) setAdminSettings(snap.data())
       },
@@ -235,7 +236,7 @@ export function AppProvider({ children }) {
     }
 
     const unsub = onSnapshot(
-      collection(db, 'quote_requests'),
+      collection(db, FS.QUOTE_REQUESTS),
       (snap) => {
         const firestoreUnread = snap.docs.filter((d) => {
           const data = d.data()

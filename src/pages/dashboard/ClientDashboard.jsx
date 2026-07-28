@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { useApp } from '../../context/AppContext'
 import { db, isFirebaseConfigured } from '../../firebase'
+import { FS } from '../../firestorePaths'
 import { SITE } from '../../data/site'
 import {
   buildQuoteWhatsAppMessage,
@@ -76,7 +77,7 @@ export default function ClientDashboard() {
     if (userId) {
       unsubs.push(
         onSnapshot(
-          query(collection(db, 'quote_requests'), where('userId', '==', userId)),
+          query(collection(db, FS.QUOTE_REQUESTS), where('userId', '==', userId)),
           (snap) => apply(snap.docs),
           () => {
             setRequests(fromLocal())
@@ -89,7 +90,7 @@ export default function ClientDashboard() {
     if (email) {
       unsubs.push(
         onSnapshot(
-          query(collection(db, 'quote_requests'), where('clientEmail', '==', email)),
+          query(collection(db, FS.QUOTE_REQUESTS), where('clientEmail', '==', email)),
           (snap) => {
             const byEmail = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
             setRequests((prev) => {

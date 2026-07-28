@@ -6,6 +6,7 @@ import OptimizedImage from '../components/OptimizedImage'
 import { useApp } from '../context/AppContext'
 import { SITE } from '../data/site'
 import { db, isFirebaseConfigured } from '../firebase'
+import { FS } from '../firestorePaths'
 import {
   buildQuoteMailto,
   buildQuoteWhatsAppMessage,
@@ -114,7 +115,7 @@ export default function QuotePage() {
     try {
       let saved = null
       if (firebaseReady && db) {
-        const ref = await addDoc(collection(db, 'quote_requests'), {
+        const ref = await addDoc(collection(db, FS.QUOTE_REQUESTS), {
           ...payload,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),

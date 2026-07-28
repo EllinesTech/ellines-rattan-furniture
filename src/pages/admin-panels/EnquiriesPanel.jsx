@@ -7,6 +7,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import { db, isFirebaseConfigured } from '../../firebase'
+import { FS } from '../../firestorePaths'
 import { SITE } from '../../data/site'
 import {
   buildQuoteMailto,
@@ -97,7 +98,7 @@ export default function EnquiriesPanel() {
     }
 
     const unsub = onSnapshot(
-      collection(db, 'quote_requests'),
+      collection(db, FS.QUOTE_REQUESTS),
       (snap) => {
         const remote = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
         const merged = mergeLocal(remote)
@@ -148,7 +149,7 @@ export default function EnquiriesPanel() {
       return
     }
     if (firebaseReady && db) {
-      await setDoc(doc(db, 'quote_requests', enquiry.id), { read, updatedAt: serverTimestamp() }, { merge: true })
+      await setDoc(doc(db, FS.QUOTE_REQUESTS, enquiry.id), { read, updatedAt: serverTimestamp() }, { merge: true })
     }
   }
 
@@ -161,7 +162,7 @@ export default function EnquiriesPanel() {
     }
     if (firebaseReady && db) {
       await setDoc(
-        doc(db, 'quote_requests', enquiry.id),
+        doc(db, FS.QUOTE_REQUESTS, enquiry.id),
         { status, read: true, updatedAt: serverTimestamp() },
         { merge: true },
       )

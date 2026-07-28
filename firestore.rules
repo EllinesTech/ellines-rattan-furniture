@@ -3,15 +3,21 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Site configuration, product catalogue, admin credentials, admin settings.
-    // Tighten with Firebase Auth custom claims before production hardening.
+    // ── Ellines Rattan Furniture (shared project ellines-haven-web) ─────────
+    // These rules are the Rattan *additions* expected in the live project.
+    // DO NOT deploy this file alone over Haven — it would wipe Haven rules.
+    // Deploy via Haven's firestore.rules (which merges Haven + Rattan rules),
+    // or paste the Rattan match blocks into the Firebase Console.
+
+    // Site config docs used by Rattan (and Haven). Doc IDs are namespaced
+    // where they would collide (rattan_admin_credentials, rattan_admin_settings).
     match /site_data/{docId} {
       allow read: if true;
       allow write: if true;
     }
 
-    // Portal users — clients and staff (passwords stored hashed client-side).
-    match /users/{userId} {
+    // Rattan portal users (clients / staff) — NOT Haven's `users` collection.
+    match /rattan_users/{userId} {
       allow read: if true;
       allow create: if true;
       allow update, delete: if true;

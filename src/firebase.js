@@ -1,3 +1,12 @@
+/**
+ * Ellines Rattan Furniture — Firebase
+ *
+ * Project: ellines-haven-web (shared with Ellines Haven on Blaze).
+ * Hosting remains Cloudflare Pages — do not firebase deploy hosting.
+ *
+ * Data is namespaced via src/firestorePaths.js so Haven books/users/admin
+ * credentials are never overwritten.
+ */
 import { initializeApp } from 'firebase/app'
 import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore'
 

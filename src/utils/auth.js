@@ -10,6 +10,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import { db, isFirebaseConfigured, SUPER_ADMIN_EMAIL as ENV_SUPER_ADMIN_EMAIL } from '../firebase'
+import { FS } from '../firestorePaths'
 import { storePasswordValue, verifyPassword } from './passwordSecurity'
 import { ROLES } from './roles'
 
@@ -49,7 +50,7 @@ function saveLocalUsers(users) {
 export async function loadAdminSettings() {
   if (isFirebaseConfigured() && db) {
     try {
-      const snap = await getDoc(doc(db, 'site_data', 'admin_settings'))
+      const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_SETTINGS))
       if (snap.exists()) return snap.data()
     } catch (e) {
       console.warn('[loadAdminSettings]', e.message)
@@ -76,7 +77,7 @@ export async function saveAdminSettings(settings, actorEmail) {
   }
 
   if (isFirebaseConfigured() && db) {
-    await setDoc(doc(db, 'site_data', 'admin_settings'), payload, { merge: true })
+    await setDoc(doc(db, FS.SITE_DATA, FS.ADMIN_SETTINGS), payload, { merge: true })
   } else {
     localStorage.setItem(
       LOCAL_ADMIN_SETTINGS_KEY,
@@ -100,7 +101,7 @@ export async function findUserByEmail(email) {
 
   if (isFirebaseConfigured() && db) {
     try {
-      const q = query(collection(db, 'users'), where('email', '==', emailKey))
+      const q = query(collection(db, FS.USERS), where('email', '==', emailKey))
       const snap = await getDocs(q)
       if (!snap.empty) {
         const d = snap.docs[0]
@@ -129,10 +130,11 @@ export async function registerClient({ name, email, phone, password }) {
     role: ROLES.CLIENT,
     password: hashed,
     createdAt: new Date().toISOString(),
+    source: 'rattan',
   }
 
   if (isFirebaseConfigured() && db) {
-    const ref = await addDoc(collection(db, 'users'), {
+    const ref = await addDoc(collection(db, FS.USERS), {
       ...userData,
       createdAt: serverTimestamp(),
     })
@@ -156,7 +158,7 @@ export async function loginPortalUser(email, password) {
   if (check.needsUpgrade) {
     const hashed = await storePasswordValue(password)
     if (isFirebaseConfigured() && db && user.id && !user.id.startsWith('local_')) {
-      await setDoc(doc(db, 'users', user.id), { password: hashed, updatedAt: serverTimestamp() }, { merge: true })
+      await setDoc(doc(db, FS.USERS, user.id), { password: hashed, updatedAt: serverTimestamp() }, { merge: true })
     } else {
       const users = loadLocalUsers().map((u) =>
         u.id === user.id ? { ...u, password: hashed } : u,
@@ -180,7 +182,7 @@ export async function createStaffAccount({ name, email, phone, password }, creat
   if (existing) throw new Error('A user with this email already exists.')
 
   if (isFirebaseConfigured() && db) {
-    const snap = await getDoc(doc(db, 'site_data', 'admin_credentials'))
+    const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
     const admins = snap.exists() ? snap.data()?.accounts || [] : []
     if (admins.some((a) => (a.email || '').toLowerCase() === emailKey)) {
       throw new Error('This email is already an admin account.')
@@ -197,10 +199,11 @@ export async function createStaffAccount({ name, email, phone, password }, creat
     createdBy: createdBy?.email || null,
     createdAt: new Date().toISOString(),
     active: true,
+    source: 'rattan',
   }
 
   if (isFirebaseConfigured() && db) {
-    const ref = await addDoc(collection(db, 'users'), {
+    const ref = await addDoc(collection(db, FS.USERS), {
       ...userData,
       createdAt: serverTimestamp(),
     })
@@ -216,7 +219,7 @@ export async function createStaffAccount({ name, email, phone, password }, creat
 export async function listStaffAccounts() {
   if (isFirebaseConfigured() && db) {
     try {
-      const snap = await getDocs(collection(db, 'users'))
+      const snap = await getDocs(collection(db, FS.USERS))
       return snap.docs
         .map((d) => ({ id: d.id, ...d.data() }))
         .filter((u) => u.role === ROLES.STAFF || u.role === ROLES.CLIENT)
@@ -239,7 +242,7 @@ export async function checkAdminCredentials(email, password) {
 
   if (isFirebaseConfigured() && db) {
     try {
-      const snap = await getDoc(doc(db, 'site_data', 'admin_credentials'))
+      const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
       const data = snap.exists() ? snap.data() || {} : null
       const admins = data?.accounts || []
 
@@ -256,7 +259,7 @@ export async function checkAdminCredentials(email, password) {
             (a.email || '').toLowerCase() === emailKey ? { ...a, password: hashed } : a,
           )
           await setDoc(
-            doc(db, 'site_data', 'admin_credentials'),
+            doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS),
             {
               accounts: nextAccounts,
               pwOverrides: { ...pwMap, [emailKey]: hashed },
@@ -278,7 +281,7 @@ export async function checkAdminCredentials(email, password) {
           password: hashed,
         }
         await setDoc(
-          doc(db, 'site_data', 'admin_credentials'),
+          doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS),
           {
             accounts: [bootstrapEntry],
             pwOverrides: { [emailKey]: hashed },
@@ -348,7 +351,7 @@ export async function updateSuperAdminEmail(newEmail, currentPassword, currentUs
   }
 
   if (isFirebaseConfigured() && db) {
-    const snap = await getDoc(doc(db, 'site_data', 'admin_credentials'))
+    const snap = await getDoc(doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS))
     const data = snap.exists() ? snap.data() || {} : {}
     const admins = data.accounts || []
     const oldKey = currentUser.email.toLowerCase()
@@ -367,7 +370,7 @@ export async function updateSuperAdminEmail(newEmail, currentPassword, currentUs
     }
 
     await setDoc(
-      doc(db, 'site_data', 'admin_credentials'),
+      doc(db, FS.SITE_DATA, FS.ADMIN_CREDENTIALS),
       { accounts: nextAccounts, pwOverrides: pwMap, updatedAt: serverTimestamp() },
       { merge: true },
     )
