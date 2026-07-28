@@ -245,6 +245,10 @@ export const FAQ_ITEMS = [
     a: 'Yes. We provide rattan furniture consultation at a fee — covering layout, weave and colour choices, frame materials (steel, wood, aluminium, or your preference), and project planning. Contact us to book.',
   },
   {
+    q: 'Do you publish service prices?',
+    a: 'Yes — our Services page lists starting prices for custom furniture, repairs, and consultation fees. Final quotes depend on size, weave, materials, and delivery. Shop catalogue items also show starting prices.',
+  },
+  {
     q: 'How do I get a quote?',
     a: 'WhatsApp is the fastest way — message us with your project details at 0748 255 466. You can also call or email info@ellines.co.ke.',
   },

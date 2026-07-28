@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { SERVICES, SITE, WHY_CHOOSE } from '../data/site'
+import { SERVICE_PRICING, SERVICES, SITE, WHY_CHOOSE } from '../data/site'
+import { formatKes } from '../utils/auth'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
 import './Services.css'
@@ -51,6 +52,20 @@ const ICONS = {
   ),
 }
 
+function formatServicePrice(pricing) {
+  if (!pricing) return null
+  if (pricing.type === 'quote') return 'Price on request'
+  if (pricing.type === 'fee') return formatKes(pricing.amount)
+  if (pricing.type === 'from') return `From ${formatKes(pricing.amount)}`
+  return formatKes(pricing.amount)
+}
+
+function formatTierPrice(item) {
+  if (item.type === 'quote' || item.price == null) return 'Quote on request'
+  if (item.type === 'fee') return formatKes(item.price)
+  return `From ${formatKes(item.price)}`
+}
+
 export default function Services({ standalone = false }) {
   const waUrl = `https://wa.me/${SITE.whatsapp.number}?text=${encodeURIComponent(SITE.whatsapp.message)}`
 
@@ -77,6 +92,40 @@ export default function Services({ standalone = false }) {
           ))}
         </div>
 
+        <Reveal className="services-pricing card" delay={80}>
+          <div className="services-pricing__head">
+            <div>
+              <p className="section-eyebrow">Transparent pricing</p>
+              <h2>Service pricing guide</h2>
+              <p>{SERVICE_PRICING.note}</p>
+            </div>
+            <Link to="/shop" className="btn btn-outline services-pricing__shop-link">
+              View shop catalogue
+            </Link>
+          </div>
+
+          <div className="services-pricing__grid">
+            {SERVICE_PRICING.tiers.map((tier) => (
+              <div key={tier.group} className="services-pricing__tier">
+                <h3>{tier.group}</h3>
+                <ul className="services-pricing__list">
+                  {tier.items.map((item) => (
+                    <li key={item.name} className="services-pricing__row">
+                      <div className="services-pricing__row-copy">
+                        <span className="services-pricing__name">{item.name}</span>
+                        {item.detail && <span className="services-pricing__detail">{item.detail}</span>}
+                      </div>
+                      <span className="services-pricing__price">{formatTierPrice(item)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <p className="services-pricing__footnote">{SERVICE_PRICING.deliveryNote}</p>
+        </Reveal>
+
         <div className="services__grid">
           {SERVICES.map((service, i) => (
             <Reveal key={service.title} delay={i * 70}>
@@ -91,7 +140,13 @@ export default function Services({ standalone = false }) {
                 <div className="services__body">
                   <div className="services__icon">{ICONS[service.icon]}</div>
                   <h3>{service.title}</h3>
+                  {service.pricing && (
+                    <p className="services__price">{formatServicePrice(service.pricing)}</p>
+                  )}
                   <p>{service.description}</p>
+                  {service.pricing?.note && (
+                    <p className="services__price-note">{service.pricing.note}</p>
+                  )}
                 </div>
               </article>
             </Reveal>
@@ -100,12 +155,12 @@ export default function Services({ standalone = false }) {
 
         <Reveal className="services__cta-band" delay={150}>
           <div className="services__cta-copy">
-            <h3>Have a project in mind?</h3>
-            <p>Tell us what you need — we will guide you from design to delivery.</p>
+            <h3>Need an exact quote?</h3>
+            <p>Share photos, dimensions, or a sketch — we will confirm pricing before any work begins.</p>
           </div>
           <div className="services__cta-btns">
-            <Link to="/contact" className="btn btn-outline">
-              Get in Touch
+            <Link to="/quote" className="btn btn-outline">
+              Build a quote
             </Link>
             <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
               WhatsApp Quote

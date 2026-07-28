@@ -46,7 +46,7 @@ export const PAGE_META = {
   services: {
     title: 'Services | Ellines Rattan Furniture',
     description:
-      'Custom rattan furniture, repairs at reasonable prices, and paid furniture consultation — workshops in Nyeri and Nairobi, Kenya.',
+      'Custom rattan furniture, repairs, and paid consultation — with transparent starting prices from our Nyeri and Nairobi workshops.',
     heroImage: '/images/projects/project-original-armchair-shaggy.jpg',
     heroPosition: 'center 30%',
     eyebrow: 'What We Offer',

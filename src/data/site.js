@@ -172,6 +172,7 @@ export const SERVICES = [
       'Modular and fixed sofas tailored to your space, weave pattern, and colour palette — built for comfort indoors or out.',
     icon: 'sofa',
     image: '/images/projects/project-original-modular-sections.jpg',
+    pricing: { type: 'from', amount: 145000 },
   },
   {
     title: 'Armchairs & Lounge Seating',
@@ -179,6 +180,7 @@ export const SERVICES = [
       'Statement armchairs with hand-woven synthetic rattan on sturdy steel, wood, or aluminium frames — elegant, durable, and made to order.',
     icon: 'chair',
     image: '/images/projects/project-original-armchair-shaggy.jpg',
+    pricing: { type: 'from', amount: 65000 },
   },
   {
     title: 'Cabinets & Storage',
@@ -186,6 +188,7 @@ export const SERVICES = [
       'Checkered and geometric woven cabinets with glass tops, gold accents, and practical shelving for home or hospitality.',
     icon: 'cabinet',
     image: '/images/projects/project-original-cabinet-gold.jpg',
+    pricing: { type: 'from', amount: 55000 },
   },
   {
     title: 'Tables & Side Pieces',
@@ -193,6 +196,7 @@ export const SERVICES = [
       'Coffee tables, side tables, and accent pieces that complement your seating — coordinated weaves and finishes.',
     icon: 'table',
     image: '/images/projects/project-original-coffee-table.jpg',
+    pricing: { type: 'from', amount: 35000 },
   },
   {
     title: 'Outdoor Living Sets',
@@ -200,6 +204,7 @@ export const SERVICES = [
       'Weather-resistant rattan collections for patios, terraces, and poolside lounges — designed for Kenyan climates.',
     icon: 'outdoor',
     image: '/images/projects/project-original-modular-collection.jpg',
+    pricing: { type: 'from', amount: 185000 },
   },
   {
     title: 'Bespoke Workshop Builds',
@@ -207,6 +212,7 @@ export const SERVICES = [
       'Bring your reference or sketch. Our Nyeri and Nairobi workshops weave every piece by hand with precision and care.',
     icon: 'craft',
     image: '/images/projects/project-craftsmanship-weaving.jpg',
+    pricing: { type: 'quote' },
   },
   {
     title: 'Rattan Furniture Repair',
@@ -214,15 +220,47 @@ export const SERVICES = [
       'We repair and re-weave rattan furniture at a reasonable price — loose weaves, damaged sections, frame touch-ups, and refreshes for pieces you already love.',
     icon: 'repair',
     image: '/images/projects/project-craftsmanship-hand-weave.jpg',
+    pricing: { type: 'from', amount: 8500, note: 'Per item · quote after photos' },
   },
   {
     title: 'Furniture Consultation',
     description:
-      'Paid consultation for layout, weave selection, frame materials, and project planning — workshop advice tailored to your space, budget, and style. Fees apply.',
+      'Paid consultation for layout, weave selection, frame materials, and project planning — workshop advice tailored to your space, budget, and style.',
     icon: 'consult',
     image: '/images/projects/workshop-nairobi-showroom.jpg',
+    pricing: { type: 'fee', amount: 3500, note: 'Per session (approx. 1 hour)' },
   },
 ]
+
+export const SERVICE_PRICING = {
+  note:
+    'Prices below are starting guides from our workshop. Final quotes depend on size, weave, frame material, cushions, repair scope, and delivery location.',
+  deliveryNote: 'Nationwide delivery quoted separately based on location and piece size.',
+  tiers: [
+    {
+      group: 'Custom furniture',
+      items: [
+        { name: 'Living sets', price: 185000, type: 'from' },
+        { name: 'Sofas & sectionals', price: 145000, type: 'from' },
+        { name: 'Armchairs', price: 65000, type: 'from' },
+        { name: 'Cabinets & storage', price: 55000, type: 'from' },
+        { name: 'Tables & side pieces', price: 35000, type: 'from' },
+        { name: 'Outdoor seating', price: 45000, type: 'from' },
+        { name: 'Bespoke / one-off builds', price: null, type: 'quote' },
+      ],
+    },
+    {
+      group: 'Repair & consultation',
+      items: [
+        { name: 'Minor weave repair', price: 8500, type: 'from', detail: 'Loose strands, small sections' },
+        { name: 'Partial re-weave', price: 15000, type: 'from', detail: 'Seat, back, or panel refresh' },
+        { name: 'Full re-weave', price: null, type: 'quote', detail: 'Quote after workshop assessment' },
+        { name: 'Frame touch-up', price: 5000, type: 'from', detail: 'Coating or joint work where needed' },
+        { name: 'Furniture consultation', price: 3500, type: 'fee', detail: 'Layout, materials & planning' },
+      ],
+    },
+  ],
+}
 
 export const CRAFTSMANSHIP = [
   {
