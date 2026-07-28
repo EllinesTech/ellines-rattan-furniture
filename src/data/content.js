@@ -1,7 +1,10 @@
 export const FOOTER_LINKS = [
   { path: '/about', label: 'Our Story' },
   { path: '/collections', label: 'Collections' },
+  { path: '/catalogue', label: 'Catalogue' },
   { path: '/hospitality', label: 'Hospitality & Trade' },
+  { path: '/guide', label: 'Measurement Guide' },
+  { path: '/visit', label: 'Book a Visit' },
   { path: '/materials', label: 'Materials & Care' },
   { path: '/faq', label: 'FAQ' },
   { path: '/delivery', label: 'Delivery & Warranty' },
@@ -83,6 +86,24 @@ export const HOSPITALITY = {
     'Frame options in metal, aluminium, wood, or powder-coated steel — prices vary by material',
     'Transparent workshop quotes for procurement',
     'Nationwide delivery and installation support',
+  ],
+  tradePerks: [
+    {
+      title: 'Designer-friendly specs',
+      desc: 'Share mood boards, CAD notes, or room plans — we translate them into weave patterns, frame choices, and workshop quotes.',
+    },
+    {
+      title: 'Sample & finish support',
+      desc: 'Review weave colours and frame finishes in our Nairobi showroom before committing a full order.',
+    },
+    {
+      title: 'Project lead times',
+      desc: 'Clear build windows for multi-unit hospitality sets, with staged delivery when guest areas open in phases.',
+    },
+    {
+      title: 'Aftercare for venues',
+      desc: 'Re-weave and repair services keep high-traffic lounges looking sharp without full replacement.',
+    },
   ],
 }
 
@@ -204,6 +225,167 @@ export const MATERIALS = [
   },
 ]
 
+/** Deeper care & “why synthetic” content for Materials page */
+export const CARE_GUIDE = {
+  whySynthetic: {
+    heading: 'Why synthetic rattan?',
+    intro:
+      'We weave with premium synthetic rattan because Kenyan homes, terraces, and hospitality spaces need beauty that lasts through sun, dust, and seasonal rain — without the fragility of untreated natural cane outdoors.',
+    points: [
+      {
+        title: 'Weather-ready look',
+        desc: 'UV-stabilised polyethylene weave holds colour and shape better than natural rattan in strong equatorial light.',
+      },
+      {
+        title: 'Low daily upkeep',
+        desc: 'A damp cloth clears dust and spills. No oiling cycles like many natural cane finishes require.',
+      },
+      {
+        title: 'Custom colour freedom',
+        desc: 'Checkered, chevron, solid, and dual-tone weaves — matched to your interior or brand palette.',
+      },
+      {
+        title: 'Repairable craft',
+        desc: 'Loose or damaged sections can be re-woven in our workshops instead of replacing the whole piece.',
+      },
+    ],
+  },
+  routines: [
+    {
+      title: 'Weekly wipe-down',
+      desc: 'Dust the weave with a soft cloth or soft brush. Wipe with mild soapy water, then dry with a clean cloth — especially after outdoor evenings.',
+    },
+    {
+      title: 'Cushions & covers',
+      desc: 'Store cushions indoors overnight when used on open terraces. Wash removable covers gently; air-dry fully before replacing.',
+    },
+    {
+      title: 'Frames & joints',
+      desc: 'Check screws and welded joins once a year. Touch up powder-coated chips promptly so moisture does not reach the metal.',
+    },
+    {
+      title: 'Rainy season tips',
+      desc: 'Cover or move pieces under a roof during prolonged storms. Avoid standing water on wood frames and glass tops.',
+    },
+  ],
+  avoid: [
+    'Harsh solvents, bleach, or abrasive scrubbers on the weave',
+    'Dragging heavy pieces across rough floors (lift to move)',
+    'Leaving wet cushions sealed under plastic covers for days',
+    'Open flames or extreme heat near synthetic weave',
+  ],
+}
+
+export const MEASUREMENT_GUIDE = {
+  intro:
+    'Custom furniture fits when measurements are clear. Use this guide before you visit, WhatsApp photos, or request a quote — we refine everything in consultation.',
+  tools: [
+    'Tape measure (metres or centimetres)',
+    'Phone camera for room photos and reference pieces',
+    'Paper or notes app for wall lengths and clearances',
+    'Optional: sketch of the room layout',
+  ],
+  steps: [
+    {
+      title: 'Measure the space',
+      desc: 'Record wall length, room depth, and ceiling height where the piece will sit. Note doorways and corridors if delivery path is tight.',
+    },
+    {
+      title: 'Mark clearances',
+      desc: 'Leave walking space — typically 60–90 cm in front of sofas and 40–50 cm beside dining chairs. Account for curtains, radiators, and outlets.',
+    },
+    {
+      title: 'Decide piece footprint',
+      desc: 'For sofas and sectionals, note desired overall width and depth. For tables, confirm seating count and place setting space.',
+    },
+    {
+      title: 'Capture context',
+      desc: 'Photograph the room from two angles. Share inspiration images for weave colour, pattern, and frame finish.',
+    },
+  ],
+  tips: [
+    {
+      title: 'Sofas & lounges',
+      items: [
+        'Overall width and depth of the intended footprint',
+        'Seat height preference (standard vs lounge)',
+        'Modular: number of seats and corner orientation',
+      ],
+    },
+    {
+      title: 'Dining & tables',
+      items: [
+        'Table length × width, or diameter for rounds',
+        'Number of chairs and chair width allowance',
+        'Clearance to walls and other furniture',
+      ],
+    },
+    {
+      title: 'Beds & bedroom',
+      items: [
+        'Mattress size (or intended size)',
+        'Headboard width vs wall space',
+        'Side-table clearances and bedside walking space',
+      ],
+    },
+    {
+      title: 'Outdoor & hospitality',
+      items: [
+        'Covered vs open exposure',
+        'Number of covers / coversets needed',
+        'Traffic flow for guest seating',
+      ],
+    },
+  ],
+  ctaNote: 'Unsure? Book a Nairobi showroom visit or paid consultation — we can measure with you or guide you over WhatsApp.',
+}
+
+export const VISIT_INFO = {
+  intro:
+    'See weave samples, discuss frame materials, and plan custom sizes in person — or book a paid consultation if you need layout advice before we build.',
+  options: [
+    {
+      title: 'Nairobi showroom visit',
+      desc: 'View samples, discuss colours and frames, and sketch ideas with our team. Ideal before a custom order.',
+      detail: 'Mon – Sat, 8:00 AM – 6:00 PM',
+    },
+    {
+      title: 'Paid furniture consultation',
+      desc: 'Layout, weave, and material planning with transparent fees listed on our Services page.',
+      detail: 'In-person or remote via WhatsApp / call',
+    },
+    {
+      title: 'Nyeri atelier preview',
+      desc: 'See production weaving in progress when scheduling allows — great for large hospitality projects.',
+      detail: 'By appointment',
+    },
+  ],
+  whatToBring: [
+    'Room measurements or rough sketch',
+    'Inspiration photos or mood board',
+    'Budget range (optional but helpful)',
+    'Project timeline / move-in date',
+  ],
+}
+
+export const LEAD_TIMES = [
+  {
+    title: 'Single chairs & small tables',
+    range: 'Typically 1–3 weeks',
+    desc: 'Faster when frame stock and weave colours are on hand.',
+  },
+  {
+    title: 'Sofas & living sets',
+    range: 'Typically 3–6 weeks',
+    desc: 'Depends on size, modular layout, cushions, and current workshop queue.',
+  },
+  {
+    title: 'Hospitality / multi-unit',
+    range: 'Quoted per project',
+    desc: 'We schedule staged builds for hotels, restaurants, and offices — confirm timeline in your quote.',
+  },
+]
+
 export const FAQ_ITEMS = [
   {
     q: 'Do you make fully custom furniture?',
@@ -219,11 +401,19 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How long does a custom order take?',
-    a: 'Lead times depend on complexity and current workshop schedule. Contact us on WhatsApp for an accurate timeline — we provide transparent quotes before any work begins.',
+    a: 'Lead times depend on complexity and current workshop schedule. Single chairs often take 1–3 weeks; sofas and living sets typically 3–6 weeks; hospitality multi-unit projects are quoted per brief. See Delivery & Warranty for typical windows, and ask on WhatsApp for a date tied to your quote.',
   },
   {
     q: 'Can I visit your workshops?',
-    a: 'Absolutely. Our Nairobi workshop serves as a showroom for consultations, and our Nyeri atelier handles production. Visit Mon – Sat, 8:00 AM – 6:00 PM.',
+    a: 'Absolutely. Book a Nairobi showroom visit or consultation on our Visit page. Our Nairobi workshop serves as a showroom, and our Nyeri atelier handles production. Visit Mon – Sat, 8:00 AM – 6:00 PM.',
+  },
+  {
+    q: 'How should I measure my space for custom furniture?',
+    a: 'Use our Measurement Guide — record wall lengths, clearances, and piece footprint, then share photos. Unsure? Book a visit and we will help you measure.',
+  },
+  {
+    q: 'Do you have a catalogue I can download or print?',
+    a: 'Yes — open our Catalogue page to browse current workshop pieces with starting prices, then print or save as PDF from your browser. For a formal quote, add items in Shop and submit via Quote.',
   },
   {
     q: 'Do you deliver outside Nairobi and Nyeri?',
@@ -235,7 +425,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Is your furniture suitable for outdoor use?',
-    a: 'Our synthetic rattan collections are designed for patios, terraces, and poolside lounges. We recommend covered outdoor areas for longest life; ask us about specific piece suitability.',
+    a: 'Our synthetic rattan collections are designed for patios, terraces, and poolside lounges. We recommend covered outdoor areas for longest life; ask us about specific piece suitability. See Materials & Care for maintenance tips.',
   },
   {
     q: 'How do you handle my personal information?',
@@ -247,7 +437,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Do you offer furniture consultation?',
-    a: 'Yes. We provide rattan furniture consultation at a fee — covering layout, weave and colour choices, frame materials (steel, wood, aluminium, or your preference), and project planning. Contact us to book.',
+    a: 'Yes. We provide rattan furniture consultation at a fee — covering layout, weave and colour choices, frame materials (steel, wood, aluminium, or your preference), and project planning. Book via our Visit page or Services.',
   },
   {
     q: 'Do you publish service prices?',
@@ -255,7 +445,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'How do I get a quote?',
-    a: 'WhatsApp is the fastest way — message us with your project details at 0748 255 466. You can also call or email info@ellines.co.ke.',
+    a: 'Browse Shop, add pieces to your quote list, then submit via Quote — or WhatsApp us with dimensions at 0748 255 466. You can also call or email info@ellines.co.ke.',
   },
 ]
 
@@ -266,8 +456,8 @@ export const DELIVERY_INFO = {
     { title: 'Delivery & Setup', desc: 'We deliver across Kenya with care. Larger sets may require assembly — we will advise on arrival.' },
   ],
   warranty: [
-    { title: 'Workshop Guarantee', desc: 'We stand behind every build with workshop-direct support. Structural frame issues from manufacturing are covered.' },
-    { title: 'Weave Integrity', desc: 'Normal weave wear under standard residential use is expected over time. We offer repair and re-weave services at a reasonable price.' },
-    { title: 'Aftercare Support', desc: 'Questions after delivery? Contact us anytime — we are here to help maintain your furniture for years.' },
+    { title: 'Workshop Guarantee', desc: 'We stand behind every build with workshop-direct support. Structural frame issues from manufacturing defects are covered under our workshop guarantee — details confirmed on your order paperwork.' },
+    { title: 'Weave Integrity', desc: 'Normal weave wear under standard residential use is expected over time. We offer repair and re-weave services at a reasonable price so pieces stay beautiful for years.' },
+    { title: 'Aftercare Support', desc: 'Questions after delivery? Contact us anytime — care tips, cushion advice, and repair quotes are part of workshop-direct support.' },
   ],
 }

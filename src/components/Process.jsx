@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { PROCESS_STEPS, SITE } from '../data/site'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
@@ -40,10 +41,18 @@ export default function Process() {
         </div>
 
         <Reveal className="process__cta" delay={200}>
-          <p>Ready to start? Share your ideas — we reply fastest on WhatsApp.</p>
-          <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
-            Begin Your Project
-          </a>
+          <p>
+            Ready to start? Typical builds take a few weeks depending on size — we confirm lead times in your quote.
+            Share your ideas; we reply fastest on WhatsApp.
+          </p>
+          <div className="process__cta-row">
+            <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
+              Begin Your Project
+            </a>
+            <Link to="/delivery" className="btn btn-outline">
+              Lead times &amp; warranty
+            </Link>
+          </div>
         </Reveal>
       </div>
     </section>

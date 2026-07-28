@@ -179,6 +179,13 @@
   max-width: 320px;
 }
 
+.contact__secondary-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
 .contact__social {
   margin: 0 0 1.25rem;
 }

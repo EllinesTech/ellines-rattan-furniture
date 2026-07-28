@@ -1,0 +1,78 @@
+.home-journey {
+  background: linear-gradient(180deg, rgba(201, 168, 76, 0.05), transparent 40%), var(--bg);
+  border-top: 1px solid rgba(201, 168, 76, 0.08);
+}
+
+.home-journey__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+.home-journey__step {
+  position: relative;
+}
+
+.home-journey__card {
+  height: 100%;
+  padding: 1.35rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  background: linear-gradient(145deg, rgba(201, 168, 76, 0.08), rgba(18, 18, 28, 0.92));
+}
+
+.home-journey__num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+.home-journey__card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+  color: var(--gold-lt);
+  margin: 0;
+}
+
+.home-journey__card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.home-journey__link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin-top: 0.35rem;
+}
+
+.home-journey__link:hover {
+  color: var(--gold-lt);
+}
+
+.home-journey__arrow {
+  display: none;
+}
+
+.home-journey__extras {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .home-journey__grid {
+    grid-template-columns: 1fr;
+    max-width: min(480px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

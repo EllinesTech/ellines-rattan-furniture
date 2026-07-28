@@ -64,14 +64,31 @@ export default function HospitalitySection({ standalone = false }) {
           </ul>
         </Reveal>
 
+        <Reveal className="content-page__block" delay={120}>
+          <h3 className="content-page__subtitle">For designers &amp; trade</h3>
+          <div className="card-grid card-grid--2">
+            {(c.tradePerks?.length ? c.tradePerks : HOSPITALITY.tradePerks).map((perk) => (
+              <article key={perk.title} className="card">
+                <div className="card__body">
+                  <h4 className="card__title">{perk.title}</h4>
+                  <p className="card__desc">{perk.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Reveal>
+
         <Reveal className="content-page__cta card" delay={150}>
           <p>Share your project brief — we respond fastest on WhatsApp.</p>
           <div className="content-page__cta-row">
             <a href={waUrl} className="btn btn-primary btn-wa" target="_blank" rel="noopener noreferrer">
               Trade Enquiry
             </a>
-            <Link to="/contact" className="btn btn-outline">
-              Contact Page
+            <Link to="/catalogue" className="btn btn-outline">
+              Catalogue
+            </Link>
+            <Link to="/visit" className="btn btn-outline">
+              Book a visit
             </Link>
           </div>
         </Reveal>

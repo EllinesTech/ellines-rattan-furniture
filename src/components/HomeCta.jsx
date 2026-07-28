@@ -4,27 +4,27 @@ import './HomeCta.css'
 
 const LINKS = [
   {
-    path: '/collections',
-    label: 'Collections',
-    desc: 'Living sets, sofas, armchairs, cabinets, tables & outdoor seating',
+    path: '/shop',
+    label: 'Shop & Quote',
+    desc: 'Browse the catalogue, choose frames, and request a workshop estimate',
     image: '/images/projects/project-original-modular-grey-white.jpg',
   },
   {
-    path: '/craftsmanship',
-    label: 'Our Craftsmanship',
-    desc: 'See how we hand-weave every piece in Nyeri & Nairobi',
-    image: '/images/projects/project-craftsmanship-hand-weave.jpg',
+    path: '/visit',
+    label: 'Book a Visit',
+    desc: 'Nairobi showroom samples and paid furniture consultation',
+    image: '/images/projects/project-original-living-set-brown.jpg',
   },
   {
-    path: '/hospitality',
-    label: 'Hospitality & Trade',
-    desc: 'Custom builds for hotels, restaurants, offices & designers',
-    image: '/images/projects/project-original-living-set-wide.jpg',
+    path: '/guide',
+    label: 'Measurement Guide',
+    desc: 'How to measure your space before a custom build',
+    image: '/images/projects/project-original-modular-sections.jpg',
   },
   {
     path: '/materials',
     label: 'Materials & Care',
-    desc: 'Premium rattan, frames, and maintenance guides',
+    desc: 'Why synthetic rattan, frame options, and maintenance',
     image: '/images/projects/project-craftsmanship-chevron-detail.jpg',
   },
 ]
@@ -58,8 +58,8 @@ export default function HomeCta() {
         </div>
 
         <Reveal className="home-cta__contact" delay={200}>
-          <Link to="/contact" className="btn btn-primary">
-            Start Your Custom Project
+          <Link to="/visit" className="btn btn-primary">
+            Book a Visit or Consultation
           </Link>
         </Reveal>
       </div>

@@ -143,11 +143,89 @@
   color: var(--gold);
 }
 
-.content-page__cta-row {
+.content-page__intro--flush {
+  margin-bottom: 1.25rem;
+}
+
+.delivery-lead__range {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.guide-tools {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.guide-tools li {
+  padding: 14px 16px 14px 36px;
+  border-radius: var(--r);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  background: rgba(201, 168, 76, 0.05);
+  color: var(--text);
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.guide-tools li::before {
+  content: '✦';
+  position: absolute;
+  left: 14px;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+.guide-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guide-checklist li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.guide-checklist li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+.materials-why {
+  margin-bottom: 2.75rem;
+}
+
+.materials-why__intro {
+  max-width: 720px;
+  margin: 0 auto 1.35rem;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.materials-avoid {
+  max-width: 800px;
+}
+
+@media (max-width: 640px) {
+  .guide-tools {
+    grid-template-columns: 1fr;
+  }
 }
 
 .collections-card {

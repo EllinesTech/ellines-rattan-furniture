@@ -108,7 +108,14 @@
 
 .process__cta p {
   color: var(--muted);
-  max-width: 480px;
+  max-width: 520px;
+}
+
+.process__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
 }
 
 @media (max-width: 960px) {

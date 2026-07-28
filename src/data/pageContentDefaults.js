@@ -10,6 +10,10 @@ import {
   MATERIALS,
   FAQ_ITEMS,
   DELIVERY_INFO,
+  CARE_GUIDE,
+  MEASUREMENT_GUIDE,
+  VISIT_INFO,
+  LEAD_TIMES,
 } from './content'
 
 export const PAGE_CONTENT_DEFAULTS = {
@@ -96,6 +100,7 @@ export const PAGE_CONTENT_DEFAULTS = {
       image: a.image,
     })),
     bullets: HOSPITALITY.benefits,
+    tradePerks: HOSPITALITY.tradePerks,
   },
   materials: {
     cards: MATERIALS.map((m) => ({
@@ -104,6 +109,9 @@ export const PAGE_CONTENT_DEFAULTS = {
       care: m.care,
       image: m.image,
     })),
+    whySynthetic: CARE_GUIDE.whySynthetic,
+    routines: CARE_GUIDE.routines,
+    avoid: CARE_GUIDE.avoid,
   },
   faq: {
     faq: FAQ_ITEMS.map((f) => ({ q: f.q, a: f.a })),
@@ -118,6 +126,31 @@ export const PAGE_CONTENT_DEFAULTS = {
       title: w.title,
       desc: w.desc,
     })),
+    leadTimes: LEAD_TIMES,
+  },
+  guide: {
+    intro: [MEASUREMENT_GUIDE.intro],
+    tools: MEASUREMENT_GUIDE.tools,
+    cards: MEASUREMENT_GUIDE.steps.map((s) => ({
+      title: s.title,
+      desc: s.desc,
+    })),
+    tips: MEASUREMENT_GUIDE.tips,
+    ctaNote: MEASUREMENT_GUIDE.ctaNote,
+  },
+  visit: {
+    intro: [VISIT_INFO.intro],
+    cards: VISIT_INFO.options.map((o) => ({
+      title: o.title,
+      desc: o.desc,
+      detail: o.detail,
+    })),
+    whatToBring: VISIT_INFO.whatToBring,
+  },
+  catalogue: {
+    intro: [
+      'A workshop catalogue of active pieces — starting prices for a base configuration. Frame material, weave, and cushions change the final quote.',
+    ],
   },
   craftsmanship: {
     intro: [

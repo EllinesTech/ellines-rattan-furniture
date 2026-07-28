@@ -21,6 +21,9 @@ const FaqPage = lazy(() => import('./pages/FaqPage'))
 const DeliveryPage = lazy(() => import('./pages/DeliveryPage'))
 const CollectionsPage = lazy(() => import('./pages/CollectionsPage'))
 const HospitalityPage = lazy(() => import('./pages/HospitalityPage'))
+const GuidePage = lazy(() => import('./pages/GuidePage'))
+const VisitPage = lazy(() => import('./pages/VisitPage'))
+const CataloguePage = lazy(() => import('./pages/CataloguePage'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
 const TermsPage = lazy(() => import('./pages/TermsPage'))
 const CookiesPage = lazy(() => import('./pages/CookiesPage'))
@@ -91,6 +94,9 @@ export default function App() {
             <Route path="collections" element={<LazyPage Page={CollectionsPage} />} />
             <Route path="services" element={<LazyPage Page={ServicesPage} />} />
             <Route path="hospitality" element={<LazyPage Page={HospitalityPage} />} />
+            <Route path="guide" element={<LazyPage Page={GuidePage} />} />
+            <Route path="visit" element={<LazyPage Page={VisitPage} />} />
+            <Route path="catalogue" element={<LazyPage Page={CataloguePage} />} />
             <Route path="contact" element={<LazyPage Page={ContactPage} />} />
             <Route path="about" element={<LazyPage Page={AboutPage} />} />
             <Route path="about/founder" element={<LazyPage Page={FounderPage} />} />

@@ -166,6 +166,36 @@ export const PAGE_META = {
     heading: 'Hospitality & Trade',
     sub: 'Furniture built for guest spaces, brand interiors, and high-traffic venues.',
   },
+  guide: {
+    title: 'Measurement Guide | Ellines Rattan Furniture',
+    description:
+      'How to measure your space for custom synthetic rattan furniture — sofas, tables, bedrooms, and outdoor sets from Ellines workshops in Kenya.',
+    heroImage: '/images/projects/project-original-modular-sections.jpg',
+    heroPosition: 'center 40%',
+    eyebrow: 'Plan Your Build',
+    heading: 'Measurement & Space Guide',
+    sub: 'Clear dimensions make custom furniture fit — measure once, weave once.',
+  },
+  visit: {
+    title: 'Book a Visit | Ellines Rattan Furniture',
+    description:
+      'Book a Nairobi showroom visit or paid furniture consultation with Ellines Rattan Furniture — Nyeri & Nairobi workshops.',
+    heroImage: '/images/projects/project-original-living-set-brown.jpg',
+    heroPosition: 'center 38%',
+    eyebrow: 'Showroom & Consultation',
+    heading: 'Visit or Book a Consultation',
+    sub: 'See samples in Nairobi, plan custom sizes, or schedule a paid design consultation.',
+  },
+  catalogue: {
+    title: 'Catalogue | Ellines Rattan Furniture',
+    description:
+      'Printable Ellines Rattan Furniture catalogue — synthetic rattan living sets, sofas, armchairs, cabinets, and tables with starting prices.',
+    heroImage: '/images/projects/project-original-modular-grey-white.jpg',
+    heroPosition: 'center 35%',
+    eyebrow: 'Workshop Catalogue',
+    heading: 'Printable Catalogue',
+    sub: 'Browse current pieces, note starting prices, then print or save as PDF from your browser.',
+  },
   privacy: {
     title: 'Privacy Policy | Ellines Rattan Furniture',
     description:

@@ -42,8 +42,8 @@ export default function Footer() {
             <h2>Ready to transform your space?</h2>
             <p>Custom rattan furniture, woven by hand in Nyeri &amp; Nairobi.</p>
           </div>
-          <Link to="/contact" className="btn btn-primary footer__cta-btn">
-            Get in Touch
+          <Link to="/visit" className="btn btn-primary footer__cta-btn">
+            Book a Visit
           </Link>
         </div>
       </div>

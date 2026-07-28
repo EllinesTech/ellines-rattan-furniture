@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { CONTACT_IMAGE, SITE, WHY_CHOOSE } from '../data/site'
 import OptimizedImage from './OptimizedImage'
 import Reveal from './Reveal'
@@ -93,6 +94,14 @@ export default function Contact({ standalone = false }) {
             <a href={waUrl} className="btn btn-primary btn-wa contact__cta" target="_blank" rel="noopener noreferrer">
               Message on WhatsApp
             </a>
+            <div className="contact__secondary-ctas">
+              <Link to="/visit" className="btn btn-outline">
+                Book a showroom visit
+              </Link>
+              <Link to="/guide" className="btn btn-outline">
+                Measurement guide
+              </Link>
+            </div>
           </Reveal>
 
           <Reveal className="contact__visual card reveal--right" delay={120}>
